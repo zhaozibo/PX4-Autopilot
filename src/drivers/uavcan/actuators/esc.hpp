@@ -57,6 +57,16 @@
 #include <uORB/topics/dronecan_node_status.h>
 #include "../node_info.hpp"
 
+/**
+ * ESC manufacturer enumeration for vendor-specific handling
+ */
+enum class EscManufacturer : uint8_t {
+	NONE = 0,	// Not yet detected (default)
+	UNKNOWN,	// Detected but unrecognized manufacturer
+	VERTIQ,		// iq_motion
+	// Future: TMOTOR, HOLYBRO, etc.
+};
+
 class UavcanEscController
 {
 public:
@@ -106,6 +116,11 @@ private:
 	 */
 	uint32_t get_failures(uint8_t esc_index);
 
+	/**
+	 * Detects and caches the ESC manufacturer based on device_info name
+	 */
+	EscManufacturer detect_esc_manufacturer(uint8_t esc_index);
+
 	typedef uavcan::MethodBinder<UavcanEscController *,
 		void (UavcanEscController::*)(const uavcan::ReceivedDataStructure<uavcan::equipment::esc::Status>&)> StatusCbBinder;
 
@@ -124,6 +139,9 @@ private:
 	uORB::Subscription _device_information_sub{ORB_ID(device_information)};
 
 	uint8_t		_rotor_count{0};
+
+	EscManufacturer _esc_manufacturer[esc_status_s::CONNECTED_ESC_MAX] {};	// Cached manufacturer per ESC
+	uint8_t _esc_status_flags[esc_status_s::CONNECTED_ESC_MAX] {};		// StatusExtended status_flags per ESC
 
 	/*
 	 * libuavcan related things

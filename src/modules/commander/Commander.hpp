@@ -34,6 +34,7 @@
 #pragma once
 
 /*   Helper classes  */
+#include "DisarmChecks.hpp"
 #include "failsafe/failsafe.h"
 #include "failure_detector/FailureDetector.hpp"
 #include "HealthAndArmingChecks/HealthAndArmingChecks.hpp"
@@ -286,6 +287,8 @@ private:
 	bool _have_taken_off_since_arming{false};
 	bool _status_changed{true};
 	bool _mission_in_progress{false};
+
+	DisarmChecks	_disarm_checks{};
 
 	vehicle_land_detected_s	_vehicle_land_detected{};
 

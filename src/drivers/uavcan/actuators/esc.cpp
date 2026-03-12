@@ -128,7 +128,24 @@ void UavcanEscController::esc_status_sub_cb(const uavcan::ReceivedDataStructure<
 		_esc_status.counter += 1;
 		_esc_status.esc_connectiontype = esc_status_s::ESC_CONNECTION_TYPE_CAN;
 		_esc_status.esc_online_flags = check_escs_status();
-		_esc_status.esc_armed_flags = (1 << _rotor_count) - 1;
+
+		// Calculate esc_armed_flags: for Vertiq use status_flags bit 0, else assume armed
+		uint8_t armed_flags = 0;
+
+		for (uint8_t i = 0; i < _rotor_count; i++) {
+			if (detect_esc_manufacturer(i) == EscManufacturer::VERTIQ) {
+
+				if (_esc_status_flags[i] & (1 << 0)) {// Vertiq: bit 0 of status_flags indicates armed state
+					armed_flags |= (1 << i);
+				}
+
+			} else {
+				// Non-Vertiq: assume armed (per existing behavior)
+				armed_flags |= (1 << i);
+			}
+		}
+
+		_esc_status.esc_armed_flags = armed_flags;
 		_esc_status.timestamp = esc_report.timestamp;
 		_esc_status_pub.publish(_esc_status);
 	}
@@ -150,6 +167,13 @@ void UavcanEscController::esc_status_extended_sub_cb(const uavcan::ReceivedDataS
 		// published with the non-extended esc::Status
 		esc_report.motor_temperature = msg.motor_temperature_degC;
 		esc_report.esc_power = msg.input_pct;
+
+		// Store status_flags (use only first 8 bits)
+		_esc_status_flags[index] = static_cast<uint8_t>(msg.status_flags & 0xFF);
+		esc_report.esc_state = _esc_status_flags[index];
+
+		// Trigger manufacturer detection and caching
+		detect_esc_manufacturer(index);
 	}
 }
 
@@ -169,9 +193,39 @@ uint8_t UavcanEscController::check_escs_status()
 	return esc_status_flags;
 }
 
+EscManufacturer UavcanEscController::detect_esc_manufacturer(uint8_t esc_index)
+{
+	if (esc_index >= esc_status_s::CONNECTED_ESC_MAX) {
+		return EscManufacturer::UNKNOWN;
+	}
+
+	// Return cached value if already detected
+	if (_esc_manufacturer[esc_index] != EscManufacturer::NONE) {
+		return _esc_manufacturer[esc_index];
+	}
+
+	// Attempt to detect manufacturer from device_info
+	device_information_s device_info{};
+
+	if (_device_information_sub.copy(&device_info)
+	    && device_info.device_type == device_information_s::DEVICE_TYPE_ESC
+	    && device_info.device_id == esc_index) {
+
+		if (strstr(device_info.name, "iq_motion") != nullptr) {
+			_esc_manufacturer[esc_index] = EscManufacturer::VERTIQ;
+
+		} else {
+			// Detected but unrecognized manufacturer
+			_esc_manufacturer[esc_index] = EscManufacturer::UNKNOWN;
+		}
+	}
+
+	return _esc_manufacturer[esc_index];
+}
+
 uint32_t UavcanEscController::get_failures(uint8_t esc_index)
 {
-	// Check DoneCAN node health of the ESC
+	// Check DroneCAN node health of the ESC
 	dronecan_node_status_s node_status{};
 	uint8_t esc_node_id = _esc_status.esc[esc_index].esc_address;
 	uint8_t node_health = dronecan_node_status_s::HEALTH_OK;
@@ -194,13 +248,8 @@ uint32_t UavcanEscController::get_failures(uint8_t esc_index)
 		return 0;
 	}
 
-	// Parse VertiQ = iq_motion ESC error flags
-	device_information_s device_information{};
-
-	if (_device_information_sub.copy(&device_information)
-	    && device_information.device_type == device_information_s::DEVICE_TYPE_ESC
-	    && device_information.device_id == esc_index
-	    && strstr(device_information.name, "iq_motion") != nullptr) {
+	// Parse Vertiq (iq_motion) ESC error flags using cached manufacturer
+	if (detect_esc_manufacturer(esc_index) == EscManufacturer::VERTIQ) {
 		static const struct {
 			uint8_t bit;
 			uint8_t failure_type;

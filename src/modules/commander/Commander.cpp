@@ -709,6 +709,9 @@ transition_result_t Commander::disarm(arm_disarm_reason_t calling_reason, bool f
 
 	_user_mode_intention.onDisarm();
 
+	// Trigger disarm checks
+	_disarm_checks.start();
+
 	mavlink_log_info(&_mavlink_log_pub, "Disarmed by %s\t", arm_disarm_reason_str(calling_reason));
 	events::send<events::px4::enums::arm_disarm_reason_t>(events::ID("commander_disarmed_by"), events::Log::Info,
 			"Disarmed by {1}", calling_reason);
@@ -1915,6 +1918,9 @@ void Commander::run()
 		handleAutoDisarm();
 
 		battery_status_check();
+
+		// Disarm checks
+		_disarm_checks.update(&_mavlink_log_pub);
 
 		checkForMissionUpdate();
 

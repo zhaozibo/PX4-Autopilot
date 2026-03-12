@@ -49,6 +49,7 @@ px4_add_module(
 		calibration_routines.cpp
 		Commander.cpp
 		commander_helper.cpp
+		DisarmChecks.cpp
 		esc_calibration.cpp
 		factory_calibration_storage.cpp
 		gyro_calibration.cpp
