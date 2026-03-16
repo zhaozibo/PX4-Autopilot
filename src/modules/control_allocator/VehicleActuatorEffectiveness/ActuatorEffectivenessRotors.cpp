@@ -265,15 +265,14 @@ ActuatorBitmask ActuatorEffectivenessRotors::getMotors() const
 	return motors;
 }
 
-// Helper to check if a vector is primarily aligned with a specific axis index
 bool ActuatorEffectivenessRotors::isAlignedWithAxis(const Vector3f &axis_abs, int primary_idx)
 {
 	for (int i = 0; i < 3; ++i) {
 		if (i == primary_idx) {
-			if (axis_abs(i) <= MAX_AXIS_NEGLIGIBLE) { return false; }
+			if (axis_abs(i) < MIN_AXIS_DOMINANT) { return false; }
 
 		} else {
-			if (axis_abs(i) >= MIN_AXIS_DOMINANT) { return false; }
+			if (axis_abs(i) > MAX_AXIS_NEGLIGIBLE) { return false; }
 		}
 	}
 

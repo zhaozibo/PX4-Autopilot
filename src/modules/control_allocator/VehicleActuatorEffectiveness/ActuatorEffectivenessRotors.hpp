@@ -141,6 +141,12 @@ private:
 	const AxisConfiguration _axis_config;
 	const bool _tilt_support; ///< if true, tilt servo assignment params are loaded
 
+
+	/**
+	 * Helper to check if a unit vector is primarily aligned with a specific axis index, meaning:
+	 *   | component along that axis | >= MIN_AXIS_DOMINANT
+	 *   | component along other axes | <= MAX_AXIS_NEGLIGIBLE
+	 */
 	bool isAlignedWithAxis(const Vector3f &axis_abs, int primary_idx);
 
 	struct ParamHandles {
