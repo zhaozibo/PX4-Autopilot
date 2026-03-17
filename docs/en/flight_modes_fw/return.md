@@ -4,6 +4,11 @@
 
 The _Return_ flight mode is used to _fly a vehicle to safety_ on an unobstructed path to a safe destination, where it can land.
 
+This topic describes the [Mission Landing/Rally Point](../flight_modes/return.md#mission-landing-rally-point-return-type-rtl-type-1) return type that FW vehicles use by default.
+See the [Return Mode (Generic Vehicle)](../flight_modes/return.md#return-types-rtl-type) for an overview of the other supported types.
+
+## Overview
+
 Fixed-wing vehicles use the [Mission Landing/Rally Point](../flight_modes/return.md#mission-landing-rally-point-return-type-rtl-type-1) return type by default, and are expected to always have a mission with a landing pattern.
 With this configuration, return mode causes the vehicle to ascend to a minimum safe altitude above obstructions (if needed), fly to the start of the landing pattern defined in the mission plan, and then follow it to land.
 

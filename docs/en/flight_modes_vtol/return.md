@@ -4,6 +4,11 @@
 
 The _Return_ flight mode is used to _fly a vehicle to safety_ on an unobstructed path to a safe destination, where it may either wait (hover or circle) or land.
 
+This topic describes the [Mission Landing/Rally Point](../flight_modes/return.md#mission-landing-rally-point-return-type-rtl-type-1) return type that VTOL vehicles use by default.
+See the [Return Mode (Generic Vehicle)](../flight_modes/return.md#return-types-rtl-type) for an overview of the other supported types.
+
+## Overview
+
 VTOL vehicles use the [Mission Landing/Rally Point](../flight_modes/return.md#mission-landing-rally-point-return-type-rtl-type-1) return type by default.
 In this return type a vehicle ascends to a minimum safe altitude above obstructions (if needed), and then flies directly to a rally point or the start of a mission landing point (whichever is nearest), or the home position if neither rally points or mission landing pattern is defined.
 If the destination is a mission landing pattern, the vehicle will then follow the pattern to land.
