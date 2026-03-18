@@ -195,7 +195,7 @@ void CrsfRc::Run()
 		}
 	}
 
-	/* vehicle command */
+	// vehicle command
 	vehicle_command_s vcmd;
 
 	if (_vehicle_cmd_sub.update(&vcmd)) {
