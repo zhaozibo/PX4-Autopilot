@@ -109,6 +109,12 @@ void BatterySimulator::Run()
 		vbatt = _battery.empty_cell_voltage();
 	}
 
+	if (_zero_volt_spike) {
+		// Zero volt but only one sample. Replicates some I2C comm failures
+		vbatt = 0.0f;
+		_zero_volt_spike = false;
+	}
+
 	vbatt *= _battery.cell_count();
 
 	_battery.setConnected(true);
@@ -157,6 +163,17 @@ void BatterySimulator::updateCommands()
 					supported = true;
 					_force_empty_battery = true;
 				}
+
+			} else if (failure_type == vehicle_command_s::FAILURE_TYPE_INTERMITTENT) {
+				handled = true;
+				PX4_WARN("CMD_INJECT_FAILURE, battery intermittent (single 0V sample)");
+				supported = true;
+
+				if (instance == 0) {
+					supported = true;
+					_zero_volt_spike = true;
+				}
+
 			}
 		}
 

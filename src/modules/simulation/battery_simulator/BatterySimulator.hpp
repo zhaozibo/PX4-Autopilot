@@ -89,6 +89,7 @@ private:
 	bool _armed{false};
 
 	bool _force_empty_battery{false};
+	bool _zero_volt_spike{false};
 
 	perf_counter_t	_loop_perf{perf_alloc(PC_ELAPSED, MODULE_NAME": cycle")};
 
