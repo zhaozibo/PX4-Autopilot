@@ -556,17 +556,6 @@ PARAM_DEFINE_FLOAT(COM_VEL_FS_EVH, 1.f);
 PARAM_DEFINE_INT32(COM_FLIGHT_UUID, 0);
 
 /**
- * Action after TAKEOFF has been accepted.
- *
- * The mode transition after TAKEOFF has completed successfully.
- *
- * @value 0 Hold
- * @value 1 Mission (if valid)
- * @group Commander
- */
-PARAM_DEFINE_INT32(COM_TAKEOFF_ACT, 0);
-
-/**
  * Set GCS connection loss failsafe mode
  *
  * The GCS connection loss failsafe will only be entered after a timeout,
