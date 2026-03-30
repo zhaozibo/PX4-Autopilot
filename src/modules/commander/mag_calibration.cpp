@@ -637,11 +637,6 @@ calibrate_return mag_calibrate_all(orb_advert_t *mavlink_log_pub, int32_t cal_ma
 			if (worker_data.calibration[cur_mag].device_id() != 0) {
 				// Mag in this slot is available and we should have values for it to calibrate
 
-				// Estimate only the offsets if two-sided calibration is selected, as the problem is not constrained
-				// enough to reliably estimate both scales and offsets with 2 sides only (even if the existing calibration
-				// is already close)
-				bool sphere_fit_only = worker_data.calibration_sides <= 2;
-
 				sphere_params sphere_data;
 				sphere_data.radius = sphere_radius[cur_mag];
 				sphere_data.offset = matrix::Vector3f(sphere[cur_mag](0), sphere[cur_mag](1), sphere[cur_mag](2));
@@ -657,7 +652,18 @@ calibrate_return mag_calibrate_all(orb_advert_t *mavlink_log_pub, int32_t cal_ma
 					sphere_fit_success = true;
 					PX4_INFO("Mag: %" PRIu8 " sphere radius: %.4f", cur_mag, (double)sphere_data.radius);
 
+					// Estimate only the offsets if two-sided calibration is selected, as the problem is not constrained
+					// enough to reliably estimate both scales and offsets with 2 sides only (even if the existing calibration
+					// is already close)
+					const bool sphere_fit_only = worker_data.calibration_sides <= 2;
+
 					if (!sphere_fit_only) {
+						if (mag_sphere_radius.source == SphereRadiusSource::WMM) {
+							// Use WMM instead of estimated radius as this lead to better
+							// estimates of true scale factors
+							sphere_data.radius = mag_sphere_radius.value;
+						}
+
 						int ellipsoid_ret = lm_mag_fit(worker_data.x[cur_mag], worker_data.y[cur_mag], worker_data.z[cur_mag],
 									       worker_data.calibration_counter_total[cur_mag], sphere_data, true);
 
