@@ -110,6 +110,11 @@ vs offline correction applied.
 **Online vs Offline Scatter** — Error vs thrust scatter for raw, online-
 corrected, and offline-corrected data.
 
+**CF Bandwidth Sensitivity** (range sensor required) — Sweeps `SENS_BAR_CF_BW`
+to show how the CF crossover frequency affects K identification and
+compensation quality. See [CF Bandwidth Tuning](#cf-bandwidth-tuning) for
+how to interpret this page.
+
 ## Manual Calibration Procedure
 
 If not using the online estimator, you can calibrate manually:
@@ -145,9 +150,43 @@ If not using the online estimator, you can calibrate manually:
 - **Online/offline K disagreement > 2 m**: The estimator may not have had
   enough excitation. Fly longer or with more altitude variation.
 
+## CF Bandwidth Tuning
+
+The default `SENS_BAR_CF_BW` (0.1 Hz) works well for most vehicles. Only
+adjust it if the online estimator consistently fails to converge or produces
+a K that disagrees with range-sensor ground truth.
+
+When a range sensor is present, the tool generates a **CF Bandwidth
+Sensitivity** page with two panels:
+
+**Left — K vs Bandwidth**: Shows how the identified K changes with CF
+crossover frequency. The green dashed line is the range-sensor ground truth K.
+
+- If the curve is **flat near ground truth** around the default (gray line):
+  the default bandwidth is fine, K identification is robust.
+- If the curve **crosses ground truth far from the default**: the default
+  bandwidth is producing a biased K. Consider setting `SENS_BAR_CF_BW` to
+  the "Best K match" bandwidth (blue dashed line).
+
+**Right — Compensated Error Std vs Bandwidth**: Shows the residual baro
+error standard deviation after applying the K identified at each bandwidth.
+Lower is better.
+
+- The green line is the theoretical minimum (range-sensor optimal PCOEF).
+- The orange line is the current PCOEF performance.
+- If the default bandwidth is already near the minimum: leave it alone.
+- If a different bandwidth gives significantly lower error std: consider
+  changing `SENS_BAR_CF_BW` to that value.
+
+In practice, the default is conservative and works across vehicle types.
+Raising the bandwidth makes K identification faster and more accurate when
+the IMU is good, but noisier when it's not. Lower bandwidth is more robust
+to IMU vibration but slower to converge.
+
 ## Parameters Reference
 
 | Parameter | Description | Range | Default |
 |-----------|-------------|-------|---------|
 | `SENS_BARO_PCOEF` | Baro altitude correction per unit vertical thrust [m] | -30 to 30 | 0.0 |
 | `SENS_BAR_AUTOCAL` | Bitmask: bit 0 = GNSS offset, bit 1 = online thrust cal | 0 to 3 | 1 |
+| `SENS_BAR_CF_BW` | CF crossover frequency for the online estimator [Hz] | 0.01 to 1.0 | 0.1 |

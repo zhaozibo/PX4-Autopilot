@@ -186,8 +186,8 @@ void BaroThrustCfRls::RlsEstimator::update(float residual, float thrust, float d
 	const float e = residual - (theta[0] * phi[0] + theta[1] * phi[1]);
 
 	const float Pphi[2] = {
-		P[0][0] * phi[0] + P[0][1] * phi[1],
-		P[1][0] * phi[0] + P[1][1] * phi[1]
+		P[0][0] *phi[0] + P[0][1] *phi[1],
+		P[1][0] *phi[0] + P[1][1] *phi[1]
 	};
 
 	const float phiPphi = phi[0] * Pphi[0] + phi[1] * Pphi[1];
