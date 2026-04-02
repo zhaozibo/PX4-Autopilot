@@ -70,9 +70,6 @@ public:
 	 */
 	struct Param {
 		float equivalent_airspeed_trim; 	///< the trim value of the equivalent airspeed [m/s].
-		float airspeed_measurement_std_dev; 	///< airspeed measurement standard deviation in [m/s].
-		float airspeed_rate_measurement_std_dev;///< airspeed rate measurement standard deviation in [m/s²].
-		float airspeed_rate_noise_std_dev; 	///< standard deviation on the airspeed rate deviation in the model in [m/s²].
 	};
 
 	/**
@@ -116,6 +113,23 @@ public:
 private:
 	// States
 	AirspeedFilterState _airspeed_state{.speed = 0.0f, .speed_rate = 0.0f};	///< Complimentary filter state
+
+	static constexpr float kAirspeedMeasurementStdDev{0.07f};	///< Airspeed measurement standard deviation [m/s].
+	static constexpr float kAirspeedRateMeasurementStdDev{0.2f};	///< Airspeed rate measurement standard deviation [m/s²].
+	static constexpr float kAirspeedRateNoiseStdDev{0.2f};		///< Standard deviation of the airspeed rate process noise [m/s²].
+
+	// Intermediate values for the steady-state Kalman gain (all compile-time constants)
+	static constexpr float _kNoiseInv{1.0f / kAirspeedMeasurementStdDev};
+	static constexpr float _kRateNoiseInv{1.0f / kAirspeedRateMeasurementStdDev};
+	static constexpr float _kRateInvSqProc{_kRateNoiseInv *_kRateNoiseInv * kAirspeedRateNoiseStdDev};
+	static constexpr float _kDenom{_kNoiseInv + _kRateInvSqProc};
+	static constexpr float _kCommonNom{__builtin_sqrtf(kAirspeedRateNoiseStdDev * (2.0f * _kNoiseInv + _kRateInvSqProc))};
+
+	/// Steady-state Kalman gain entries, fixed because the noise constants are fixed.
+	static constexpr float kKg00{_kNoiseInv *_kCommonNom / _kDenom};
+	static constexpr float kKg01{_kRateInvSqProc / _kDenom};
+	static constexpr float kKg10{_kNoiseInv *_kNoiseInv *kAirspeedRateNoiseStdDev / _kDenom};
+	static constexpr float kKg11{_kRateInvSqProc *_kCommonNom / _kDenom};
 };
 
 class TECSAltitudeReferenceModel
@@ -598,9 +612,6 @@ public:
 	void set_detect_underspeed_enabled(bool enabled) { _control_flag.detect_underspeed_enabled = enabled; };
 
 	// setters for parameters
-	void set_airspeed_measurement_std_dev(float std_dev) {_airspeed_filter_param.airspeed_measurement_std_dev = std_dev;};
-	void set_airspeed_rate_measurement_std_dev(float std_dev) {_airspeed_filter_param.airspeed_rate_measurement_std_dev = std_dev;};
-	void set_airspeed_filter_process_std_dev(float std_dev) {_airspeed_filter_param.airspeed_rate_noise_std_dev = std_dev;};
 
 	void set_integrator_gain_throttle(float gain) { _control_param.integrator_gain_throttle = gain;};
 	void set_integrator_gain_pitch(float gain) { _control_param.integrator_gain_pitch = gain; };
@@ -710,9 +721,6 @@ private:
 	/// Airspeed filter parameters.
 	TECSAirspeedFilter::Param _airspeed_filter_param{
 		.equivalent_airspeed_trim = 15.0f,
-		.airspeed_measurement_std_dev = 0.2f,
-		.airspeed_rate_measurement_std_dev = 0.05f,
-		.airspeed_rate_noise_std_dev = 0.02f
 	};
 	/// Reference model parameters.
 	TECSAltitudeReferenceModel::Param _reference_param{
