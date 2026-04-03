@@ -41,6 +41,13 @@ Key features:
 
 See [Log Analysis using Flight Review](../log/flight_review.md) for an introduction.
 
+### Hawkeye (3D Flight Replay)
+
+[Hawkeye](../sim_hawkeye/index.md) can replay ULog files as 3D flight visualizations.
+Its ghost mode overlays two flights at different opacities for visual comparison (e.g. before/after PID tuning), and it supports multi-drone side-by-side playback.
+
+See [Hawkeye ULog Replay](../sim_hawkeye/index.md#ulog-replay) for details.
+
 ### Foxglove
 
 [Foxglove](https://foxglove.dev/) is a purpose-built robotics observation platform that works natively with ULog.
