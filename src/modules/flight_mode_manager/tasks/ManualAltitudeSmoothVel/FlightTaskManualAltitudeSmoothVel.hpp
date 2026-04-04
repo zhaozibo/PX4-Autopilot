@@ -69,5 +69,5 @@ protected:
 				       )
 
 private:
-	bool _terrain_hold_previous{false}; /**< true when vehicle was controlling height above a static ground position in the previous iteration */
+	bool _terrain_position_previous{false}; /**< true when parent class was managing position setpoint from terrain data in the previous iteration */
 };
