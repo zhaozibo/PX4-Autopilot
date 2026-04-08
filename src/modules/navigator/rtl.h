@@ -62,6 +62,7 @@
 #include <uORB/topics/rtl_time_estimate.h>
 
 class Navigator;
+class RTLTestPeer;
 
 class RTL : public NavigatorMode, public ModuleParams
 {
@@ -91,6 +92,8 @@ public:
 	bool isLanding();
 
 private:
+	friend class RTLTestPeer;
+
 	enum class DestinationType {
 		DESTINATION_TYPE_HOME,
 		DESTINATION_TYPE_MISSION_LAND,
@@ -173,31 +176,43 @@ private:
 	void parameters_update();
 
 	/**
-	 * @brief read VTOL land approaches
-	 *
-	 * @param[in] rtl_position landing position of the rtl
-	 *
+	 * @brief Read all VTOL landing approaches associated with one safe point.
 	 */
-	land_approaches_s readVtolLandApproaches(PositionYawSetpoint rtl_position) const;
+	land_approaches_s readVtolLandApproach(int safe_point_index, float home_altitude_amsl) const;
 
 	/**
-	 * @brief Has VTOL land approach
-	 *
-	 * @param[in] rtl_position landing position of the rtl
-	 *
-	 * @return true if home land approaches are defined for home position
-	 * @return false otherwise
+	 * @brief Read all VTOL landing approaches associated with rtl_position.
 	 */
-	bool hasVtolLandApproach(const PositionYawSetpoint &rtl_position) const;
+	land_approaches_s readVtolLandApproaches(const PositionYawSetpoint &rtl_position, float home_altitude_amsl) const;
+
+	/**
+	 * @brief Return whether rtl_position has at least one valid VTOL landing approach.
+	 */
+	bool hasVtolLandApproach(const PositionYawSetpoint &rtl_position, float home_altitude_amsl) const;
+
+	/**
+	 * @brief Return whether the indexed safe point has at least one valid VTOL landing approach.
+	 */
+	bool hasVtolLandApproach(int safe_point_index, float home_altitude_amsl) const;
 
 	/**
 	 * @brief Choose best landing approach
 	 *
-	 * Choose best landing approach for home considering wind
+	 * Choose the wind-aligned landing approach for the associated land location.
 	 *
 	 * @return loiter_point_s best landing approach
 	 */
-	loiter_point_s chooseBestLandingApproach(const land_approaches_s &vtol_land_approaches);
+	loiter_point_s chooseBestLandingApproach(const land_approaches_s &vtol_land_approaches) const;
+
+	/**
+	 * @brief Return the wind-selected VTOL landing approach for a destination, or an invalid loiter if none exists.
+	 */
+	loiter_point_s selectLandingApproach(const PositionYawSetpoint &destination) const;
+
+	bool findAssociatedSafePointIndex(const PositionYawSetpoint &rtl_position, int &safe_point_index) const;
+	bool hasValidVtolLandApproachInBlock(int safe_point_index, float home_altitude_amsl) const;
+	void collectVtolLandApproachBlock(int safe_point_index, float home_altitude_amsl,
+					  land_approaches_s &vtol_land_approaches) const;
 
 	enum class DatamanState {
 		UpdateRequestWait,
