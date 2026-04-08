@@ -196,6 +196,7 @@ void Standard::update_transition_state()
 	const Eulerf attitude_setpoint_euler(Quatf(_v_att_sp->q_d));
 	float roll_body = attitude_setpoint_euler.phi();
 	float pitch_body = attitude_setpoint_euler.theta();
+	const float pitch_body_original = pitch_body;
 	float yaw_body = attitude_setpoint_euler.psi();
 
 	if (_vtol_mode == vtol_mode::TRANSITION_TO_FW) {
@@ -263,6 +264,12 @@ void Standard::update_transition_state()
 		const Quatf q_sp(Eulerf(roll_body, pitch_body, yaw_body));
 
 		q_sp.copyTo(_v_att_sp->q_d);
+
+		if (_time_since_trans_start < 0.05f) {
+			PX4_INFO("\n\njust started backtransition (t=%.4f)", (double) _time_since_trans_start);
+			PX4_INFO("pitch_body: %.4f", (double) pitch_body);
+			PX4_INFO("pitch_body orig: %.4f", (double) pitch_body_original);
+		}
 
 		_pusher_throttle = 0.0f;
 	}

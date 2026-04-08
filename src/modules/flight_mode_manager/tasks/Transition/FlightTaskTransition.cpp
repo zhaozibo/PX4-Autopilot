@@ -94,6 +94,7 @@ bool FlightTaskTransition::update()
 
 	if (!_sub_vehicle_status.get().in_transition_to_fw) {
 		tilt_setpoint = computeBackTransitionTiltSetpoint();
+		PX4_INFO("tilt setpoint: %.4f", (double) tilt_setpoint);
 		const Vector2f velocity_xy{_velocity};
 		horizontal_acceleration_direction = -velocity_xy.unit_or_zero();
 
