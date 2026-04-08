@@ -37,12 +37,15 @@
 #include <crc32.h>
 #include <unistd.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <errno.h>
-#include <limits.h>
 #include <cstring>
+
+#ifndef __PX4_NUTTX
+#include <stdlib.h>
+#include <limits.h>
+#endif
 
 #include "mavlink_ftp.h"
 #include "mavlink_main.h"
@@ -512,11 +515,13 @@ MavlinkFTP::_workOpen(PayloadHeader *payload, int oflag)
 	fileSize = st.st_size;
 
 	PX4_DEBUG("open: %s", _work_buffer1);
-	// Set mode to 666 incase oflag has O_CREAT. Use O_NOFOLLOW where available
-	// so a TOCTOU race cannot redirect the leaf through a symlink between
-	// validation and open(2).
+	// Set mode to 666 incase oflag has O_CREAT. On POSIX use O_NOFOLLOW so a
+	// TOCTOU race cannot redirect the leaf through a symlink between
+	// validation and open(2). NuttX has a flat VFS with no symlink support
+	// in the FAT driver and PSEUDOFS_SOFTLINKS off by default, so the flag
+	// is unnecessary there.
 	int leaf_oflag = oflag;
-#ifdef O_NOFOLLOW
+#if !defined(__PX4_NUTTX) && defined(O_NOFOLLOW)
 	leaf_oflag |= O_NOFOLLOW;
 #endif
 	int fd = ::open(_work_buffer1, leaf_oflag, PX4_O_MODE_666);
@@ -1207,19 +1212,18 @@ static bool canonicalize_path(const char *path, char *out, size_t out_len)
 }
 #endif // !__PX4_NUTTX
 
-/**
- * Resolve symlinks and verify the path is contained in PX4_STORAGEDIR.
- *
- * Defence against symlink-resolution bypasses where _validatePath() accepts a
- * string that does not contain ".." but the underlying open()/mkdir() follows
- * a symlink to a target outside the intended FTP root.
- *
- * On NuttX realpath() is not available; the simpler string-based check from
- * the previous implementation is used in that case.
- */
-bool MavlinkFTP::_validatePathIsInRoot(const char *path)
+bool MavlinkFTP::_validatePathIsWritable(const char *path)
 {
 #ifndef __PX4_NUTTX
+	// POSIX/SITL: resolve symlinks and verify the canonical path stays
+	// inside PX4_STORAGEDIR. Defence against symlink-resolution bypasses
+	// where _validatePath() accepts a string that does not contain ".."
+	// but the underlying open()/mkdir() follows a symlink to a target
+	// outside the intended FTP root (GHSA-93v7-287q-qx4g).
+	//
+	// NuttX is not affected: it has a flat VFS, the FAT driver used for
+	// /fs/microsd does not support symlinks, and CONFIG_PSEUDOFS_SOFTLINKS
+	// is off by default.
 	char canonical_root[PATH_MAX];
 
 	if (realpath(PX4_STORAGEDIR, canonical_root) == nullptr) {
@@ -1246,20 +1250,13 @@ bool MavlinkFTP::_validatePathIsInRoot(const char *path)
 
 	return true;
 #else
-
-	// NuttX: realpath() is not available. Fall back to a string-based prefix
-	// and traversal check; symlinks are not commonly used on NuttX targets.
+	// NuttX: simple string-based check. Original behavior, unchanged.
 	if (strncmp(path, CONFIG_BOARD_ROOT_PATH "/", strlen(CONFIG_BOARD_ROOT_PATH "/")) != 0
 	    || strstr(path, "/../") != nullptr) {
-		PX4_ERR("FTP: rejecting path outside FTP root: %s", path);
+		PX4_ERR("Disallowing write to %s", path);
 		return false;
 	}
 
 	return true;
 #endif
-}
-
-bool MavlinkFTP::_validatePathIsWritable(const char *path)
-{
-	return _validatePathIsInRoot(path);
 }

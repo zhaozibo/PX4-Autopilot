@@ -150,7 +150,6 @@ private:
 
 	bool _validatePath(const char *path);
 	bool _validatePathIsWritable(const char *path);
-	bool _validatePathIsInRoot(const char *path);
 
 	/**
 	 * make sure that the working buffers _work_buffer* are allocated
