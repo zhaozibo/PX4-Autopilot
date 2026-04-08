@@ -1250,6 +1250,7 @@ bool MavlinkFTP::_validatePathIsWritable(const char *path)
 
 	return true;
 #else
+
 	// NuttX: simple string-based check. Original behavior, unchanged.
 	if (strncmp(path, CONFIG_BOARD_ROOT_PATH "/", strlen(CONFIG_BOARD_ROOT_PATH "/")) != 0
 	    || strstr(path, "/../") != nullptr) {
