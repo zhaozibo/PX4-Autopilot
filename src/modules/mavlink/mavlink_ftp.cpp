@@ -1261,52 +1261,5 @@ bool MavlinkFTP::_validatePathIsInRoot(const char *path)
 
 bool MavlinkFTP::_validatePathIsWritable(const char *path)
 {
-	if (!_validatePathIsInRoot(path)) {
-		return false;
-	}
-
-	// Reject writes to boot-executed startup hook files. The PX4 NuttX rcS
-	// sources $FRC, $FCONFIG, $FEXTRAS unconditionally during boot, so an
-	// attacker that can write to these paths gets persistent code execution
-	// at the next reboot. Reject the entire PX4_STORAGEDIR/etc/ subtree to
-	// keep future hooks safe by default.
-
-#ifndef __PX4_NUTTX
-	// On POSIX, run the deny check on the same canonical path used by the
-	// in-root check (including the parent+leaf fallback for new files), so
-	// that prefix variations like ".//etc/x" or "./etc/x" cannot bypass the
-	// raw string match, and so symlinks redirecting through etc/ are caught.
-	char canonical_root[PATH_MAX];
-	char canonical[PATH_MAX];
-
-	if (realpath(PX4_STORAGEDIR, canonical_root) == nullptr
-	    || !canonicalize_path(path, canonical, sizeof(canonical))) {
-		PX4_ERR("FTP: cannot canonicalize for boot-hook check: %s", path);
-		return false;
-	}
-
-	char boot_hook_prefix[PATH_MAX];
-	const int n = snprintf(boot_hook_prefix, sizeof(boot_hook_prefix),
-			       "%s/etc/", canonical_root);
-
-	if (n <= 0 || (size_t)n >= sizeof(boot_hook_prefix)) {
-		return false;
-	}
-
-	if (strncmp(canonical, boot_hook_prefix, strlen(boot_hook_prefix)) == 0) {
-		PX4_ERR("FTP: refusing to write protected path %s -> %s", path, canonical);
-		return false;
-	}
-
-#else
-	// NuttX: simple literal prefix check.
-	static const char kBootHookPrefix[] = PX4_STORAGEDIR "/etc/";
-
-	if (strncmp(path, kBootHookPrefix, sizeof(kBootHookPrefix) - 1) == 0) {
-		PX4_ERR("FTP: refusing to write protected path %s", path);
-		return false;
-	}
-
-#endif
-	return true;
+	return _validatePathIsInRoot(path);
 }
