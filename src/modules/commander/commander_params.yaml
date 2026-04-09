@@ -310,8 +310,8 @@ parameters:
       description:
         short: Stick override threshold
         long: |-
-          If COM_RC_OVERRIDE is enabled and the joystick input is moved more than this threshold
-          the pilot takes over control.
+          If COM_RC_OVERRIDE is enabled, the pilot takes over control when stick deflection
+          exceeds this threshold. The stick must also be actively moving to trigger override.
       type: float
       default: 30.0
       unit: '%'

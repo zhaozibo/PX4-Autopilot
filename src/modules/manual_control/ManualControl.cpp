@@ -123,14 +123,18 @@ void ManualControl::processInput(hrt_abstime now)
 
 		processStickArming(_selector.setpoint());
 
-		// User override by stick
+		// User override by stick: any axis exceeds COM_RC_STICK_OV deflection and STICK_OVERRIDE_MIN_RATE velocity
 		const float dt_s = (now - _timestamp_last_loop) / 1e6f;
-		const float minimum_stick_change = 0.01f * _param_com_rc_stick_ov.get();
+		const float override_threshold = 0.01f * _param_com_rc_stick_ov.get();
 
-		_selector.setpoint().sticks_moving = (fabsf(_roll_diff.update(_selector.setpoint().roll, dt_s)) > minimum_stick_change)
-						     || (fabsf(_pitch_diff.update(_selector.setpoint().pitch, dt_s)) > minimum_stick_change)
-						     || (fabsf(_yaw_diff.update(_selector.setpoint().yaw, dt_s)) > minimum_stick_change)
-						     || (fabsf(_throttle_diff.update(_selector.setpoint().throttle, dt_s)) > minimum_stick_change);
+		_selector.setpoint().sticks_moving =
+			(fabsf(_selector.setpoint().roll) > override_threshold
+			 && fabsf(_roll_diff.update(_selector.setpoint().roll, dt_s)) > STICK_OVERRIDE_MIN_RATE)
+			|| (fabsf(_selector.setpoint().pitch) > override_threshold
+			    && fabsf(_pitch_diff.update(_selector.setpoint().pitch, dt_s)) > STICK_OVERRIDE_MIN_RATE)
+			|| (fabsf(_selector.setpoint().yaw) > override_threshold
+			    && fabsf(_yaw_diff.update(_selector.setpoint().yaw, dt_s)) > STICK_OVERRIDE_MIN_RATE)
+			|| (fabsf(_throttle_diff.update(_selector.setpoint().throttle, dt_s)) > STICK_OVERRIDE_MIN_RATE);
 
 		_selector.setpoint().timestamp = now;
 		_manual_control_setpoint_pub.publish(_selector.setpoint());

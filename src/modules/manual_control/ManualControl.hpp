@@ -132,6 +132,8 @@ private:
 	MovingDiff _yaw_diff{};
 	MovingDiff _throttle_diff{};
 
+	static constexpr float STICK_OVERRIDE_MIN_RATE = 5.f; // [normalized/s]
+
 	perf_counter_t	_loop_perf{perf_alloc(PC_ELAPSED, MODULE_NAME": cycle")};
 	perf_counter_t	_loop_interval_perf{perf_alloc(PC_INTERVAL, MODULE_NAME": interval")};
 
