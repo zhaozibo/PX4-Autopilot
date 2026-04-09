@@ -251,9 +251,17 @@ int INA238::collect()
 	success = success && (RegisterRead(Register::DIETEMP, (uint16_t &)temperature) == PX4_OK);
 
 	if (setConnected(success)) {
-		_battery.updateVoltage(static_cast<float>(bus_voltage * INA238_VSCALE));
-		_battery.updateCurrent(static_cast<float>(current * _current_lsb));
-		_battery.updateTemperature(static_cast<float>(temperature * INA238_TSCALE));
+
+		// Sometimes the read operation "succeeds" but results in wrong
+		// zero readings. Given that with noise a true reading of
+		// exactly 0 is very improbable, we just ignore those readings.
+		// The battery library keeps the old value.
+
+		if (bus_voltage) { _battery.updateVoltage(static_cast<float>(bus_voltage * INA238_VSCALE)); }
+
+		if (current) { _battery.updateCurrent(static_cast<float>(current * _current_lsb)); }
+
+		if (temperature) { _battery.updateTemperature(static_cast<float>(temperature * INA238_TSCALE)); }
 
 		_battery.updateAndPublishBatteryStatus(hrt_absolute_time());
 	}

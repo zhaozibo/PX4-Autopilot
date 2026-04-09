@@ -322,8 +322,16 @@ INA228::collect()
 	success = success && (read(INA228_REG_DIETEMP, _temperature) == PX4_OK);
 
 	if (setConnected(success)) {
-		_battery.updateVoltage(static_cast<float>(_bus_voltage * INA228_VSCALE));
-		_battery.updateCurrent(static_cast<float>(_current * _current_lsb));
+
+		// Sometimes the read operation "succeeds" but results in wrong
+		// zero readings. Given that with noise a true reading of
+		// exactly 0 is very improbable, we just ignore those readings.
+		// The battery library keeps the old value.
+
+		if (_bus_voltage) { _battery.updateVoltage(static_cast<float>(_bus_voltage * INA228_VSCALE)); }
+
+		if (_current) { _battery.updateCurrent(static_cast<float>(_current * _current_lsb)); }
+
 		_battery.updateTemperature(static_cast<float>(_temperature * INA228_TSCALE));
 	}
 

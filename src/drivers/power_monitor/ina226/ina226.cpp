@@ -227,8 +227,15 @@ INA226::collect()
 	// success = success && (read(INA226_REG_SHUNTVOLTAGE, _shunt) == PX4_OK);
 
 	if (setConnected(success)) {
-		_battery.updateVoltage(static_cast<float>(_bus_voltage * INA226_VSCALE));
-		_battery.updateCurrent(static_cast<float>(_current * _current_lsb));
+
+		// Sometimes the read operation "succeeds" but results in wrong
+		// zero readings. Given that with noise a true reading of
+		// exactly 0 is very improbable, we just ignore those readings.
+		// The battery library keeps the old value.
+
+		if (_bus_voltage) { _battery.updateVoltage(static_cast<float>(_bus_voltage * INA226_VSCALE)); }
+
+		if (_current) { _battery.updateCurrent(static_cast<float>(_current * _current_lsb)); }
 	}
 
 	_battery.updateAndPublishBatteryStatus(hrt_absolute_time());

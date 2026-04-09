@@ -247,8 +247,16 @@ INA220::collect()
 	switch (_ch_type) {
 	case PM_CH_TYPE_VBATT: {
 			_battery.setConnected(success);
-			_battery.updateVoltage(_voltage);
-			_battery.updateCurrent(_current);
+
+			// Sometimes the read operation "succeeds" but results in wrong
+			// zero readings. Given that with noise a true reading of
+			// exactly 0 is very improbable, we just ignore those readings.
+			// The battery library keeps the old value.
+
+			if (_bus_voltage) { _battery.updateVoltage(_voltage); }
+
+			if (_bus_current) { _battery.updateCurrent(_current); }
+
 			_battery.updateAndPublishBatteryStatus(hrt_absolute_time());
 		}
 		break;
