@@ -89,6 +89,11 @@ def extract_px4_metadata(px4_path: Path) -> Optional[Dict[str, Any]]:
         if "manifest" in data and data["manifest"]:
             metadata["manifest"] = data["manifest"]
 
+        # Additive: discriminator so future non-.px4 producers (VOXL2 .deb,
+        # Linux tarballs, etc.) can coexist in the same manifest. Older QGC
+        # ignores unknown fields, new consumers branch on this.
+        metadata["artifact_type"] = "px4"
+
         return metadata
 
     except json.JSONDecodeError as e:
