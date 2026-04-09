@@ -1,5 +1,5 @@
-# vim: set noexpandtab tabstop=4 shiftwidth=4:
 #!/usr/bin/env python3
+# vim: set noexpandtab tabstop=4 shiftwidth=4:
 ############################################################################
 #
 #   Copyright (C) 2012, 2013 PX4 Development Team. All rights reserved.
@@ -72,10 +72,8 @@ def _merge_manifest(dst, src):
 	if not isinstance(src, dict):
 		return
 	for k, v in src.items():
-		if k == "hardware":
-			dst.setdefault("hardware", {})
-		if isinstance(v, dict):
-			dst["hardware"].update(v)
+		if k == "hardware" and isinstance(v, dict):
+			dst.setdefault("hardware", {}).update(v)
 		else:
 			dst[k] = v
 
