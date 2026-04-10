@@ -86,10 +86,19 @@ There are several scripts to analyze and convert logging files in the [pyulog](h
 ## Log Cleanup
 
 PX4 automatically manages log storage by cleaning up old logs when starting to log.
-Cleanup is triggered based on two criteria:
+Two parameters control how much space logs may use:
 
-- **Storage-based cleanup**: Ensures minimum free space (300 MB or 10% of disk, whichever is smaller) is available.
-- **Count-based cleanup**: If [SDLOG_DIRS_MAX](../advanced_config/parameter_reference.md#SDLOG_DIRS_MAX) is set, limits the total number of log directories.
+- [SDLOG_ROTATE](../advanced_config/parameter_reference.md#SDLOG_ROTATE) is the maximum disk usage percentage (default 90).
+  Cleanup ensures at least `(100 - SDLOG_ROTATE)%` of the disk stays free at all times, **even while writing a new log file**.
+  Setting it to `0` disables space-based cleanup entirely; setting it to `100` lets logs fill the disk completely.
+- [SDLOG_MAX_SIZE](../advanced_config/parameter_reference.md#SDLOG_MAX_SIZE) is the maximum size of a single log file in MB
+  (default 1024). It also reserves headroom so that a full new file always fits after cleanup.
+
+At log start, the cleanup threshold is `((100 - SDLOG_ROTATE)% of disk) + SDLOG_MAX_SIZE`.
+Oldest logs are deleted until the free space meets this threshold.
+For example, on an 8 GB card with defaults, cleanup keeps at least `820 + 1024 = ~1.8 GB` free at log start,
+so ~6 GB is usable for logs and disk usage never exceeds 90% during writing.
+Small flash targets override `SDLOG_MAX_SIZE` to a smaller value to keep more logs within the available space.
 
 The cleanup algorithm prioritizes deleting logs from the directory naming scheme not currently in use.
 PX4 uses two directory naming schemes:

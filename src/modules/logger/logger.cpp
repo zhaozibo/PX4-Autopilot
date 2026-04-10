@@ -1449,11 +1449,14 @@ void Logger::start_log_file(LogType type)
 			_max_log_file_size = 0; // unlimited
 		}
 
-		// Cleanup old logs if needed (storage-based and/or count-based)
+		// Cleanup old logs if needed.
+		// SDLOG_ROTATE is the max disk-usage percentage; cleanup ensures at least
+		// (100 - rotate)% is free even during writing. SDLOG_MAX_SIZE is passed so
+		// there's always room for the next log file on top of the free-space target.
 		hrt_abstime cleanup_start = hrt_absolute_time();
 
 		if (util::cleanup_old_logs(LOG_ROOT[(int)LogType::Full], _mavlink_log_pub,
-					   (uint32_t)max_size_mb, _param_sdlog_dirs_max.get()) == 1) {
+					   (uint32_t)_param_sdlog_rotate.get(), (uint32_t)max_size_mb) == 1) {
 			return;  // Not enough space even after cleanup
 		}
 

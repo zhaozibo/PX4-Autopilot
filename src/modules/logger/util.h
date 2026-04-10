@@ -87,14 +87,23 @@ bool scan_log_directories(const char *log_root_dir, LogDirInfo &info);
  * Cleanup old logs to ensure sufficient free space. Deletes oldest files,
  * preferring the opposite directory type first (sess dirs when time is known,
  * date dirs when it is not), then falls back to its own type.
+ *
+ * The cleanup threshold is computed as:
+ *     ((100 - rotate_pct) / 100) * disk_size + max_file_size_mb
+ *
+ * i.e. after cleanup there is enough free space to write one more full log
+ * file while still maintaining the rotate_pct usage guarantee.
+ *
  * @param log_root_dir log root directory
  * @param mavlink_log_pub mavlink log publisher
- * @param target_free_mb target free space in MB (0 = use default minimum)
- * @param max_log_dirs_to_keep maximum log directories to keep (0 = unlimited)
+ * @param rotate_pct maximum disk usage percentage (0 disables space-based
+ *                   cleanup; 90 keeps at least 10% free during writing)
+ * @param max_file_size_mb maximum log file size in MB; reserved as headroom
+ *                         for the next log file write
  * @return 0 on success, 1 if not enough space even after cleanup
  */
 int cleanup_old_logs(const char *log_root_dir, orb_advert_t &mavlink_log_pub,
-		     uint32_t target_free_mb, int32_t max_log_dirs_to_keep);
+		     uint32_t rotate_pct, uint32_t max_file_size_mb);
 
 /**
  * Get UTC time in microseconds from CLOCK_REALTIME

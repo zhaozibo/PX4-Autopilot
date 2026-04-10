@@ -138,7 +138,7 @@ bool scan_log_directories(const char *log_root_dir, LogDirInfo &info)
 }
 
 int cleanup_old_logs(const char *log_root_dir, orb_advert_t &mavlink_log_pub,
-		     uint32_t target_free_mb, int32_t max_log_dirs_to_keep)
+		     uint32_t rotate_pct, uint32_t max_file_size_mb)
 {
 	uint64_t avail_bytes = 0;
 	uint64_t total_bytes = 0;
@@ -147,25 +147,21 @@ int cleanup_old_logs(const char *log_root_dir, orb_advert_t &mavlink_log_pub,
 		return PX4_ERROR;
 	}
 
-	// Calculate cleanup threshold
-	uint64_t cleanup_threshold;
+	// Calculate cleanup threshold. rotate_pct is the maximum allowed disk usage;
+	// we guarantee the disk never exceeds rotate_pct% full even during writing of
+	// a new log file. So at cleanup time, free space must be at least
+	// ((100 - rotate_pct)% of disk) + max log file size, where the latter term
+	// reserves headroom for the next file write.
+	// rotate_pct == 0 disables space-based cleanup entirely.
+	uint64_t cleanup_threshold = 0;
 
-	if (target_free_mb > 0) {
-		cleanup_threshold = (uint64_t)target_free_mb * 1024ULL * 1024ULL;
-
-	} else {
-		// Default: 300 MiB or 10% of disk, whichever is smaller
-		cleanup_threshold = 300ULL * 1024ULL * 1024ULL;
-
-		if (total_bytes / 10 < cleanup_threshold) {
-			cleanup_threshold = total_bytes / 10;
-		}
+	if (rotate_pct > 0 && rotate_pct <= 100) {
+		cleanup_threshold = (total_bytes * (100 - rotate_pct)) / 100;
+		cleanup_threshold += (uint64_t)max_file_size_mb * 1024ULL * 1024ULL;
 	}
 
-	// Early out if we have enough space and no directory limit
-	bool need_space_cleanup = avail_bytes < cleanup_threshold;
-
-	if (!need_space_cleanup && max_log_dirs_to_keep <= 0) {
+	// Early out if we have enough space
+	if (avail_bytes >= cleanup_threshold) {
 		return PX4_OK;
 	}
 
@@ -176,26 +172,18 @@ int cleanup_old_logs(const char *log_root_dir, orb_advert_t &mavlink_log_pub,
 		return PX4_OK; // ignore if we cannot access the log directory
 	}
 
-	int total_dirs = info.num_sess + info.num_dates;
-	bool need_count_cleanup = (max_log_dirs_to_keep > 0) && (total_dirs > max_log_dirs_to_keep);
-
-	if (!need_space_cleanup && !need_count_cleanup) {
-		return PX4_OK;
-	}
-
-	PX4_INFO("Log cleanup: %u MiB free, threshold %u MiB, %d dirs (max %" PRId32 ")",
-		 (unsigned)(avail_bytes / 1024U / 1024U), (unsigned)(cleanup_threshold / 1024U / 1024U),
-		 total_dirs, max_log_dirs_to_keep > 0 ? max_log_dirs_to_keep : -1);
+	PX4_INFO("Log cleanup: %u MiB free, threshold %u MiB",
+		 (unsigned)(avail_bytes / 1024U / 1024U), (unsigned)(cleanup_threshold / 1024U / 1024U));
 
 	// Determine if we currently have valid time (using date dirs) or not (using sess dirs)
 	// Delete from the "other" scheme first to avoid deleting current log
 	uint64_t utc_time_usec;
 	bool have_time = get_log_time(utc_time_usec, 0, false);
 
-	// Cleanup oldest .ulg files one by one until conditions are met
+	// Cleanup oldest .ulg files one by one until we have enough free space
 	int empty_dir_failures = 0;
 
-	while (need_space_cleanup || need_count_cleanup) {
+	while (avail_bytes < cleanup_threshold) {
 		char oldest_file[LOG_DIR_LEN] = "";
 		char oldest_dir[LOG_DIR_LEN];
 
@@ -203,7 +191,6 @@ int cleanup_old_logs(const char *log_root_dir, orb_advert_t &mavlink_log_pub,
 			break;
 		}
 
-		total_dirs = info.num_sess + info.num_dates;
 		bool found_sess = info.num_sess > 0;
 		bool found_date = info.num_dates > 0;
 
@@ -299,13 +286,10 @@ int cleanup_old_logs(const char *log_root_dir, orb_advert_t &mavlink_log_pub,
 			break;
 		}
 
-		// Re-check conditions
+		// Re-check free space
 		if (!get_free_space(log_root_dir, &avail_bytes, nullptr)) {
 			break;
 		}
-
-		need_space_cleanup = avail_bytes < cleanup_threshold;
-		need_count_cleanup = (max_log_dirs_to_keep > 0) && (total_dirs > max_log_dirs_to_keep);
 	}
 
 	// Final check: if still not enough space, refuse to log
