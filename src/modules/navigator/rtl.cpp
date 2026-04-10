@@ -716,7 +716,7 @@ bool RTL::findAssociatedSafePointIndex(const PositionYawSetpoint &rtl_position, 
 		mission_item_s mission_item{};
 
 		const bool success = _dataman_cache_safepoint.loadWait(static_cast<dm_item_t>(_stats.dataman_id), current_seq,
-				     reinterpret_cast<uint8_t *>(&mission_item), sizeof(mission_item_s));
+				     reinterpret_cast<uint8_t *>(&mission_item), sizeof(mission_item_s), 500_ms);
 
 		if (!success) {
 			PX4_ERR("dm_read failed");
@@ -731,7 +731,7 @@ bool RTL::findAssociatedSafePointIndex(const PositionYawSetpoint &rtl_position, 
 
 		// Skip invalid rally points so later valid rally points are considered
 		if (!extractValidSafePointPosition(mission_item, home_altitude_amsl, safe_point_position)) {
-			continue;;
+			continue;
 		}
 
 		const float dist_to_safepoint = get_distance_to_next_waypoint(safe_point_position.lat, safe_point_position.lon,
@@ -756,7 +756,7 @@ bool RTL::scanVtolLandApproachBlock(int safe_point_index, float home_altitude_am
 		mission_item_s mission_item{};
 
 		const bool success = _dataman_cache_safepoint.loadWait(static_cast<dm_item_t>(_stats.dataman_id), current_seq,
-				     reinterpret_cast<uint8_t *>(&mission_item), sizeof(mission_item_s));
+				     reinterpret_cast<uint8_t *>(&mission_item), sizeof(mission_item_s), 500_ms);
 
 		if (!success) {
 			PX4_ERR("dm_read failed");
