@@ -177,11 +177,6 @@ private:
 	void parameters_update();
 
 	/**
-	 * @brief Read all VTOL landing approaches associated with one safe point.
-	 */
-	land_approaches_s readVtolLandApproach(int safe_point_index, float home_altitude_amsl) const;
-
-	/**
 	 * @brief Read all VTOL landing approaches associated with rtl_position.
 	 */
 	land_approaches_s readVtolLandApproaches(const PositionYawSetpoint &rtl_position, float home_altitude_amsl) const;
@@ -210,10 +205,24 @@ private:
 	 */
 	loiter_point_s selectLandingApproach(const PositionYawSetpoint &destination) const;
 
-	bool findAssociatedSafePointIndex(const PositionYawSetpoint &rtl_position, int &safe_point_index) const;
-	bool hasValidVtolLandApproachInBlock(int safe_point_index, float home_altitude_amsl) const;
-	void collectVtolLandApproachBlock(int safe_point_index, float home_altitude_amsl,
-					  land_approaches_s &vtol_land_approaches) const;
+	/**
+	 * @brief Find the dataman index of the first rally point within association distance of rtl_position.
+	 *
+	 * On success, safe_point_index and safe_point_item are populated with the found item.
+	 */
+	bool findAssociatedSafePointIndex(const PositionYawSetpoint &rtl_position, int &safe_point_index,
+					  mission_item_s &safe_point_item) const;
+
+	/**
+	 * @brief Scan the loiter-to-alt block following a safe point.
+	 *
+	 * If result is non-null, all valid approaches are collected into it.
+	 * If result is null, returns true on the first valid approach (early exit).
+	 *
+	 * @return true if at least one valid approach was found.
+	 */
+	bool scanVtolLandApproachBlock(int safe_point_index, float home_altitude_amsl,
+				       land_approaches_s *result) const;
 
 	enum class DatamanState {
 		UpdateRequestWait,
