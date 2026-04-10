@@ -100,6 +100,13 @@ private:
 		DESTINATION_TYPE_SAFE_POINT
 	};
 
+protected:
+
+	/**
+	 * @brief Load one safe-point mission item from the safe-point dataman cache.
+	 */
+	virtual bool loadSafePointItemWait(int seq, mission_item_s &item, hrt_abstime timeout) const;
+
 private:
 
 	/**

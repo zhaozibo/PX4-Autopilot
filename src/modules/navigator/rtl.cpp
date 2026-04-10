@@ -424,12 +424,10 @@ PositionYawSetpoint RTL::findClosestSafePoint(float min_dist, uint8_t &safe_poin
 	if (_safe_points_updated) {
 		_one_rally_point_has_land_approach = false;
 
-		for (int current_seq = 0; current_seq < _dataman_cache_safepoint.size(); ++current_seq) {
+		for (int current_seq = 0; current_seq < _stats.num_items; ++current_seq) {
 			mission_item_s mission_safe_point;
 
-			const bool success = _dataman_cache_safepoint.loadWait(static_cast<dm_item_t>(_stats.dataman_id), current_seq,
-					     reinterpret_cast<uint8_t *>(&mission_safe_point),
-					     sizeof(mission_item_s), 500_ms);
+			const bool success = loadSafePointItemWait(current_seq, mission_safe_point, 500_ms);
 
 			if (!success) {
 				PX4_ERR("dm_read failed");
@@ -470,6 +468,12 @@ PositionYawSetpoint RTL::findClosestSafePoint(float min_dist, uint8_t &safe_poin
 	}
 
 	return safe_point;
+}
+
+bool RTL::loadSafePointItemWait(int seq, mission_item_s &item, hrt_abstime timeout) const
+{
+	return _dataman_cache_safepoint.loadWait(static_cast<dm_item_t>(_stats.dataman_id), seq,
+			reinterpret_cast<uint8_t *>(&item), sizeof(mission_item_s), timeout);
 }
 
 void RTL::findRtlDestination(DestinationType &destination_type, PositionYawSetpoint &destination, uint8_t &safe_point_index)
@@ -575,9 +579,6 @@ bool RTL::extractValidSafePointPosition(const mission_item_s &safe_point_item, f
 		break;
 
 	default:
-		mavlink_log_critical(_navigator->get_mavlink_log_pub(), "RTL: unsupported MAV_FRAME\t");
-		events::send<uint8_t>(events::ID("rtl_unsupported_mav_frame"), events::Log::Error, "RTL: unsupported MAV_FRAME ({1})",
-				      safe_point_item.frame);
 		return false;
 	}
 
@@ -715,8 +716,7 @@ bool RTL::findAssociatedSafePointIndex(const PositionYawSetpoint &rtl_position, 
 	for (int current_seq = 0; current_seq < _stats.num_items; ++current_seq) {
 		mission_item_s mission_item{};
 
-		const bool success = _dataman_cache_safepoint.loadWait(static_cast<dm_item_t>(_stats.dataman_id), current_seq,
-				     reinterpret_cast<uint8_t *>(&mission_item), sizeof(mission_item_s), 500_ms);
+		const bool success = loadSafePointItemWait(current_seq, mission_item, 500_ms);
 
 		if (!success) {
 			PX4_ERR("dm_read failed");
@@ -755,8 +755,7 @@ bool RTL::scanVtolLandApproachBlock(int safe_point_index, float home_altitude_am
 	for (int current_seq = safe_point_index + 1; current_seq < _stats.num_items; ++current_seq) {
 		mission_item_s mission_item{};
 
-		const bool success = _dataman_cache_safepoint.loadWait(static_cast<dm_item_t>(_stats.dataman_id), current_seq,
-				     reinterpret_cast<uint8_t *>(&mission_item), sizeof(mission_item_s), 500_ms);
+		const bool success = loadSafePointItemWait(current_seq, mission_item, 500_ms);
 
 		if (!success) {
 			PX4_ERR("dm_read failed");
