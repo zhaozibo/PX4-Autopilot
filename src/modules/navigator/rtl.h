@@ -148,11 +148,12 @@ private:
 	void setLandPosAsDestination(PositionYawSetpoint &rtl_position, mission_item_s &land_mission_item) const;
 
 	/**
-	 * @brief Set the safepoint as destination.
+	 * @brief Parse a rally-point mission item into a PositionYawSetpoint, validating frame, coordinates and finiteness.
 	 *
-	 * @param mission_safe_point is the mission safe point/rally point to set as destination.
+	 * @return true if the item is a valid rally point with sane coordinates, false otherwise.
 	 */
-	void setSafepointAsDestination(PositionYawSetpoint &rtl_position, const mission_item_s &mission_safe_point) const;
+	bool extractValidSafePointPosition(const mission_item_s &safe_point_item, float home_altitude_amsl,
+					   PositionYawSetpoint &position) const;
 
 	/**
 	 * @brief calculate return altitude from return altitude parameter, current altitude and cone angle

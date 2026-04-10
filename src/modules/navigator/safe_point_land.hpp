@@ -69,6 +69,7 @@ struct land_approaches_s {
 	land_approaches_s()
 	{
 		resetAllApproaches();
+		land_location_lat_lon.setNaN();
 	}
 
 	void resetAllApproaches()

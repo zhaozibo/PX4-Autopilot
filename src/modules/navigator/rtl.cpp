@@ -65,41 +65,6 @@ static loiter_point_s makeVtolLandApproachPoint(const mission_item_s &mission_it
 	return approach;
 }
 
-static bool extractValidSafePointPosition(const mission_item_s &safe_point_item, float home_altitude_amsl,
-		PositionYawSetpoint &position)
-{
-	if (safe_point_item.nav_cmd != NAV_CMD_RALLY_POINT) {
-		return false;
-	}
-
-	switch (safe_point_item.frame) {
-	case NAV_FRAME_GLOBAL:
-	case NAV_FRAME_GLOBAL_INT:
-		position.alt = safe_point_item.altitude;
-		break;
-
-	case NAV_FRAME_GLOBAL_RELATIVE_ALT:
-	case NAV_FRAME_GLOBAL_RELATIVE_ALT_INT:
-		if (!PX4_ISFINITE(home_altitude_amsl)) {
-			return false;
-		}
-
-		position.alt = safe_point_item.altitude + home_altitude_amsl;
-		break;
-
-	default:
-		PX4_WARN("RTL safe point frame %u unsupported", static_cast<unsigned>(safe_point_item.frame));
-		return false;
-	}
-
-	position.lat = safe_point_item.lat;
-	position.lon = safe_point_item.lon;
-	position.yaw = NAN;
-	return PX4_ISFINITE(position.lat) && PX4_ISFINITE(position.lon) && PX4_ISFINITE(position.alt)
-	       && !((fabs(position.lat) < NULL_ISLAND_THRESHOLD_DEG) && (fabs(position.lon) < NULL_ISLAND_THRESHOLD_DEG))
-	       && (fabs(position.lat) <= 90.0) && (fabs(position.lon) <= 180.0);
-}
-
 RTL::RTL(Navigator *navigator) :
 	NavigatorMode(navigator, vehicle_status_s::NAVIGATION_STATE_AUTO_RTL),
 	ModuleParams(navigator),
@@ -494,7 +459,10 @@ PositionYawSetpoint RTL::findClosestSafePoint(float min_dist, uint8_t &safe_poin
 				const float dist{get_distance_to_next_waypoint(_global_pos_sub.get().lat, _global_pos_sub.get().lon, mission_safe_point.lat, mission_safe_point.lon)};
 
 				PositionYawSetpoint safepoint_position;
-				setSafepointAsDestination(safepoint_position, mission_safe_point);
+
+				if (!extractValidSafePointPosition(mission_safe_point, _home_pos_sub.get().alt, safepoint_position)) {
+					continue;
+				}
 
 				const bool current_safe_point_has_approaches{hasVtolLandApproach(current_seq, _home_pos_sub.get().alt)};
 
@@ -592,31 +560,43 @@ void RTL::setLandPosAsDestination(PositionYawSetpoint &rtl_position, mission_ite
 	rtl_position.lon = land_mission_item.lon;
 }
 
-void RTL::setSafepointAsDestination(PositionYawSetpoint &rtl_position, const mission_item_s &mission_safe_point) const
+bool RTL::extractValidSafePointPosition(const mission_item_s &safe_point_item, float home_altitude_amsl,
+					PositionYawSetpoint &position) const
 {
-	// There is a safe point closer than home/mission landing
-	// TODO: handle all possible mission_safe_point.frame cases
-	switch (mission_safe_point.frame) {
-	case 0: // MAV_FRAME_GLOBAL
-	case 5: // MAV_FRAME_GLOBAL_INT
-		rtl_position.lat = mission_safe_point.lat;
-		rtl_position.lon = mission_safe_point.lon;
-		rtl_position.alt = mission_safe_point.altitude;	// alt of safe point is relative to MSL
+	if (safe_point_item.nav_cmd != NAV_CMD_RALLY_POINT) {
+		return false;
+	}
+
+	// TODO: handle all possible safe_point_item.frame cases
+	switch (safe_point_item.frame) {
+	case NAV_FRAME_GLOBAL:
+	case NAV_FRAME_GLOBAL_INT:
+		position.alt = safe_point_item.altitude;
 		break;
 
-	case 3: // MAV_FRAME_GLOBAL_RELATIVE_ALT
-	case 6: // MAV_FRAME_GLOBAL_RELATIVE_ALT_INT
-		rtl_position.lat = mission_safe_point.lat;
-		rtl_position.lon = mission_safe_point.lon;
-		rtl_position.alt = mission_safe_point.altitude + _home_pos_sub.get().alt; // alt of safe point is rel to home
+	case NAV_FRAME_GLOBAL_RELATIVE_ALT:
+	case NAV_FRAME_GLOBAL_RELATIVE_ALT_INT:
+		if (!PX4_ISFINITE(home_altitude_amsl)) {
+			return false;
+		}
+
+		position.alt = safe_point_item.altitude + home_altitude_amsl; // alt of safe point is rel to home
 		break;
 
 	default:
 		mavlink_log_critical(_navigator->get_mavlink_log_pub(), "RTL: unsupported MAV_FRAME\t");
 		events::send<uint8_t>(events::ID("rtl_unsupported_mav_frame"), events::Log::Error, "RTL: unsupported MAV_FRAME ({1})",
-				      mission_safe_point.frame);
-		break;
+				      safe_point_item.frame);
+		return false;
 	}
+
+	position.lat = safe_point_item.lat;
+	position.lon = safe_point_item.lon;
+	position.yaw = NAN;
+
+	return PX4_ISFINITE(position.lat) && PX4_ISFINITE(position.lon) && PX4_ISFINITE(position.alt)
+	       && !((fabs(position.lat) < NULL_ISLAND_THRESHOLD_DEG) && (fabs(position.lon) < NULL_ISLAND_THRESHOLD_DEG))
+	       && (fabs(position.lat) <= 90.0) && (fabs(position.lon) <= 180.0);
 }
 
 float RTL::computeReturnAltitude(const PositionYawSetpoint &rtl_position) const
