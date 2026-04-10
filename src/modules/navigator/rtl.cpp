@@ -55,16 +55,6 @@ static constexpr float MAX_DIST_FROM_HOME_FOR_LAND_APPROACHES{10.0f}; // [m] We 
 static constexpr float MIN_DIST_THRESHOLD = 2.f;
 static constexpr double NULL_ISLAND_THRESHOLD_DEG{1e-7};
 
-static loiter_point_s makeVtolLandApproachPoint(const mission_item_s &mission_item, float home_altitude_amsl)
-{
-	loiter_point_s approach{};
-	approach.lat = mission_item.lat;
-	approach.lon = mission_item.lon;
-	approach.height_m = MissionBlock::get_absolute_altitude_for_item(mission_item, home_altitude_amsl);
-	approach.loiter_radius_m = mission_item.loiter_radius;
-	return approach;
-}
-
 RTL::RTL(Navigator *navigator) :
 	NavigatorMode(navigator, vehicle_status_s::NAVIGATION_STATE_AUTO_RTL),
 	ModuleParams(navigator),
@@ -429,7 +419,7 @@ PositionYawSetpoint RTL::findClosestSafePoint(float min_dist, uint8_t &safe_poin
 	const bool vtol_in_fw_mode = _vehicle_status_sub.get().is_vtol
 				     && (_vehicle_status_sub.get().vehicle_type == vehicle_status_s::VEHICLE_TYPE_FIXED_WING);
 
-	PositionYawSetpoint safe_point{(double)NAN, (double)NAN, NAN, NAN};
+	PositionYawSetpoint safe_point{static_cast<double>(NAN), static_cast<double>(NAN), NAN, NAN};
 
 	if (_safe_points_updated) {
 		_one_rally_point_has_land_approach = false;
@@ -788,6 +778,16 @@ bool RTL::scanVtolLandApproachBlock(int safe_point_index, float home_altitude_am
 	}
 
 	return result ? (valid_approach_counter > 0) : false;
+}
+
+loiter_point_s RTL::makeVtolLandApproachPoint(const mission_item_s &mission_item, float home_altitude_amsl) const
+{
+	loiter_point_s approach{};
+	approach.lat = mission_item.lat;
+	approach.lon = mission_item.lon;
+	approach.height_m = MissionBlock::get_absolute_altitude_for_item(mission_item, home_altitude_amsl);
+	approach.loiter_radius_m = mission_item.loiter_radius;
+	return approach;
 }
 
 land_approaches_s RTL::readVtolLandApproaches(const PositionYawSetpoint &rtl_position, float home_altitude_amsl) const

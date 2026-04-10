@@ -224,6 +224,8 @@ private:
 	bool scanVtolLandApproachBlock(int safe_point_index, float home_altitude_amsl,
 				       land_approaches_s *result) const;
 
+	loiter_point_s makeVtolLandApproachPoint(const mission_item_s &mission_item, float home_altitude_amsl) const;
+
 	enum class DatamanState {
 		UpdateRequestWait,
 		Read,
