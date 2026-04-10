@@ -108,6 +108,8 @@ void SensorGpsSim::Run()
 		updateParams();
 	}
 
+	_failure_injector.update();
+
 	if (_vehicle_local_position_sub.updated() && _vehicle_global_position_sub.updated()) {
 
 		vehicle_local_position_s lpos{};
@@ -196,17 +198,53 @@ void SensorGpsSim::Run()
 		sensor_gps.vel_ned_valid = true;
 		sensor_gps.satellites_used = _sim_gps_used.get();
 
-		sensor_gps.timestamp = hrt_absolute_time();
-		_sensor_gps_pub.publish(sensor_gps);
+		// --- GPS instance 0 (primary) ---
+		if (!_failure_injector.isBlocked(0)) {
+			if (_failure_injector.isStuck(0)) {
+				// Replay the last known position with a fresh timestamp so the
+				// consumer sees live-looking data whose position never changes.
+				_last_gps0.timestamp = hrt_absolute_time();
+				_sensor_gps_pub.publish(_last_gps0);
 
+			} else {
+				if (_failure_injector.isWrong(0)) {
+					// Corrupt position by +1 degree lat/lon (~111 km offset).
+					// GPS0 and GPS1 will now diverge well beyond the redundancy gate.
+					sensor_gps.latitude_deg  += 1.0;
+					sensor_gps.longitude_deg += 1.0;
+				}
+
+				sensor_gps.timestamp = hrt_absolute_time();
+				_last_gps0 = sensor_gps;
+				_sensor_gps_pub.publish(sensor_gps);
+			}
+		}
+
+		// --- GPS instance 1 (secondary) ---
 		const float gps1_offx = _param_gps1_offx.get();
 		const float gps1_offy = _param_gps1_offy.get();
 
 		if (fabsf(gps1_offx) > 0.f || fabsf(gps1_offy) > 0.f) {
-			sensor_gps.latitude_deg  = latitude  + (double)gps1_offx / CONSTANTS_RADIUS_OF_EARTH * (180.0 / M_PI);
-			sensor_gps.longitude_deg = longitude + (double)gps1_offy / CONSTANTS_RADIUS_OF_EARTH * (180.0 / M_PI) / cos(latitude * M_PI / 180.0);
-			sensor_gps.timestamp     = hrt_absolute_time();
-			_sensor_gps_pub2.publish(sensor_gps);
+			if (!_failure_injector.isBlocked(1)) {
+				sensor_gps_s gps1 = sensor_gps;
+				gps1.latitude_deg  = latitude  + (double)gps1_offx / CONSTANTS_RADIUS_OF_EARTH * (180.0 / M_PI);
+				gps1.longitude_deg = longitude + (double)gps1_offy / CONSTANTS_RADIUS_OF_EARTH * (180.0 / M_PI) / cos(latitude * M_PI / 180.0);
+
+				if (_failure_injector.isStuck(1)) {
+					_last_gps1.timestamp = hrt_absolute_time();
+					_sensor_gps_pub2.publish(_last_gps1);
+
+				} else {
+					if (_failure_injector.isWrong(1)) {
+						gps1.latitude_deg  += 1.0;
+						gps1.longitude_deg += 1.0;
+					}
+
+					gps1.timestamp = hrt_absolute_time();
+					_last_gps1 = gps1;
+					_sensor_gps_pub2.publish(gps1);
+				}
+			}
 		}
 	}
 
