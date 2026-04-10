@@ -177,44 +177,51 @@ private:
 	void parameters_update();
 
 	/**
-	 * @brief Read all VTOL landing approaches associated with rtl_position.
-	 */
-	land_approaches_s readVtolLandApproaches(const PositionYawSetpoint &rtl_position, float home_altitude_amsl) const;
-
-	/**
-	 * @brief Return whether rtl_position has at least one valid VTOL landing approach.
-	 */
-	bool hasVtolLandApproach(const PositionYawSetpoint &rtl_position, float home_altitude_amsl) const;
-
-	/**
-	 * @brief Return whether the indexed safe point has at least one valid VTOL landing approach.
-	 */
-	bool hasVtolLandApproach(int safe_point_index, float home_altitude_amsl) const;
-
-	/**
-	 * @brief Choose best landing approach
+	 * @brief Read the landing-approach block associated with the first valid rally point near rtl_position.
 	 *
-	 * Choose the wind-aligned landing approach for the associated land location.
+	 * A block starts at the associated rally point and contains the consecutive NAV_CMD_LOITER_TO_ALT
+	 * items that follow it. The next rally point starts a new block.
+	 * Invalid rally points are skipped so a later nearby valid rally point can still be considered.
+	 */
+	land_approaches_s getVtolLandApproachesNearLocation(const PositionYawSetpoint &rtl_position,
+			float home_altitude_amsl) const;
+
+	/**
+	 * @brief Return whether a valid associated block near rtl_position has at least one valid approach.
+	 */
+	bool hasVtolLandApproachesNearLocation(const PositionYawSetpoint &rtl_position, float home_altitude_amsl) const;
+
+	/**
+	 * @brief Return whether the block after safe_point_index contains at least one valid approach.
+	 */
+	bool hasVtolLandApproachesAtSafePointIndex(int safe_point_index, float home_altitude_amsl) const;
+
+	/**
+	 * @brief Choose the most wind-aligned approach in a landing-approach block.
 	 *
-	 * @return loiter_point_s best landing approach
+	 * Bearings are evaluated from the block's land location.
 	 */
 	loiter_point_s chooseBestLandingApproach(const land_approaches_s &vtol_land_approaches) const;
 
 	/**
-	 * @brief Return the wind-selected VTOL landing approach for a destination, or an invalid loiter if none exists.
+	 * @brief Return the wind-selected VTOL approach for destination, or an invalid loiter if none exists.
 	 */
 	loiter_point_s selectLandingApproach(const PositionYawSetpoint &destination) const;
 
 	/**
-	 * @brief Find the dataman index of the first rally point within association distance of rtl_position.
+	 * @brief Find the first rally point whose block should be associated with rtl_position.
 	 *
-	 * On success, safe_point_index and safe_point_item are populated with the found item.
+	 * Invalid rally points are skipped so nearby valid fallbacks can still be associated.
+	 * On success, safe_point_index and safe_point_item are populated with the rally point that starts the block.
 	 */
-	bool findAssociatedSafePointIndex(const PositionYawSetpoint &rtl_position, int &safe_point_index,
-					  mission_item_s &safe_point_item) const;
+	bool findAssociatedSafePointIndex(const PositionYawSetpoint &rtl_position, float home_altitude_amsl,
+					  int &safe_point_index, mission_item_s &safe_point_item) const;
 
 	/**
-	 * @brief Scan the loiter-to-alt block following a safe point.
+	 * @brief Scan one landing-approach block after a rally point.
+	 *
+	 * A block is the consecutive NAV_CMD_LOITER_TO_ALT items after safe_point_index.
+	 * Scanning stops at the next rally point because it starts a different safe-point block.
 	 *
 	 * If result is non-null, all valid approaches are collected into it.
 	 * If result is null, returns true on the first valid approach (early exit).
@@ -224,6 +231,9 @@ private:
 	bool scanVtolLandApproachBlock(int safe_point_index, float home_altitude_amsl,
 				       land_approaches_s *result) const;
 
+	/**
+	 * @brief Convert one loiter mission item into a landing-approach entry.
+	 */
 	loiter_point_s makeVtolLandApproachPoint(const mission_item_s &mission_item, float home_altitude_amsl) const;
 
 	enum class DatamanState {
