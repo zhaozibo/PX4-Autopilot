@@ -60,4 +60,4 @@ bool flight_time_limit_exceeded       # Maximum flight time exceeded
 bool position_accuracy_low            # Position estimate has dropped below threshold, but is currently still declared valid
 bool navigator_failure        	      # Navigator failed to execute a mode
 bool parachute_unhealthy              # Parachute system missing or unhealthy
-bool gps_redundancy_lost              # Number of active GPS receivers dropped below COM_GPS_MIN
+bool gnss_lost                        # Active GNSS count dropped below SYS_HAS_NUM_GNSS, or two receivers report inconsistent positions
