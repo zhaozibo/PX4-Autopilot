@@ -12,7 +12,8 @@ hawkeye --replay drone1.ulg drone2.ulg drone3.ulg
 
 Up to 16 files are supported. Each becomes a replay-backed vehicle in the scene, with its own trail, markers, and telemetry. Hawkeye pre-scans every log (as with single-log replay) and additionally checks for conflicts between them.
 
-*<!-- 07-vid-01: 15-20s. Terminal command → app opens → pre-scan console output → if conflicts detected, deconfliction prompt appears, user picks a mode → drones replay. -->*
+_<!-- 07-vid-01: 15-20s. Terminal command → app opens → pre-scan console output → if conflicts detected, deconfliction prompt appears, user picks a mode → drones replay. -->_
+
 ## Deconfliction
 
 On load, Hawkeye compares the home positions of every loaded log and checks for three kinds of conflict that would break a shared-origin view:
@@ -27,7 +28,7 @@ When the loaded drones have clean, compatible home positions and no conflicts ar
 
 ![Formation mode](../../assets/simulation/hawkeye/formation-mode.png)
 
-*<!-- 07-img-03: three drones at real GPS positions, home markers visible. -->*
+_<!-- 07-img-03: three drones at real GPS positions, home markers visible. -->_
 
 Formation is the correct mode for coordinated swarms that actually flew together. It's also the only mode that preserves real-world geometric relationships between drones.
 
@@ -39,7 +40,7 @@ If any conflict is detected, a **deconfliction prompt** appears before playback 
 
 ![Deconfliction prompt](../../assets/simulation/hawkeye/deconfliction-prompt.png)
 
-*<!-- 07-img-02: deconfliction prompt UI showing the three resolution modes. -->*
+_<!-- 07-img-02: deconfliction prompt UI showing the three resolution modes. -->_
 
 #### Ghost
 
@@ -49,7 +50,7 @@ Use when comparing two (or more) flights of the same mission, e.g., before/after
 
 ![Ghost mode](../../assets/simulation/hawkeye/ghost-mode.png)
 
-*<!-- 07-img-04: two flights overlaid, one opaque + one 35% tinted. -->*
+_<!-- 07-img-04: two flights overlaid, one opaque + one 35% tinted. -->_
 
 You can also force Ghost mode from the command line without a prompt:
 
@@ -65,7 +66,7 @@ Use when drones share a launch point (which is what would have triggered Formati
 
 ![Grid offset mode](../../assets/simulation/hawkeye/grid-offset-mode.png)
 
-*<!-- 07-img-05: drones separated by +5m offsets, labeled. -->*
+_<!-- 07-img-05: drones separated by +5m offsets, labeled. -->_
 
 #### Narrow Grid
 
@@ -73,7 +74,7 @@ Collapses drones from geographically distant locations into the same view area w
 
 Use when comparing flights from entirely different test sites, where the drones have nothing in common geographically, but you want to compare their trajectories side by side.
 
-*<!-- 07-img-06: drones from different locations collapsed to same view with 1m spacing. -->*
+_<!-- 07-img-06: drones from different locations collapsed to same view with 1m spacing. -->_
 
 ### Switching modes mid-replay
 
@@ -90,7 +91,7 @@ Drones in a swarm rarely log their start at the same wall-clock time. Drone A mi
 
 Press `A` to toggle **takeoff alignment**.
 
-*<!-- 07-gif-03: before = drones at different playback positions, after = all drones synchronized at takeoff moment. 8s. -->*
+_<!-- 07-gif-03: before = drones at different playback positions, after = all drones synchronized at takeoff moment. 8s. -->_
 
 With alignment on, each drone's timeline is shifted so `t = 0` corresponds to its detected takeoff moment. All drones now appear to lift off simultaneously. Press `A` again to return to absolute log timestamps.
 
@@ -126,7 +127,7 @@ When comparing two drones (same mission flown twice, or two drones in formation)
 
 ![Correlation HUD](../../assets/simulation/hawkeye/correlation-hud.png)
 
-*<!-- 07-img-07: HUD sidebar showing PRSN/RMSE/CONF badges with example values. -->*
+_<!-- 07-img-07: HUD sidebar showing PRSN/RMSE/CONF badges with example values. -->_
 
 ### The metrics
 
@@ -138,10 +139,10 @@ When comparing two drones (same mission flown twice, or two drones in formation)
 
 Press `Shift+T` to cycle 3D correlation overlays between the selected and pinned drones:
 
-| Mode | Rendering |
-|---|---|
-| Off | No overlay |
-| Line | Direct 3D line between the two drones' current positions |
+| Mode    | Rendering                                                               |
+| ------- | ----------------------------------------------------------------------- |
+| Off     | No overlay                                                              |
+| Line    | Direct 3D line between the two drones' current positions                |
 | Curtain | Semi-transparent ruled surface spanning the two drones' trail histories |
 
 Both overlays are diegetic; they render inside the 3D scene alongside the trails. See [Correlation Overlays](world_indicators.md#correlation-overlays) for the full visual explanation.

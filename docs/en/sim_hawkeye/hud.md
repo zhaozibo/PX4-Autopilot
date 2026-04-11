@@ -14,7 +14,7 @@ The default HUD. Visible on first launch.
 
 ![Annotated Console HUD](../../assets/simulation/hawkeye/console-hud-annotated.svg)
 
-*<!-- 06-dia-01: annotated Console HUD with callouts for every region. SVG, 1920×1080. -->*
+_<!-- 06-dia-01: annotated Console HUD with callouts for every region. SVG, 1920×1080. -->_
 
 ### Telemetry rows
 
@@ -42,7 +42,7 @@ The numpad layout adapts to drone count:
 
 ![Adaptive numpad layouts](../../assets/simulation/hawkeye/numpad-adaptive.png)
 
-*<!-- 06-img-03: 3×3 vs 3×4 vs 4×4 triptych. -->*
+_<!-- 06-img-03: 3×3 vs 3×4 vs 4×4 triptych. -->_
 
 - ≤9 drones: **3×3** grid, single-digit direct select
 - 10 to 12 drones: **3×4** grid with smaller font
@@ -83,19 +83,19 @@ An alternative HUD mode designed for cinematic playback and screen recording. Mi
 
 ![Tactical HUD overview](../../assets/simulation/hawkeye/tactical-hud.png)
 
-*<!-- 06-img-01: tactical HUD overview, hero shot for the mode. -->*
+_<!-- 06-img-01: tactical HUD overview, hero shot for the mode. -->_
 
 A more comprehensive view showing all tactical HUD elements active at once (multi-drone scene with pinned ring cells, radar panel, ticker, transport bar, gimbal rings, GS/ALT stacks):
 
-*<!-- 06-dia.png: tactical HUD with every feature visible at once. -->*
+_<!-- 06-dia.png: tactical HUD with every feature visible at once. -->_
 
 ![Annotated Tactical HUD](../../assets/simulation/hawkeye/tactical-hud-annotated.svg)
 
-*<!-- 06-dia-02: annotated Tactical HUD with callouts for every region. SVG, 1920×1080, derived from docs/tactical-wireframe.svg. -->*
+_<!-- 06-dia-02: annotated Tactical HUD with callouts for every region. SVG, 1920×1080, derived from docs/tactical-wireframe.svg. -->_
 
 Press `H` from Console to enter Tactical. The camera smoothly zooms to a close chase distance on entry and restores when you exit.
 
-*<!-- 06-gif-01: H key transition, 4s. -->*
+_<!-- 06-gif-01: H key transition, 4s. -->_
 
 ### Floating corner tags
 
@@ -107,7 +107,7 @@ A 2D radar panel shows all drones as colored blips relative to the selected dron
 
 ![Radar panel with multi-drone blips](../../assets/simulation/hawkeye/radar-panel.gif)
 
-*<!-- 06-gif-03: 4 drones, radar blips update, 6s. -->*
+_<!-- 06-gif-03: 4 drones, radar blips update, 6s. -->_
 
 ### Gimbal rings
 
@@ -115,7 +115,7 @@ Three concentric 3D rings drawn around the selected vehicle represent yaw, pitch
 
 ![Gimbal rings in motion](../../assets/simulation/hawkeye/gimbal-rings.gif)
 
-*<!-- 06-gif-02: drone rolling and pitching, rings rotate smoothly, 4s. -->*
+_<!-- 06-gif-02: drone rolling and pitching, rings rotate smoothly, 4s. -->_
 
 In multi-drone scenes with pinned drones, mini 2D ring cells appear in a corner bar, one per pinned drone.
 
@@ -133,7 +133,7 @@ Press `Ctrl+D` to toggle a performance and diagnostics overlay on the right side
 
 ![Debug overlay](../../assets/simulation/hawkeye/debug-overlay.png)
 
-*<!-- 06-img-02: debug overlay visible, all regions labeled. -->*
+_<!-- 06-img-02: debug overlay visible, all regions labeled. -->_
 
 Contents:
 
@@ -150,19 +150,19 @@ Colors adapt to the active theme. Use the debug overlay when diagnosing performa
 
 Annunciators are subtle HUD animations that draw attention to events without interrupting playback. Five animations ship built-in, each keyed to a specific event type and HUD mode.
 
-| Annunciator | HUD mode | Triggered by |
-|---|---|---|
-| Console tab fade | Console | Marker crossing (any drone) |
-| Gimbal ring bounce | Tactical | Marker crossing (pinned drone) |
-| Radar droplet wave | Tactical | Marker crossing (any drone) |
-| Ticker warning flash | Either | STATUSTEXT ≤ WARNING severity |
-| Ring shake | Tactical | STATUSTEXT ≤ WARNING severity (per drone) |
+| Annunciator          | HUD mode | Triggered by                              |
+| -------------------- | -------- | ----------------------------------------- |
+| Console tab fade     | Console  | Marker crossing (any drone)               |
+| Gimbal ring bounce   | Tactical | Marker crossing (pinned drone)            |
+| Radar droplet wave   | Tactical | Marker crossing (any drone)               |
+| Ticker warning flash | Either   | STATUSTEXT ≤ WARNING severity             |
+| Ring shake           | Tactical | STATUSTEXT ≤ WARNING severity (per drone) |
 
 ### Console tab fade
 
 When playback crosses a marker, the affected drone's color bar in the Console sidebar double-pulses: fades out, fades back in, then pulses once more at smaller amplitude.
 
-*<!-- 06-gif-04: marker crossed during playback, drone's left color bar double-pulses. 4s. -->*
+_<!-- 06-gif-04: marker crossed during playback, drone's left color bar double-pulses. 4s. -->_
 
 ### Gimbal ring bounce
 
@@ -170,7 +170,7 @@ In Tactical mode, a marker crossing for a pinned drone bounces that drone's gimb
 
 ![Gimbal ring bounce](../../assets/simulation/hawkeye/annunc-ring-bounce.gif)
 
-*<!-- 06-gif-05: tactical view with pinned drone, marker crossed, cell bounces. 4s. -->*
+_<!-- 06-gif-05: tactical view with pinned drone, marker crossed, cell bounces. 4s. -->_
 
 ### Radar droplet wave
 
@@ -178,13 +178,13 @@ A marker crossing sends two expanding concentric rings outward from the affected
 
 ![Radar droplet wave](../../assets/simulation/hawkeye/annunc-radar-wave.gif)
 
-*<!-- 06-gif-06: marker crossed, rings expand from blip. 4s. -->*
+_<!-- 06-gif-06: marker crossed, rings expand from blip. 4s. -->_
 
 ### Ticker warning flash
 
 When a new STATUSTEXT arrives during ULog replay, its ticker entry's background brightens and the text inverts briefly before returning to normal. Unmissable attention for new warnings.
 
-*<!-- 06-gif-07: STATUSTEXT arrives, ticker entry flashes. 4s. -->*
+_<!-- 06-gif-07: STATUSTEXT arrives, ticker entry flashes. 4s. -->_
 
 ### Ring shake
 
@@ -192,4 +192,4 @@ STATUSTEXT warnings for a specific drone oscillate that drone's gimbal ring cell
 
 ![Ring shake](../../assets/simulation/hawkeye/annunc-ring-shake.gif)
 
-*<!-- 06-gif-08: STATUSTEXT arrives for a specific drone, cell oscillates. 4s. -->*
+_<!-- 06-gif-08: STATUSTEXT arrives for a specific drone, cell oscillates. 4s. -->_

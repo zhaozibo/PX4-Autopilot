@@ -27,7 +27,7 @@ Hawkeye binds to UDP port 19410 by default. PX4 SIH sends `HIL_STATE_QUATERNION`
 
 <iframe width="720" height="405" src="https://www.youtube.com/embed/WudOSKFC0pc" frameborder="0" allowfullscreen></iframe>
 
-*<!-- 08-vid-01: Single vehicle SITL quickstart. -->*
+_<!-- 08-vid-01: Single vehicle SITL quickstart. -->_
 
 **Arm and take off** in the PX4 shell:
 
@@ -51,11 +51,11 @@ Configure PX4 to stream to the same port. See [Command-Line Reference](cli.md) f
 
 PX4 SIH ships vehicle presets beyond `sihsim_quadx`. Some common ones:
 
-| PX4 target | Vehicle type |
-|---|---|
-| `make px4_sitl sihsim_quadx` | Quadrotor |
-| `make px4_sitl sihsim_airplane` | Fixed-wing |
-| `make px4_sitl sihsim_xvert` | Tailsitter |
+| PX4 target                      | Vehicle type |
+| ------------------------------- | ------------ |
+| `make px4_sitl sihsim_quadx`    | Quadrotor    |
+| `make px4_sitl sihsim_airplane` | Fixed-wing   |
+| `make px4_sitl sihsim_xvert`    | Tailsitter   |
 
 Hawkeye auto-detects the vehicle type from `HEARTBEAT` and loads the matching 3D model. No Hawkeye configuration needed; just launch the appropriate PX4 target and Hawkeye adapts.
 
@@ -67,7 +67,7 @@ PX4 supports running multiple SITL instances simultaneously via `sitl_multiple_r
 
 Each vehicle binds `base_port + N`:
 
-*<!-- 08-dia-01: SVG showing base_port + N layout for PX4 instances and Hawkeye sockets. -->*
+_<!-- 08-dia-01: SVG showing base_port + N layout for PX4 instances and Hawkeye sockets. -->_
 
 With default `-udp 19410 -n 5`, Hawkeye listens on ports 19410 through 19414 simultaneously. PX4 instance 1 sends to 19410, instance 2 to 19411, and so on, so PX4 instance N and Hawkeye vehicle N automatically match up.
 
@@ -86,9 +86,7 @@ make px4_sitl_sih
 rm -rf build/px4_sitl_sih/instance_*/parameters*.bson
 ```
 
-::: warning
-PX4 persists the `SIH_LOC_LAT0`, `SIH_LOC_LON0`, and `SIH_LOC_ALT0` parameters per instance between runs. If you forget to clear them, your vehicles will spawn in whatever formation the last run left behind, possibly far from the expected origin. Clearing the `parameters*.bson` files is the reliable way to reset them.
-:::
+::: warning PX4 persists the `SIH_LOC_LAT0`, `SIH_LOC_LON0`, and `SIH_LOC_ALT0` parameters per instance between runs. If you forget to clear them, your vehicles will spawn in whatever formation the last run left behind, possibly far from the expected origin. Clearing the `parameters*.bson` files is the reliable way to reset them. :::
 
 **3. Launch N instances in parallel:**
 
@@ -107,7 +105,7 @@ cd Hawkeye
 
 All five vehicles appear in Hawkeye immediately. By default they spawn stacked on top of each other at the origin. Use the swarm test script (next section) to spread them into formation and fly a mission.
 
-*<!-- 08-vid-02: 45-60s video of the complete swarm demo: clear params → launch 5 instances → launch Hawkeye → run swarm_test.py → watch formation takeoff + waypoint + landing. -->*
+_<!-- 08-vid-02: 45-60s video of the complete swarm demo: clear params → launch 5 instances → launch Hawkeye → run swarm_test.py → watch formation takeoff + waypoint + landing. -->_
 
 ## MAVSDK swarm test script
 
@@ -131,14 +129,14 @@ The script connects to each PX4 instance via MAVSDK gRPC, configures spawn offse
 
 ### Options
 
-| Flag | Description | Default |
-|---|---|---|
-| `--n <count>` | Number of vehicles | 5 |
-| `--spacing <meters>` | Formation spacing between vehicles | 2.0 |
-| `--altitude <meters>` | Takeoff altitude AGL | 10.0 |
-| `--base-port <port>` | PX4 MAVLink base UDP port | 14540 |
-| `--grpc-base <port>` | MAVSDK gRPC base port | 50051 |
-| `--speed <factor>` | Sim speed factor for scaling wait times | 1.0 |
+| Flag                  | Description                             | Default |
+| --------------------- | --------------------------------------- | ------- |
+| `--n <count>`         | Number of vehicles                      | 5       |
+| `--spacing <meters>`  | Formation spacing between vehicles      | 2.0     |
+| `--altitude <meters>` | Takeoff altitude AGL                    | 10.0    |
+| `--base-port <port>`  | PX4 MAVLink base UDP port               | 14540   |
+| `--grpc-base <port>`  | MAVSDK gRPC base port                   | 50051   |
+| `--speed <factor>`    | Sim speed factor for scaling wait times | 1.0     |
 
 The `--speed` flag should match the `PX4_SIM_SPEED_FACTOR` used when launching SITL, so the script can scale its internal timeouts to match accelerated time.
 

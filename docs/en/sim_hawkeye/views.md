@@ -8,7 +8,7 @@ Press `C` to cycle between the three camera modes: **Chase → FPV → Free → 
 
 ![Camera mode cycle](../../assets/simulation/hawkeye/camera-cycle.gif)
 
-*<!-- 05-gif-01: camera cycle, 6s, Chase → FPV → Free with on-screen mode label. -->*
+_<!-- 05-gif-01: camera cycle, 6s, Chase → FPV → Free with on-screen mode label. -->_
 
 ### Chase (default)
 
@@ -18,7 +18,7 @@ Chase is the best mode for most flight review. It keeps the vehicle centered whi
 
 ![Chase camera view](../../assets/simulation/hawkeye/chase-camera.png)
 
-*<!-- 05-img-01: chase camera view of a single drone. -->*
+_<!-- 05-img-01: chase camera view of a single drone. -->_
 
 ### FPV
 
@@ -28,18 +28,18 @@ Use FPV for understanding what the pilot (or autopilot) was seeing at any moment
 
 ![FPV camera view](../../assets/simulation/hawkeye/fpv-camera.png)
 
-*<!-- 05-img-02: FPV nose-forward camera view. -->*
+_<!-- 05-img-02: FPV nose-forward camera view. -->_
 
 ### Free
 
 Untethered camera that ignores vehicle motion. Fly the camera manually:
 
-| Input | Action |
-|---|---|
-| `W` / `S` | Forward / backward |
-| `A` / `D` | Strafe left / right |
-| `Q` / `E` | Descend / ascend |
-| Mouse | Look around |
+| Input          | Action                 |
+| -------------- | ---------------------- |
+| `W` / `S`      | Forward / backward     |
+| `A` / `D`      | Strafe left / right    |
+| `Q` / `E`      | Descend / ascend       |
+| Mouse          | Look around            |
 | `Shift` (held) | 3× boost on all motion |
 
 Use Free mode to set up shots, inspect specific parts of the scene, or capture screenshots from arbitrary angles. Press `C` to return to Chase when you're done.
@@ -58,7 +58,7 @@ Press `O` to toggle a right-side panel with three synchronized orthographic view
 
 ![Sidebar orthographic panel](../../assets/simulation/hawkeye/sidebar-ortho.png)
 
-*<!-- 05-gif-03: press O, panel slides in, 3 views follow drone. 5s. -->*
+_<!-- 05-gif-03: press O, panel slides in, 3 views follow drone. 5s. -->_
 
 Each panel has a scale bar, coordinate axis gizmo, and 2D trail rendering. The panels follow the selected vehicle automatically.
 
@@ -66,19 +66,19 @@ Each panel has a scale bar, coordinate axis gizmo, and 2D trail rendering. The p
 
 Switch the main viewport to a fullscreen orthographic camera with `Alt+2` through `Alt+7`:
 
-| Key | View |
-|---|---|
+| Key     | View                         |
+| ------- | ---------------------------- |
 | `Alt+1` | Return to perspective camera |
-| `Alt+2` | Top |
-| `Alt+3` | Front |
-| `Alt+4` | Left |
-| `Alt+5` | Right |
-| `Alt+6` | Bottom |
-| `Alt+7` | Back |
+| `Alt+2` | Top                          |
+| `Alt+3` | Front                        |
+| `Alt+4` | Left                         |
+| `Alt+5` | Right                        |
+| `Alt+6` | Bottom                       |
+| `Alt+7` | Back                         |
 
 ![Fullscreen top orthographic view](../../assets/simulation/hawkeye/fullscreen-ortho-top.png)
 
-*<!-- 05-img-03: fullscreen ortho Top view with 2D trail and ground grid. -->*
+_<!-- 05-img-03: fullscreen ortho Top view with 2D trail and ground grid. -->_
 
 In ortho mode:
 
@@ -95,7 +95,7 @@ Press `V` to cycle themes: **Grid → Rez → Snow → Grid**.
 
 ![Theme cycle](../../assets/simulation/hawkeye/theme-cycle.gif)
 
-*<!-- 05-gif-04: theme cycle, 5s, Grid → Rez → Snow. -->*
+_<!-- 05-gif-04: theme cycle, 5s, Grid → Rez → Snow. -->_
 
 ### Built-in themes
 
@@ -107,9 +107,7 @@ Press `V` to cycle themes: **Grid → Rez → Snow → Grid**.
 
 Drag and drop any `.mvt` file onto the Hawkeye window to load it. The file is automatically copied to the `themes/` directory and added to the `V`-key cycle rotation.
 
-::: tip
-The web-based theme builder at [hawkeye.px4.io/theme-builder](https://hawkeye.px4.io/theme-builder) lets you edit every theme slot visually and export a ready-to-drop `.mvt` file. *(If the theme builder is not yet publicly hosted, this URL will be updated once it is.)*
-:::
+::: tip The web-based theme builder at [hawkeye.px4.io/theme-builder](https://hawkeye.px4.io/theme-builder) lets you edit every theme slot visually and export a ready-to-drop `.mvt` file. _(If the theme builder is not yet publicly hosted, this URL will be updated once it is.)_ :::
 
 ### Classic vs modern arm colors
 
@@ -121,19 +119,19 @@ Hawkeye ships nine 3D vehicle models:
 
 ![All nine vehicle models](../../assets/simulation/hawkeye/vehicle-models.png)
 
-*<!-- 05-img-04: all 9 vehicle models contact sheet, 3x3 grid, theme-neutral. -->*
+_<!-- 05-img-04: all 9 vehicle models contact sheet, 3x3 grid, theme-neutral. -->_
 
-| Model | Group | Typical use |
-|---|---|---|
-| Quadrotor | Quad | Default multicopter |
-| FPV Quad | Quad | Racing / freestyle quadrotor |
-| Hexarotor | Hex | Six-rotor payload platform |
-| FPV Hex | Hex | Racing hexarotor |
-| Fixed-wing | Fixed-wing | Conventional airplane |
-| Tailsitter | Tailsitter | VTOL tailsitter |
-| VTOL | VTOL | Tilt-rotor VTOL |
-| Rover | Rover | Ground vehicle |
-| ROV | ROV | Underwater vehicle |
+| Model      | Group      | Typical use                  |
+| ---------- | ---------- | ---------------------------- |
+| Quadrotor  | Quad       | Default multicopter          |
+| FPV Quad   | Quad       | Racing / freestyle quadrotor |
+| Hexarotor  | Hex        | Six-rotor payload platform   |
+| FPV Hex    | Hex        | Racing hexarotor             |
+| Fixed-wing | Fixed-wing | Conventional airplane        |
+| Tailsitter | Tailsitter | VTOL tailsitter              |
+| VTOL       | VTOL       | Tilt-rotor VTOL              |
+| Rover      | Rover      | Ground vehicle               |
+| ROV        | ROV        | Underwater vehicle           |
 
 ### Automatic selection
 
@@ -148,7 +146,7 @@ The `-mc`, `-fw`, and `-ts` command-line flags set a fallback group when no type
 
 ![Model cycling with M key](../../assets/simulation/hawkeye/model-cycle.gif)
 
-*<!-- 05-gif-05: press M to cycle within group, 6s. -->*
+_<!-- 05-gif-05: press M to cycle within group, 6s. -->_
 
 ### Theme-driven colors
 
@@ -173,9 +171,9 @@ Use this with 4+ drone swarms when you're zoomed on one pinned drone but want to
 
 ## Mouse Controls Summary
 
-| Input | Action |
-|---|---|
-| Left-drag | Orbit camera (Chase) / look around (Free) |
-| Scroll wheel | Zoom FOV (perspective) or span (ortho) |
-| Right-drag | Pan view (ortho modes only) |
+| Input        | Action                                     |
+| ------------ | ------------------------------------------ |
+| Left-drag    | Orbit camera (Chase) / look around (Free)  |
+| Scroll wheel | Zoom FOV (perspective) or span (ortho)     |
+| Right-drag   | Pan view (ortho modes only)                |
 | `Alt+Scroll` | Zoom ortho span (faster than scroll alone) |

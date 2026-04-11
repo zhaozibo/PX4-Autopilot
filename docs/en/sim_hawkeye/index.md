@@ -4,7 +4,7 @@
 
 <video src="https://github.com/user-attachments/assets/PLACEHOLDER-HERO-VIDEO" autoplay loop muted playsinline></video>
 
-*<!-- 01-vid-01: hero banner. Multi-drone swarm mid-flight, tactical HUD on, correlation curtain between two drones, smooth camera sweep. 10 to 15 seconds. -->*
+_<!-- 01-vid-01: hero banner. Multi-drone swarm mid-flight, tactical HUD on, correlation curtain between two drones, smooth camera sweep. 10 to 15 seconds. -->_
 
 Built on [Raylib](https://www.raylib.com/) and [MAVLink](https://mavlink.io/), Hawkeye is lightweight, cross-platform, and has zero runtime dependencies. Just build and fly.
 
@@ -22,7 +22,7 @@ Built on [Raylib](https://www.raylib.com/) and [MAVLink](https://mavlink.io/), H
 
 ![Hawkeye Console HUD](../../assets/simulation/hawkeye/console-hud.png)
 
-*<!-- 01-img-01: clean Console HUD screenshot, single drone mid-flight. Used as the feature-bullet illustration. 1920×1080. -->*
+_<!-- 01-img-01: clean Console HUD screenshot, single drone mid-flight. Used as the feature-bullet illustration. 1920×1080. -->_
 
 ## Installation
 
@@ -55,9 +55,7 @@ ARM64 builds (Raspberry Pi, Jetson, cloud ARM instances) are published in the sa
 
 Required on Windows, optional on macOS and Linux if you want the latest development builds.
 
-::: info
-Clone with `--recursive`. Hawkeye uses the MAVLink `c_library_v2` as a submodule. If you forget and hit `fatal: destination path 'c_library_v2' already exists and is not an empty directory`, fix it with `git submodule update --init`.
-:::
+::: info Clone with `--recursive`. Hawkeye uses the MAVLink `c_library_v2` as a submodule. If you forget and hit `fatal: destination path 'c_library_v2' already exists and is not an empty directory`, fix it with `git submodule update --init`. :::
 
 #### macOS
 
@@ -94,21 +92,21 @@ make release
 
 After a source build, the binary is at:
 
-| Platform | Path |
-|---|---|
-| macOS | `build/hawkeye` |
-| Linux | `build/hawkeye` |
-| Windows | `build\Release\hawkeye.exe` |
+| Platform | Path                        |
+| -------- | --------------------------- |
+| macOS    | `build/hawkeye`             |
+| Linux    | `build/hawkeye`             |
+| Windows  | `build\Release\hawkeye.exe` |
 
 ### Makefile targets
 
-| Target | Description |
-|---|---|
-| `make` | Debug build (default) |
-| `make release` | Release build |
-| `make test` | Build and run all tests |
-| `make run` | Build and launch the viewer |
-| `make clean` | Remove the build directory |
+| Target         | Description                 |
+| -------------- | --------------------------- |
+| `make`         | Debug build (default)       |
+| `make release` | Release build               |
+| `make test`    | Build and run all tests     |
+| `make run`     | Build and launch the viewer |
+| `make clean`   | Remove the build directory  |
 
 ### Verifying the install
 
@@ -121,7 +119,7 @@ hawkeye             # package install
 
 A window opens with the default quadrotor model on a grid backdrop, waiting for MAVLink telemetry on UDP port 19410.
 
-*<!-- 02-img-01: first-launch window, default quad, grid theme, waiting-for-MAVLink state. 1280×720. -->*
+_<!-- 02-img-01: first-launch window, default quad, grid theme, waiting-for-MAVLink state. 1280×720. -->_
 
 If the window doesn't appear or you hit a build error, see [Troubleshooting](../troubleshooting.md).
 
@@ -129,9 +127,7 @@ If the window doesn't appear or you hit a build error, see [Troubleshooting](../
 
 Three progressive paths, each standalone. Pick whichever matches what you have on hand. No PX4 source build required for replay, no log files required for live SITL.
 
-::: tip
-Press `?` at any time in Hawkeye to open the help overlay with the full keybind reference. This is the fastest way to discover what the viewer can do.
-:::
+::: tip Press `?` at any time in Hawkeye to open the help overlay with the full keybind reference. This is the fastest way to discover what the viewer can do. :::
 
 ### First run with PX4 SITL
 
@@ -158,13 +154,13 @@ commander takeoff
 
 Watch Hawkeye. The vehicle arms, lifts off, and the HUD numbers at the bottom of the screen update in real time. Ground speed, altitude, heading, and attitude all flow directly from PX4's MAVLink telemetry.
 
-*<!-- 03-gif-01: arm, takeoff, HUD numbers updating. 4–5s. -->*
+_<!-- 03-gif-01: arm, takeoff, HUD numbers updating. 4–5s. -->_
 
 Left-drag to orbit the camera around the vehicle. Press `C` to cycle between Chase, FPV, and Free camera modes. Press `?` at any time to see the full keybind reference.
 
 ![Help overlay](../../assets/simulation/hawkeye/help-overlay.png)
 
-*<!-- 03-img-02: keybind cheat sheet shown by `?` key. -->*
+_<!-- 03-img-02: keybind cheat sheet shown by `?` key. -->_
 
 That's it. You're flying.
 
@@ -186,13 +182,13 @@ ULog replay: flight.ulg (287.3s, 289 index entries)
 
 Use the transport keys to navigate:
 
-| Key | Action |
-|---|---|
-| `Space` | Pause / resume |
-| `+` / `-` | Increase / decrease playback speed |
-| `←` / `→` | Seek 5 seconds |
-| `Shift+←` / `Shift+→` | Frame step (20 ms) |
-| `R` | Restart from beginning |
+| Key                   | Action                             |
+| --------------------- | ---------------------------------- |
+| `Space`               | Pause / resume                     |
+| `+` / `-`             | Increase / decrease playback speed |
+| `←` / `→`             | Seek 5 seconds                     |
+| `Shift+←` / `Shift+→` | Frame step (20 ms)                 |
+| `R`                   | Restart from beginning             |
 
 See the [ULog Replay](replay.md) section for the full list of transport controls, marker keybinds, and analysis features.
 
@@ -210,7 +206,7 @@ If Hawkeye detects a conflict (shared launch point, drones more than 1 km apart,
 
 ![Deconfliction prompt](../../assets/simulation/hawkeye/deconfliction-prompt.png)
 
-*<!-- 07-img-02: deconfliction prompt UI with the three resolution modes. -->*
+_<!-- 07-img-02: deconfliction prompt UI with the three resolution modes. -->_
 
 - **Ghost:** non-primary drones rendered at 35% opacity. Best for before/after comparison of the same mission.
 - **Grid Offset:** drones spaced +5 m apart for visual separation. Best when drones share a launch point.

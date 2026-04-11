@@ -12,7 +12,7 @@ Press `T` to cycle trail rendering modes: **off → directional → speed ribbon
 
 ![Trail mode cycle](../../assets/simulation/hawkeye/trail-cycle.gif)
 
-*<!-- 05-gif-06: trail mode cycle, 8s, 2s per mode with on-screen label. -->*
+_<!-- 05-gif-06: trail mode cycle, 8s, 2s per mode with on-screen label. -->_
 
 Across all modes, trails fade with age: newer segments render at full opacity, older segments fade toward transparent. This gives temporal depth without requiring a separate timeline indicator.
 
@@ -22,14 +22,14 @@ The directional trail encodes **flight dynamics** (climb, descent, pitch, and ro
 
 Six theme color slots drive the blend:
 
-| Signal | Threshold | Contributes color |
-|---|---|---|
-| Forward (base) | always | `trail_forward` |
-| Climbing | vertical velocity > 0 | `trail_climb` (full at +5 m/s) |
-| Descending | vertical velocity < 0 | `trail_descend` (full at −5 m/s) |
-| Nose-up pitch | pitch angle > 0 | `trail_backward` (full at +15°) |
-| Positive roll | roll angle > 0 | `trail_roll_pos` (70% weight at full roll) |
-| Negative roll | roll angle < 0 | `trail_roll_neg` (70% weight at full roll) |
+| Signal         | Threshold             | Contributes color                          |
+| -------------- | --------------------- | ------------------------------------------ |
+| Forward (base) | always                | `trail_forward`                            |
+| Climbing       | vertical velocity > 0 | `trail_climb` (full at +5 m/s)             |
+| Descending     | vertical velocity < 0 | `trail_descend` (full at −5 m/s)           |
+| Nose-up pitch  | pitch angle > 0       | `trail_backward` (full at +15°)            |
+| Positive roll  | roll angle > 0        | `trail_roll_pos` (70% weight at full roll) |
+| Negative roll  | roll angle < 0        | `trail_roll_neg` (70% weight at full roll) |
 
 The colors overlay additively, so a steep climb with positive roll will show a blend of `trail_climb` and `trail_roll_pos`. In flat-and-level cruise, the trail stays in the base `trail_forward` color. This makes the directional trail a kind of flight-dynamics x-ray: you can see where the vehicle climbed, descended, banked, or pitched just by looking at color shifts.
 
@@ -112,7 +112,7 @@ A direct 3D line connecting the two drones' current positions. Renders in the pi
 
 ![Correlation line overlay](../../assets/simulation/hawkeye/correlation-line.gif)
 
-*<!-- 07-gif-04: press Shift+T, direct line between two drones, updates as they move. 4s. -->*
+_<!-- 07-gif-04: press Shift+T, direct line between two drones, updates as they move. 4s. -->_
 
 Simple and always visible. The line just shows current separation between the two drones; it doesn't remember past positions. Good for:
 
@@ -128,7 +128,7 @@ A semi-transparent 3D ruled surface spanning the two drones' trail histories. Ea
 
 ![Correlation curtain overlay](../../assets/simulation/hawkeye/correlation-curtain.gif)
 
-*<!-- 07-gif-05: press Shift+T twice, curtain unfurls showing path divergence surface. 5s. -->*
+_<!-- 07-gif-05: press Shift+T twice, curtain unfurls showing path divergence surface. 5s. -->_
 
 The curtain is a **burst-analysis tool**, not a persistent display. It rebuilds each time you toggle the mode on, starting fresh from the current playback position. This is intentional: a curtain that accumulated over an entire long flight would become visually incoherent. Use it to study a specific maneuver or time window, then toggle off.
 
