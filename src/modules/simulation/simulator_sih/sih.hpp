@@ -353,6 +353,9 @@ private:
 		(ParamInt<px4::params::SIH_VEHICLE_TYPE>) _sih_vtype,
 		(ParamFloat<px4::params::SIH_WIND_N>) _sih_wind_n,
 		(ParamFloat<px4::params::SIH_WIND_E>) _sih_wind_e,
-		(ParamFloat<px4::params::SIH_RNGBC_NOISE>) _sih_ranging_beacon_noise
+		(ParamFloat<px4::params::SIH_RNGBC_NOISE>) _sih_ranging_beacon_noise,
+		// fault injection
+		(ParamInt<px4::params::SIH_FAULT_IMU>) _sih_fault_imu,
+		(ParamFloat<px4::params::SIH_FAULT_VIBE>) _sih_fault_vibe
 	)
 };

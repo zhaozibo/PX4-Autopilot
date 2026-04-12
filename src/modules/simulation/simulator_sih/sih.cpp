@@ -639,6 +639,10 @@ void Sih::reconstruct_sensors_signals(const hrt_abstime &time_now_us)
 	const Vector3f specific_force_B = R_E2B * _specific_force_E;
 	const Vector3f earth_spin_rate_B = R_E2B * Vector3f(0.f, 0.f, CONSTANTS_EARTH_SPIN_RATE);
 
+	// Fault injection: which IMU index (0-based), -1 means none
+	const int fault_imu = _sih_fault_imu.get() - 1; // param is 1-indexed, -1 means off
+	const float fault_vibe = _sih_fault_vibe.get();
+
 	// Publish to all simulated IMUs with independent noise
 	for (uint8_t i = 0; i < IMU_COUNT; i++) {
 		Vector3f accel_noise;
@@ -653,7 +657,13 @@ void Sih::reconstruct_sensors_signals(const hrt_abstime &time_now_us)
 			gyro_noise = noiseGauss3f(0.01f, 0.01f, 0.01f);
 		}
 
-		const Vector3f accel = specific_force_B + accel_noise;
+		Vector3f accel = specific_force_B + accel_noise;
+
+		// Inject high-amplitude Z-axis vibration on the selected IMU
+		if ((int)i == fault_imu && fault_vibe > FLT_EPSILON) {
+			accel(2) += fault_vibe * generate_wgn();
+		}
+
 		const Vector3f gyro = _w_B + earth_spin_rate_B + gyro_noise;
 
 		_px4_accel[i].update(time_now_us, accel(0), accel(1), accel(2));
