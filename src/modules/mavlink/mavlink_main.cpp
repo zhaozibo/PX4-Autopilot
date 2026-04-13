@@ -84,6 +84,7 @@
 static pthread_mutex_t mavlink_module_mutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_mutex_t mavlink_event_buffer_mutex = PTHREAD_MUTEX_INITIALIZER;
 static px4::atomic<int> mavlink_instance_count {0};
+static px4::atomic<int> mavlink_forward_msg_active {0};
 
 events::EventBuffer *Mavlink::_event_buffer = nullptr;
 
@@ -513,7 +514,10 @@ Mavlink::forward_message(const mavlink_message_t *msg, Mavlink *self)
 		return;
 	}
 
-	LockGuard lg{mavlink_module_mutex};
+	// No global mutex: use a lightweight reader counter so deletion paths
+	// can wait for in-flight iterations to finish before freeing instances.
+	// pass_message() has its own per-instance _message_buffer_mutex.
+	mavlink_forward_msg_active.fetch_add(1);
 
 	for (Mavlink *inst : mavlink_module_instances) {
 		if (inst && (inst != self) && (inst->get_forwarding_on())) {
@@ -523,6 +527,8 @@ Mavlink::forward_message(const mavlink_message_t *msg, Mavlink *self)
 			}
 		}
 	}
+
+	mavlink_forward_msg_active.fetch_sub(1);
 }
 
 int
@@ -2970,12 +2976,19 @@ int Mavlink::start_helper(int argc, char *argv[])
 		res = instance->task_main(argc, argv);
 
 		if (res != PX4_OK) {
-			LockGuard lg{mavlink_module_mutex};
-			int instance_id = instance->get_instance_id();
+			{
+				LockGuard lg{mavlink_module_mutex};
+				int instance_id = instance->get_instance_id();
 
-			if (instance_id >= 0) {
-				mavlink_module_instances[instance_id] = nullptr;
-				mavlink_instance_count.fetch_sub(1);
+				if (instance_id >= 0) {
+					mavlink_module_instances[instance_id] = nullptr;
+					mavlink_instance_count.fetch_sub(1);
+				}
+			}
+
+			// Wait for any in-flight forward_message() to finish before freeing
+			while (mavlink_forward_msg_active.load() > 0) {
+				px4_usleep(100);
 			}
 
 			delete instance;
@@ -3288,16 +3301,26 @@ Mavlink::stop_command(int argc, char *argv[])
 					return PX4_ERROR;
 				}
 
-				LockGuard lg{mavlink_module_mutex};
+				// Remove from array so no new forward_message() picks it up
+				{
+					LockGuard lg{mavlink_module_mutex};
 
-				for (int mavlink_instance = 0; mavlink_instance < MAVLINK_COMM_NUM_BUFFERS; mavlink_instance++) {
-					if (mavlink_module_instances[mavlink_instance] == inst) {
-						mavlink_module_instances[mavlink_instance] = nullptr;
-						mavlink_instance_count.fetch_sub(1);
-						delete inst;
-						return PX4_OK;
+					for (int mavlink_instance = 0; mavlink_instance < MAVLINK_COMM_NUM_BUFFERS; mavlink_instance++) {
+						if (mavlink_module_instances[mavlink_instance] == inst) {
+							mavlink_module_instances[mavlink_instance] = nullptr;
+							mavlink_instance_count.fetch_sub(1);
+							break;
+						}
 					}
 				}
+
+				// Wait for any in-flight forward_message() to finish before freeing
+				while (mavlink_forward_msg_active.load() > 0) {
+					px4_usleep(100);
+				}
+
+				delete inst;
+				return PX4_OK;
 			}
 
 			return PX4_ERROR;
