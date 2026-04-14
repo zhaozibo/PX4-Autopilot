@@ -49,6 +49,7 @@ INA228::INA228(const I2CSPIDriverConfig &config, int battery_index) :
 	_comms_errors(perf_alloc(PC_COUNT, "ina228_com_err")),
 	_collection_errors(perf_alloc(PC_COUNT, "ina228_collection_err")),
 	_measure_errors(perf_alloc(PC_COUNT, "ina228_measurement_err")),
+	_zero_reading_perf(perf_alloc(PC_COUNT, "ina228_zero_reading")),
 	_battery(battery_index, this, INA228_SAMPLE_INTERVAL_US, battery_status_s::SOURCE_POWER_MODULE)
 {
 	float fvalue = MAX_CURRENT;
@@ -111,6 +112,7 @@ INA228::~INA228()
 	perf_free(_comms_errors);
 	perf_free(_collection_errors);
 	perf_free(_measure_errors);
+	perf_free(_zero_reading_perf);
 }
 
 int INA228::read(uint8_t address, int16_t &data)
@@ -328,6 +330,8 @@ INA228::collect()
 		// exactly 0 is very improbable, we just ignore those readings.
 		// The battery library keeps the old value.
 
+		if (!_bus_voltage || !_current || !_temperature) { perf_count(_zero_reading_perf); }
+
 		if (_bus_voltage) { _battery.updateVoltage(static_cast<float>(_bus_voltage * INA228_VSCALE)); }
 
 		if (_current) { _battery.updateCurrent(static_cast<float>(_current * _current_lsb)); }
@@ -438,6 +442,7 @@ INA228::print_status()
 	if (_initialized) {
 		perf_print_counter(_sample_perf);
 		perf_print_counter(_comms_errors);
+		perf_print_counter(_zero_reading_perf);
 
 		printf("poll interval:  %u \n", _measure_interval);
 

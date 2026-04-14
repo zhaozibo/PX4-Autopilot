@@ -51,6 +51,7 @@ INA220::INA220(const I2CSPIDriverConfig &config, int battery_index) :
 	_comms_errors(perf_alloc(PC_COUNT, "ina220_com_err")),
 	_collection_errors(perf_alloc(PC_COUNT, "ina220_collection_err")),
 	_measure_errors(perf_alloc(PC_COUNT, "ina220_measurement_err")),
+	_zero_reading_perf(perf_alloc(PC_COUNT, "ina220_zero_reading")),
 	_ch_type((PM_CH_TYPE)config.custom2),
 	_battery(battery_index, this, INA220_SAMPLE_INTERVAL_US, battery_status_s::SOURCE_POWER_MODULE)
 {
@@ -105,6 +106,7 @@ INA220::~INA220()
 	perf_free(_comms_errors);
 	perf_free(_collection_errors);
 	perf_free(_measure_errors);
+	perf_free(_zero_reading_perf);
 }
 
 int INA220::read(uint8_t address, int16_t &data)
@@ -253,6 +255,8 @@ INA220::collect()
 			// exactly 0 is very improbable, we just ignore those readings.
 			// The battery library keeps the old value.
 
+			if (!_bus_voltage || !_bus_current) { perf_count(_zero_reading_perf); }
+
 			if (_bus_voltage) { _battery.updateVoltage(_voltage); }
 
 			if (_bus_current) { _battery.updateCurrent(_current); }
@@ -354,6 +358,7 @@ INA220::print_status()
 	if (_initialized) {
 		perf_print_counter(_sample_perf);
 		perf_print_counter(_comms_errors);
+		perf_print_counter(_zero_reading_perf);
 
 		switch (_ch_type) {
 		case PM_CH_TYPE_VBATT:

@@ -102,6 +102,7 @@ INA238::~INA238()
 	perf_free(_sample_perf);
 	perf_free(_comms_errors);
 	perf_free(_collection_errors);
+	perf_free(_zero_reading_perf);
 }
 
 int INA238::read(uint8_t address, uint16_t &data)
@@ -257,6 +258,8 @@ int INA238::collect()
 		// exactly 0 is very improbable, we just ignore those readings.
 		// The battery library keeps the old value.
 
+		if (!bus_voltage || !current || !temperature) { perf_count(_zero_reading_perf); }
+
 		if (bus_voltage) { _battery.updateVoltage(static_cast<float>(bus_voltage * INA238_VSCALE)); }
 
 		if (current) { _battery.updateCurrent(static_cast<float>(current * _current_lsb)); }
@@ -382,6 +385,7 @@ void INA238::print_status()
 	if (_initialized) {
 		perf_print_counter(_sample_perf);
 		perf_print_counter(_comms_errors);
+		perf_print_counter(_zero_reading_perf);
 
 		printf("poll interval:  %u \n", _measure_interval);
 

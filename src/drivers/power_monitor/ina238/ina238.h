@@ -133,6 +133,7 @@ private:
 	perf_counter_t _comms_errors;
 	perf_counter_t _collection_errors;
 	perf_counter_t _bad_register_perf{perf_alloc(PC_COUNT, MODULE_NAME": bad register")};
+	perf_counter_t _zero_reading_perf{perf_alloc(PC_COUNT, MODULE_NAME": zero reading")};
 
 	// Configuration state, computed from params
 	float _max_current;

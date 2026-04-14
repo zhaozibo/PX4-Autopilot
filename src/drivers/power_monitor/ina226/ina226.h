@@ -186,6 +186,7 @@ private:
 	perf_counter_t		_comms_errors;
 	perf_counter_t 		_collection_errors;
 	perf_counter_t 		_measure_errors;
+	perf_counter_t		_zero_reading_perf;
 
 	int16_t           _bus_voltage{0};
 	int16_t           _power{0};
