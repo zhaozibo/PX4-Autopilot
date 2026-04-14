@@ -87,8 +87,6 @@ uint8 ANTENNA_POWER_OFF      = 1
 uint8 ANTENNA_POWER_ON       = 2
 uint8 antenna_power		# Antenna power status
 
-uint8 fix_quality		# Fix quality/confidence indicator [0-100]. 0 = no confidence, 100 = full confidence.
-
 float32 heading			# heading angle of XYZ body frame rel to NED. Set to NaN if not available and updated (used for dual antenna GPS), (rad, [-PI, PI])
 float32 heading_offset		# heading offset of dual antenna array in body frame. Set to NaN if not applicable. (rad, [-PI, PI])
 float32 heading_accuracy	# heading accuracy (rad, [0, 2PI])

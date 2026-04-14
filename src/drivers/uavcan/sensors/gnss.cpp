@@ -583,8 +583,17 @@ void UavcanGnssBridge::process_fixx(const uavcan::ReceivedDataStructure<FixType>
 		sensor_gps.diff_age               = _last_quality.diff_age;
 		sensor_gps.antenna_status         = _last_quality.antenna_status;
 		sensor_gps.antenna_power          = _last_quality.antenna_power;
-		sensor_gps.fix_quality            = _last_quality.fix_quality;
 		sensor_gps.system_error           = _last_quality.system_errors;
+
+		sensor_gnss_status_s sensor_gnss_status{};
+		sensor_gnss_status.timestamp                = hrt_absolute_time();
+		sensor_gnss_status.device_id                = sensor_gps.device_id;
+		sensor_gnss_status.quality_available        = true;
+		sensor_gnss_status.quality_corrections      = _last_quality.corrections_quality;
+		sensor_gnss_status.quality_receiver         = _last_quality.system_status_summary;
+		sensor_gnss_status.quality_gnss_signals     = _last_quality.gnss_signal_quality;
+		sensor_gnss_status.quality_post_processing  = _last_quality.post_processing_quality;
+		_sensor_gnss_status_pub.publish(sensor_gnss_status);
 	}
 
 	publish(msg.getSrcNodeID().get(), &sensor_gps);

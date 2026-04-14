@@ -48,6 +48,7 @@
 #include <uORB/SubscriptionMultiArray.hpp>
 #include <uORB/PublicationMulti.hpp>
 #include <uORB/topics/sensor_gps.h>
+#include <uORB/topics/sensor_gnss_status.h>
 #include <uORB/topics/gps_inject_data.h>
 #include <uORB/topics/gps_dump.h>
 
@@ -152,6 +153,8 @@ private:
 
 	uint64_t	_last_gnss_quality_timestamp{0};
 	uavcan::equipment::gnss::Quality _last_quality{};
+
+	uORB::PublicationMulti<sensor_gnss_status_s> _sensor_gnss_status_pub{ORB_ID(sensor_gnss_status)};
 
 	uORB::SubscriptionMultiArray<gps_inject_data_s, gps_inject_data_s::MAX_INSTANCES> _orb_inject_data_sub{ORB_ID::gps_inject_data};
 	hrt_abstime		_last_rtcm_injection_time{0};	///< time of last rtcm injection

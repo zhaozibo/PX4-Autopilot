@@ -37,8 +37,10 @@
 
 #include <uavcan/equipment/gnss/Quality.hpp>
 
+#include <uORB/Subscription.hpp>
 #include <uORB/SubscriptionCallback.hpp>
 #include <uORB/topics/sensor_gps.h>
+#include <uORB/topics/sensor_gnss_status.h>
 
 namespace uavcannode
 {
@@ -71,7 +73,6 @@ public:
 	{
 		using uavcan::equipment::gnss::Quality;
 
-		// sensor_gps -> uavcan::equipment::gnss::Quality
 		sensor_gps_s gps;
 
 		if (uORB::SubscriptionCallbackWorkItem::update(&gps)) {
@@ -86,14 +87,29 @@ public:
 			quality.diff_age           = gps.diff_age;
 			quality.antenna_status     = gps.antenna_status;
 			quality.antenna_power      = gps.antenna_power;
-			quality.fix_quality        = gps.fix_quality;
 			quality.system_errors      = gps.system_error;
+
+			quality.corrections_quality     = 255;
+			quality.system_status_summary   = 255;
+			quality.gnss_signal_quality     = 255;
+			quality.post_processing_quality = 255;
+
+			sensor_gnss_status_s status;
+
+			if (_sensor_gnss_status_sub.copy(&status) && status.quality_available) {
+				quality.corrections_quality     = status.quality_corrections;
+				quality.system_status_summary   = status.quality_receiver;
+				quality.gnss_signal_quality     = status.quality_gnss_signals;
+				quality.post_processing_quality = status.quality_post_processing;
+			}
 
 			uavcan::Publisher<uavcan::equipment::gnss::Quality>::broadcast(quality);
 
-			// ensure callback is registered
 			uORB::SubscriptionCallbackWorkItem::registerCallback();
 		}
 	}
+
+private:
+	uORB::Subscription _sensor_gnss_status_sub{ORB_ID(sensor_gnss_status)};
 };
 } // namespace uavcannode
