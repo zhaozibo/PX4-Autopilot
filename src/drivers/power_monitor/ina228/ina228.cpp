@@ -332,7 +332,7 @@ INA228::collect()
 
 		if (_current) { _battery.updateCurrent(static_cast<float>(_current * _current_lsb)); }
 
-		_battery.updateTemperature(static_cast<float>(_temperature * INA228_TSCALE));
+		if (_temperature) { _battery.updateTemperature(static_cast<float>(_temperature * INA228_TSCALE)); }
 	}
 
 	_battery.updateAndPublishBatteryStatus(hrt_absolute_time());
