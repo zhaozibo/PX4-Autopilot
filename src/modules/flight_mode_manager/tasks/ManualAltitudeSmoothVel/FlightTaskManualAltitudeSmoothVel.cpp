@@ -107,23 +107,19 @@ void FlightTaskManualAltitudeSmoothVel::_setOutputState()
 	_acceleration_setpoint(2) = _smoothing.getCurrentAcceleration();
 	_velocity_setpoint(2) = _smoothing.getCurrentVelocity();
 
-	const bool terrain_position = (_terrain_hold || _param_mpc_alt_mode.get() == 1)
-				      && PX4_ISFINITE(_dist_to_bottom)
-				      && PX4_ISFINITE(_position_setpoint(2));
-
-	if (terrain_position) {
-		// Terrain hold or terrain following: parent class set position from terrain.
+	if (_z_setpoint_from_terrain) {
+		// Parent class drove the position setpoint from terrain.
 		// Keep smoothing block synchronized to prevent divergence on transitions.
 		_smoothing.setCurrentPosition(_position_setpoint(2));
 
 	} else {
-		if (_terrain_position_previous) {
-			// Transitioning out of terrain mode: reset smoothing to current position
+		if (_z_setpoint_from_terrain_prev) {
+			// Transitioning off terrain-driven Z: reset smoothing to current position
 			_smoothing.setCurrentPosition(_position(2));
 		}
 
 		_position_setpoint(2) = _smoothing.getCurrentPosition();
 	}
 
-	_terrain_position_previous = terrain_position;
+	_z_setpoint_from_terrain_prev = _z_setpoint_from_terrain;
 }

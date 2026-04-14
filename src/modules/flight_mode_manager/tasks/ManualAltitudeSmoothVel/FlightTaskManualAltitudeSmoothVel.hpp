@@ -69,5 +69,5 @@ protected:
 				       )
 
 private:
-	bool _terrain_position_previous{false}; /**< true when parent class was managing position setpoint from terrain data in the previous iteration */
+	bool _z_setpoint_from_terrain_prev{false}; /**< parent's _z_setpoint_from_terrain from the previous iteration; used to detect transitions out of terrain-driven Z */
 };
