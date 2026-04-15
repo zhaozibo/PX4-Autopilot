@@ -53,7 +53,6 @@ using matrix::wrap_pi;
 
 static constexpr float MAX_DIST_FROM_HOME_FOR_LAND_APPROACHES{10.0f}; // [m] We don't consider safe points valid if the distance from the current home to the safe point is smaller than this distance
 static constexpr float MIN_DIST_THRESHOLD = 2.f;
-static constexpr double NULL_ISLAND_THRESHOLD_DEG{1e-7};
 
 RTL::RTL(Navigator *navigator) :
 	NavigatorMode(navigator, vehicle_status_s::NAVIGATION_STATE_AUTO_RTL),
@@ -587,7 +586,8 @@ bool RTL::extractValidSafePointPosition(const mission_item_s &safe_point_item, f
 	position.yaw = NAN;
 
 	return PX4_ISFINITE(position.lat) && PX4_ISFINITE(position.lon) && PX4_ISFINITE(position.alt)
-	       && !((fabs(position.lat) < NULL_ISLAND_THRESHOLD_DEG) && (fabs(position.lon) < NULL_ISLAND_THRESHOLD_DEG))
+	       && !((fabsf(static_cast<float>(position.lat)) < FLT_EPSILON)
+		    && (fabsf(static_cast<float>(position.lon)) < FLT_EPSILON))
 	       && (fabs(position.lat) <= 90.0) && (fabs(position.lon) <= 180.0);
 }
 
