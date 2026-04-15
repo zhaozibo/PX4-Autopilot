@@ -1,4 +1,4 @@
-# Command-Line Reference
+# Command-Line Reference (Hawkeye)
 
 Every Hawkeye CLI flag with description and default value.
 
@@ -30,7 +30,8 @@ In live MAVLink mode, each vehicle binds its own UDP socket at `base_port + N`:
 | ...        | ...                       |
 | Vehicle 16 | 19425                     |
 
-Change the base port with `-udp`. All subsequent vehicle ports increment from there.
+Change the base port with `-udp`.
+All subsequent vehicle ports increment from there.
 
 PX4 SITL instances use the same convention when launched via `sitl_multiple_run.sh`, so PX4 instance N and Hawkeye vehicle N automatically match up.
 
@@ -64,7 +65,8 @@ Binds vehicles 1–5 on 14540–14544.
 hawkeye -origin 47.641468 -122.140165 0
 ```
 
-Sets the NED reference point (Microsoft campus, Redmond, WA). Useful when PX4 SIH is configured to launch from a non-default location.
+Sets the NED reference point (Microsoft campus, Redmond, WA).
+Useful when PX4 SIH is configured to launch from a non-default location.
 
 ### Replay a single log
 
@@ -78,7 +80,8 @@ hawkeye --replay flight.ulg
 hawkeye --replay drone1.ulg drone2.ulg drone3.ulg
 ```
 
-Up to 16 files. See [ULog Replay](replay.md) for details.
+Up to 16 files.
+See [ULog Replay](replay.md) for details.
 
 ### Ghost overlay: compare two flights
 

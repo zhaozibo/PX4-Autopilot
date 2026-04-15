@@ -1,8 +1,10 @@
-# Live SITL Integration
+# Live SITL Integration (Hawkeye)
 
-Hawkeye connects to running PX4 SITL instances over UDP and visualizes them in real time. This page covers the three main workflows: a single vehicle from PX4 SIH, multi-instance swarms from `sitl_multiple_run.sh`, and orchestrated swarm missions via the included MAVSDK test script.
+Hawkeye connects to running PX4 SITL instances over UDP and visualizes them in real time.
+This page covers the three main workflows: a single vehicle from PX4 SIH, multi-instance swarms from `sitl_multiple_run.sh`, and orchestrated swarm missions via the included MAVSDK test script.
 
-For quickstart instructions, see [Getting Started](./index.md#getting-started). This page covers the topics in more depth.
+For quickstart instructions, see [Getting Started](./index.md#getting-started).
+This page covers the topics in more depth.
 
 ## Single vehicle
 
@@ -15,7 +17,8 @@ cd PX4-Autopilot
 make px4_sitl sihsim_quadx
 ```
 
-PX4 SIH (Simulation In Hardware) is a lightweight, lockstep-free flight dynamics simulator built into PX4. It's the fastest way to get telemetry flowing without installing Gazebo.
+PX4 SIH (Simulation In Hardware) is a lightweight, lockstep-free flight dynamics simulator built into PX4.
+It's the fastest way to get telemetry flowing without installing Gazebo.
 
 **Terminal 2, launch Hawkeye:**
 
@@ -23,7 +26,9 @@ PX4 SIH (Simulation In Hardware) is a lightweight, lockstep-free flight dynamics
 hawkeye
 ```
 
-Hawkeye binds to UDP port 19410 by default. PX4 SIH sends `HIL_STATE_QUATERNION` messages to the same port. The vehicle appears immediately in the Hawkeye window at the origin.
+Hawkeye binds to UDP port 19410 by default.
+PX4 SIH sends `HIL_STATE_QUATERNION` messages to the same port
+The vehicle appears immediately in the Hawkeye window at the origin.
 
 <iframe width="720" height="405" src="https://www.youtube.com/embed/WudOSKFC0pc" frameborder="0" allowfullscreen></iframe>
 
@@ -31,7 +36,7 @@ _<!-- 08-vid-01: Single vehicle SITL quickstart. -->_
 
 **Arm and take off** in the PX4 shell:
 
-```
+```sh
 commander takeoff
 ```
 
@@ -45,11 +50,13 @@ If port 19410 is already in use, bind Hawkeye to a different port with `-udp`:
 hawkeye -udp 14540
 ```
 
-Configure PX4 to stream to the same port. See [Command-Line Reference](cli.md) for the full option list.
+Configure PX4 to stream to the same port.
+See [Command-Line Reference](../sim_hawkeye/cli.md) for the full option list.
 
 ### Using different vehicle types
 
-PX4 SIH ships vehicle presets beyond `sihsim_quadx`. Some common ones:
+PX4 SIH ships vehicle presets beyond `sihsim_quadx`.
+Some common ones:
 
 | PX4 target                      | Vehicle type |
 | ------------------------------- | ------------ |
@@ -57,11 +64,13 @@ PX4 SIH ships vehicle presets beyond `sihsim_quadx`. Some common ones:
 | `make px4_sitl sihsim_airplane` | Fixed-wing   |
 | `make px4_sitl sihsim_xvert`    | Tailsitter   |
 
-Hawkeye auto-detects the vehicle type from `HEARTBEAT` and loads the matching 3D model. No Hawkeye configuration needed; just launch the appropriate PX4 target and Hawkeye adapts.
+Hawkeye auto-detects the vehicle type from `HEARTBEAT` and loads the matching 3D model.
+No Hawkeye configuration needed; just launch the appropriate PX4 target and Hawkeye adapts.
 
 ## Multi-instance swarm
 
-PX4 supports running multiple SITL instances simultaneously via `sitl_multiple_run.sh`. Each instance runs its own PX4 process with its own UDP port, and Hawkeye binds multiple sockets automatically when launched with `-n`.
+PX4 supports running multiple SITL instances simultaneously via `sitl_multiple_run.sh`.
+Each instance runs its own PX4 process with its own UDP port, and Hawkeye binds multiple sockets automatically when launched with `-n`.
 
 ### Port allocation
 
@@ -69,7 +78,8 @@ Each vehicle binds `base_port + N`:
 
 _<!-- 08-dia-01: SVG showing base_port + N layout for PX4 instances and Hawkeye sockets. -->_
 
-With default `-udp 19410 -n 5`, Hawkeye listens on ports 19410 through 19414 simultaneously. PX4 instance 1 sends to 19410, instance 2 to 19411, and so on, so PX4 instance N and Hawkeye vehicle N automatically match up.
+With default `-udp 19410 -n 5`, Hawkeye listens on ports 19410 through 19414 simultaneously.
+PX4 instance 1 sends to 19410, instance 2 to 19411, and so on, so PX4 instance N and Hawkeye vehicle N automatically match up.
 
 ### Step-by-step launch
 
@@ -86,7 +96,11 @@ make px4_sitl_sih
 rm -rf build/px4_sitl_sih/instance_*/parameters*.bson
 ```
 
-::: warning PX4 persists the `SIH_LOC_LAT0`, `SIH_LOC_LON0`, and `SIH_LOC_ALT0` parameters per instance between runs. If you forget to clear them, your vehicles will spawn in whatever formation the last run left behind, possibly far from the expected origin. Clearing the `parameters*.bson` files is the reliable way to reset them. :::
+::: warning
+PX4 persists the `SIH_LOC_LAT0`, `SIH_LOC_LON0`, and `SIH_LOC_ALT0` parameters per instance between runs.
+If you forget to clear them, your vehicles will spawn in whatever formation the last run left behind, possibly far from the expected origin.
+Clearing the `parameters*.bson` files is the reliable way to reset them.
+:::
 
 **3. Launch N instances in parallel:**
 
@@ -94,7 +108,8 @@ rm -rf build/px4_sitl_sih/instance_*/parameters*.bson
 PX4_SIM_SPEED_FACTOR=10 ./Tools/simulation/sitl_multiple_run.sh 5 sihsim_quadx px4_sitl_sih
 ```
 
-The `PX4_SIM_SPEED_FACTOR=10` runs the simulation at 10× real time, which significantly speeds up swarm missions. Set it to `1` for real-time playback.
+The `PX4_SIM_SPEED_FACTOR=10` runs the simulation at 10× real time, which significantly speeds up swarm missions.
+Set it to `1` for real-time playback.
 
 **4. In a new terminal, launch Hawkeye with matching vehicle count:**
 
@@ -103,13 +118,16 @@ cd Hawkeye
 ./build/hawkeye -n 5
 ```
 
-All five vehicles appear in Hawkeye immediately. By default they spawn stacked on top of each other at the origin. Use the swarm test script (next section) to spread them into formation and fly a mission.
+All five vehicles appear in Hawkeye immediately.
+By default they spawn stacked on top of each other at the origin.
+Use the swarm test script (next section) to spread them into formation and fly a mission.
 
 _<!-- 08-vid-02: 45-60s video of the complete swarm demo: clear params → launch 5 instances → launch Hawkeye → run swarm_test.py → watch formation takeoff + waypoint + landing. -->_
 
 ## MAVSDK swarm test script
 
-Hawkeye includes a Python script at `tests/swarm_test.py` that orchestrates a complete swarm mission using MAVSDK. It sets per-instance spawn offsets, arms all vehicles, takes off in parallel, flies to a waypoint, and lands.
+Hawkeye includes a Python script at `tests/swarm_test.py` that orchestrates a complete swarm mission using MAVSDK.
+It sets per-instance spawn offsets, arms all vehicles, takes off in parallel, flies to a waypoint, and lands.
 
 ### Prerequisites
 
@@ -152,10 +170,11 @@ The script runs this sequence:
 6. Land all vehicles
 7. Disarm
 
-Watch in Hawkeye as the swarm executes the mission. Pressing `T` during the flight cycles trail modes; trail mode 3 (drone color) is particularly useful for keeping track of which drone is which.
+Watch in Hawkeye as the swarm executes the mission.
+Pressing `T` during the flight cycles trail modes; trail mode 3 (drone color) is particularly useful for keeping track of which drone is which.
 
 ## Next steps
 
-- [Command-Line Reference](cli.md) for the full list of `-n`, `-udp`, and replay flags
-- [Multi-Drone Replay](multi_drone.md) to replay the ULogs recorded from your live SITL session with correlation analysis and takeoff alignment
-- [The HUD](hud.md) for Console mode (analysis) and Tactical mode (recording demos)
+- [Command-Line Reference](../sim_hawkeye/cli.md) for the full list of `-n`, `-udp`, and replay flags
+- [Multi-Drone Replay](../sim_hawkeye/multi_drone.md) to replay the ULogs recorded from your live SITL session with correlation analysis and takeoff alignment
+- [The HUD](../sim_hawkeye/hud.md) for Console mode (analysis) and Tactical mode (recording demos)

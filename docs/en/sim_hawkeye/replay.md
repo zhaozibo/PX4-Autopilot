@@ -1,6 +1,6 @@
-# ULog Replay
+# ULog Replay (Hawkeye)
 
-Hawkeye replays PX4 ULog (`.ulg`) flight logs as interactive 3D playback. This page covers single-log replay: loading a file, navigating with the transport controls, and dropping markers. For multi-drone analysis (multiple logs loaded together, takeoff alignment, correlation statistics), see [Multi-Drone Replay](multi_drone.md).
+Hawkeye replays PX4 ULog (`.ulg`) flight logs as interactive 3D playback. This page covers single-log replay: loading a file, navigating with the transport controls, and dropping markers. For multi-drone analysis (multiple logs loaded together, takeoff alignment, correlation statistics), see [Multi-Drone Replay](../sim_hawkeye/multi_drone.md).
 
 ## Loading a log
 
@@ -129,6 +129,6 @@ _<!-- 07-gif-07: multi-drone replay, markers from all 3 drones visible, press ] 
 
 Once you're comfortable with single-log replay, the big features are on the multi-drone side:
 
-- [Multi-Drone Replay](multi_drone.md) for loading multiple logs, deconfliction, takeoff alignment, and correlation analysis
-- [The HUD](hud.md) for Console vs Tactical modes and annunciators that fire on marker crossings
-- [Command-Line Reference](cli.md) for all replay-related flags including `--ghost` for overlay comparison
+- [Multi-Drone Replay](../sim_hawkeye/multi_drone.md) for loading multiple logs, deconfliction, takeoff alignment, and correlation analysis
+- [The HUD](../sim_hawkeye/hud.md) for Console vs Tactical modes and annunciators that fire on marker crossings
+- [Command-Line Reference](../sim_hawkeye/cli.md) for all replay-related flags including `--ghost` for overlay comparison

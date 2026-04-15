@@ -1,6 +1,7 @@
 # Hawkeye
 
-**Rapid Lightweight Visualizer** for PX4. Hawkeye renders live SITL telemetry, replays PX4 ULog flight logs, and supports multi-drone swarm analysis with correlation tracking, takeoff alignment, and deconfliction, up to 16 vehicles simultaneously.
+**Rapid Lightweight Visualizer** for PX4.
+Hawkeye renders live SITL telemetry, replays PX4 ULog flight logs, and supports multi-drone swarm analysis with correlation tracking, takeoff alignment, and deconfliction, up to 16 vehicles simultaneously.
 
 <video src="https://github.com/user-attachments/assets/PLACEHOLDER-HERO-VIDEO" autoplay loop muted playsinline></video>
 
@@ -35,7 +36,8 @@ brew tap PX4/px4
 brew install PX4/px4/hawkeye
 ```
 
-After install, the `hawkeye` binary is on your `PATH`. Launch it from any terminal:
+After install, the `hawkeye` binary is on your `PATH`.
+Launch it from any terminal:
 
 ```sh
 hawkeye
@@ -55,7 +57,11 @@ ARM64 builds (Raspberry Pi, Jetson, cloud ARM instances) are published in the sa
 
 Required on Windows, optional on macOS and Linux if you want the latest development builds.
 
-::: info Clone with `--recursive`. Hawkeye uses the MAVLink `c_library_v2` as a submodule. If you forget and hit `fatal: destination path 'c_library_v2' already exists and is not an empty directory`, fix it with `git submodule update --init`. :::
+::: info
+Clone with `--recursive`.
+Hawkeye uses the MAVLink `c_library_v2` as a submodule.
+If you forget and hit `fatal: destination path 'c_library_v2' already exists and is not an empty directory`, fix it with `git submodule update --init`.
+:::
 
 #### macOS
 
@@ -82,7 +88,7 @@ make release
 
 Requires [Visual Studio 2022](https://visualstudio.microsoft.com/) with the "Desktop development with C++" workload, [CMake](https://cmake.org/download/), and [Git](https://git-scm.com/).
 
-```powershell
+```sh
 git clone --recursive https://github.com/PX4/Hawkeye.git
 cd Hawkeye
 make release
@@ -125,13 +131,19 @@ If the window doesn't appear or you hit a build error, see [Troubleshooting](../
 
 ## Getting Started
 
-Three progressive paths, each standalone. Pick whichever matches what you have on hand. No PX4 source build required for replay, no log files required for live SITL.
+Three progressive paths, each standalone.
+Pick whichever matches what you have on hand.
+No PX4 source build required for replay, no log files required for live SITL.
 
-::: tip Press `?` at any time in Hawkeye to open the help overlay with the full keybind reference. This is the fastest way to discover what the viewer can do. :::
+::: tip
+Press `?` at any time in Hawkeye to open the help overlay with the full keybind reference.
+This is the fastest way to discover what the viewer can do.
+:::
 
 ### First run with PX4 SITL
 
-The shortest path from install to seeing a vehicle move. Requires a PX4-Autopilot source tree.
+The shortest path from install to seeing a vehicle move.
+Requires a PX4-Autopilot source tree.
 
 **Terminal 1, start PX4 SIH:**
 
@@ -146,27 +158,34 @@ make px4_sitl sihsim_quadx
 hawkeye
 ```
 
-A quadrotor appears in the Hawkeye window, sitting at the origin. In the PX4 shell (Terminal 1), arm and take off:
+A quadrotor appears in the Hawkeye window, sitting at the origin.
+In the PX4 shell (Terminal 1), arm and take off:
 
 ```
 commander takeoff
 ```
 
-Watch Hawkeye. The vehicle arms, lifts off, and the HUD numbers at the bottom of the screen update in real time. Ground speed, altitude, heading, and attitude all flow directly from PX4's MAVLink telemetry.
+Watch Hawkeye.
+The vehicle arms, lifts off, and the HUD numbers at the bottom of the screen update in real time.
+Ground speed, altitude, heading, and attitude all flow directly from PX4's MAVLink telemetry.
 
 _<!-- 03-gif-01: arm, takeoff, HUD numbers updating. 4–5s. -->_
 
-Left-drag to orbit the camera around the vehicle. Press `C` to cycle between Chase, FPV, and Free camera modes. Press `?` at any time to see the full keybind reference.
+Left-drag to orbit the camera around the vehicle.
+Press `C` to cycle between Chase, FPV, and Free camera modes.
+Press `?` at any time to see the full keybind reference.
 
 ![Help overlay](../../assets/simulation/hawkeye/help-overlay.png)
 
 _<!-- 03-img-02: keybind cheat sheet shown by `?` key. -->_
 
-That's it. You're flying.
+That's it.
+You're flying.
 
 ### Your first replay
 
-For users with an existing PX4 ULog (`.ulg`) file. No PX4 source tree required.
+For users with an existing PX4 ULog (`.ulg`) file.
+No PX4 source tree required.
 
 ```sh
 hawkeye --replay path/to/flight.ulg
@@ -174,7 +193,7 @@ hawkeye --replay path/to/flight.ulg
 
 Hawkeye opens, pre-scans the log for vehicle type and flight mode transitions, prints a summary to the console, and starts playing the flight automatically:
 
-```
+```sh
 ULog replay: flight.ulg (287.3s, 289 index entries)
   Flight modes: Takeoff@12s Mission@15s RTL@250s Land@276s
   Takeoff: 12.3s (CUSUM conf=92%)
@@ -194,13 +213,16 @@ See the [ULog Replay](replay.md) section for the full list of transport controls
 
 ### Your first swarm
 
-For users comparing multiple ULog files. The biggest visual payoff.
+For users comparing multiple ULog files.
+The biggest visual payoff.
 
 ```sh
 hawkeye --replay drone1.ulg drone2.ulg drone3.ulg
 ```
 
-Hawkeye pre-scans each log and decides how to lay out the drones in the scene. If the logs have clean, compatible home positions and no conflicts, drones render in **Formation mode** at their real GPS positions automatically. No prompt, playback starts right away.
+Hawkeye pre-scans each log and decides how to lay out the drones in the scene.
+If the logs have clean, compatible home positions and no conflicts, drones render in **Formation mode** at their real GPS positions automatically.
+No prompt, playback starts right away.
 
 If Hawkeye detects a conflict (shared launch point, drones more than 1 km apart, or missing position data), it shows a **deconfliction prompt** before playback starts with three resolution modes:
 
@@ -208,11 +230,16 @@ If Hawkeye detects a conflict (shared launch point, drones more than 1 km apart,
 
 _<!-- 07-img-02: deconfliction prompt UI with the three resolution modes. -->_
 
-- **Ghost:** non-primary drones rendered at 35% opacity. Best for before/after comparison of the same mission.
-- **Grid Offset:** drones spaced +5 m apart for visual separation. Best when drones share a launch point.
-- **Narrow Grid:** drones from distant locations collapsed to one view. Best for comparing flights from different test sites.
+- **Ghost:** non-primary drones rendered at 35% opacity.
+  Best for before/after comparison of the same mission.
+- **Grid Offset:** drones spaced +5 m apart for visual separation.
+  Best when drones share a launch point.
+- **Narrow Grid:** drones from distant locations collapsed to one view.
+  Best for comparing flights from different test sites.
 
-Pick one with arrow keys and Enter. All drones now replay together. Formation isn't in this list because it wouldn't produce a sensible view when conflicts exist; it's only available automatically when no conflict is detected.
+Pick one with arrow keys and Enter.
+All drones now replay together.
+Formation isn't in this list because it wouldn't produce a sensible view when conflicts exist; it's only available automatically when no conflict is detected.
 
 During playback, try:
 
@@ -222,18 +249,19 @@ During playback, try:
 - `Shift+1` through `Shift+9` pins a secondary drone to the HUD sidebar for correlation statistics
 - `P` cycles the view mode (Formation / Ghost / Grid Offset / Narrow Grid), with Formation skipped if conflicts were detected at load time
 
-See [Multi-Drone Replay](multi_drone.md) for the full walkthrough.
+See [Multi-Drone Replay](../sim_hawkeye/multi_drone.md) for the full walkthrough.
 
 ### Where to go next
 
-You now have the basics. The rest of this guide covers each major feature area in depth:
+You now have the basics.
+The rest of this guide covers each major feature area in depth:
 
-- [The HUD](hud.md) for Console and Tactical HUD modes, debug overlay, and annunciators
-- [In-World Indicators](world_indicators.md) for trails, ground track, correlation line, and correlation curtain
-- [Cameras and Views](views.md) for camera modes, orthographic panels, themes, vehicle models, and edge indicators
+- [The HUD](../sim_hawkeye/hud.md) for Console and Tactical HUD modes, debug overlay, and annunciators
+- [In-World Indicators](../sim_hawkeye/world_indicators.md) for trails, ground track, correlation line, and correlation curtain
+- [Cameras and Views](../sim_hawkeye/views.md) for camera modes, orthographic panels, themes, vehicle models, and edge indicators
 - [ULog Replay](replay.md) for single-log replay, transport controls, and markers
-- [Multi-Drone Replay](multi_drone.md) for loading multiple logs, deconfliction, takeoff alignment, and correlation analysis
-- [Live SITL Integration](sitl.md) for single-vehicle and multi-instance swarm workflows with PX4 SITL
-- [Command-Line Reference](cli.md) for every CLI flag with examples
-- [Reference](reference.md) for keyboard shortcuts, position data tiers, and coordinate systems
-- [Troubleshooting](troubleshooting.md) for build errors, missing telemetry, and edge cases
+- [Multi-Drone Replay](../sim_hawkeye/multi_drone.md) for loading multiple logs, deconfliction, takeoff alignment, and correlation analysis
+- [Live SITL Integration](../sim_hawkeye/sitl.md) for single-vehicle and multi-instance swarm workflows with PX4 SITL
+- [Command-Line Reference](../sim_hawkeye/cli.md) for every CLI flag with examples
+- [Reference](../sim_hawkeye/reference.md) for keyboard shortcuts, position data tiers, and coordinate systems
+- [Troubleshooting](../sim_hawkeye/troubleshooting.md) for build errors, missing telemetry, and edge cases

@@ -1,10 +1,12 @@
-# Reference
+# Reference (Hawkeye)
 
-Keyboard shortcuts, position data tiers, coordinate systems, and data source topics. Use this page as a lookup when you need a specific detail that doesn't fit in the feature sections.
+Keyboard shortcuts, position data tiers, coordinate systems, and data source topics.
+Use this page as a lookup when you need a specific detail that doesn't fit in the feature sections.
 
 ## Keyboard Shortcuts
 
-Press `?` at any time in Hawkeye to open the in-app help overlay with the complete keybind reference. The same information is listed below for offline reference.
+Press `?` at any time in Hawkeye to open the in-app help overlay with the complete keybind reference.
+The same information is listed below for offline reference.
 
 ### View
 
@@ -77,7 +79,11 @@ Press `?` at any time in Hawkeye to open the in-app help overlay with the comple
 
 ## Position Data Tiers
 
-Not every ULog file contains the same position data. Some logs have authoritative home position. Some have only GPS-derived references. Some have nothing geographic at all. Hawkeye categorizes each log into one of three tiers based on what it finds.
+Not every ULog file contains the same position data.
+Some logs have authoritative home position.
+Some have only GPS-derived references.
+Some have nothing geographic at all.
+Hawkeye categorizes each log into one of three tiers based on what it finds.
 
 ![Position data tiers flowchart](../../assets/simulation/hawkeye/position-tiers.svg)
 
@@ -100,17 +106,23 @@ The tier badge is visible in two places:
 
 - **T1 logs** compare reliably, because all drones share a well-defined geographic reference.
 - **T2 logs** compare if the reference points align; if they drift, positions drift too.
-- **T3 logs** have no real geographic position. Multi-drone replay with mixed tiers produces ambiguous layouts. Use the Narrow Grid deconfliction mode to collapse T3 drones into a shared view.
+- **T3 logs** have no real geographic position.
+  Multi-drone replay with mixed tiers produces ambiguous layouts.
+  Use the Narrow Grid deconfliction mode to collapse T3 drones into a shared view.
 
 ### Known gotchas
 
-- **Zeroed home position**: some logs record a `home_position` topic with zeros for lat/lon/alt. Hawkeye treats this as invalid and falls back to T2.
-- **Home rejected**: if the pre-scan determines that the recorded home position doesn't match observed GPS data, it's rejected and the log falls through to T2. This prevents bad home values from rendering drones at `(0,0,0)` or far from the expected area.
-- **BAD REF warning**: shown in the debug overlay if the current reference frame is suspect. Usually appears alongside T3 when the estimated origin drifts from observed position data.
+- **Zeroed home position**: some logs record a `home_position` topic with zeros for lat/lon/alt.
+  Hawkeye treats this as invalid and falls back to T2.
+- **Home rejected**: if the pre-scan determines that the recorded home position doesn't match observed GPS data, it's rejected and the log falls through to T2.
+  This prevents bad home values from rendering drones at `(0,0,0)` or far from the expected area.
+- **BAD REF warning**: shown in the debug overlay if the current reference frame is suspect.
+  Usually appears alongside T3 when the estimated origin drifts from observed position data.
 
 ## Coordinate Systems
 
-PX4 and MAVLink use the **NED** (North-East-Down) coordinate convention. Raylib uses **Y-up, right-handed**. Hawkeye converts between them at the draw layer.
+PX4 and MAVLink use the **NED** (North-East-Down) coordinate convention. Raylib uses **Y-up, right-handed**.
+Hawkeye converts between them at the draw layer.
 
 ![Coordinate systems](../../assets/simulation/hawkeye/coordinate-systems.svg)
 
@@ -134,14 +146,17 @@ _<!-- 09-dia-02: side-by-side NED vs Raylib Y-up with arrows showing the mapping
 
 ### What this means for users
 
-- **Heading** is displayed as 0° = North, 0–360° clockwise (compass convention). This matches navigation convention and what you'd expect from a PX4 HUD.
+- **Heading** is displayed as 0° = North, 0–360° clockwise (compass convention).
+  This matches navigation convention and what you'd expect from a PX4 HUD.
 - **Yaw** (toggled with `Y`) is displayed as ±180°, 0 = forward axis of the vehicle, counter-clockwise positive (math convention).
-- **Altitude** shown in the HUD is positive up, in meters above origin. The underlying log stores it as NED Z (negative below origin); the HUD flips the sign for intuitive display.
+- **Altitude** shown in the HUD is positive up, in meters above origin.
+  The underlying log stores it as NED Z (negative below origin); the HUD flips the sign for intuitive display.
 - **Origin altitude** is typically the launch point elevation, not Mean Sea Level (MSL).
 
 ### Debug panel coordinates
 
-The X/Y/Z values shown in the debug overlay (`Ctrl+D`) are in Raylib's Y-up draw-space coordinates, not NED. This is mostly what you want for understanding the rendered scene, but be aware that the Y value is the **altitude**, not the "forward distance" you might expect from an NED-convention tool.
+The X/Y/Z values shown in the debug overlay (`Ctrl+D`) are in Raylib's Y-up draw-space coordinates, not NED.
+This is mostly what you want for understanding the rendered scene, but be aware that the Y value is the **altitude**, not the "forward distance" you might expect from an NED-convention tool.
 
 ## Data Sources
 
@@ -169,4 +184,5 @@ Hawkeye consumes telemetry from two sources: live MAVLink streams (from PX4 SITL
 | `airspeed_validated`      | no       | Airspeed sensor data                          |
 | `logging`                 | no       | STATUSTEXT warnings (feeds the HUD ticker)    |
 
-If a required topic is missing, Hawkeye refuses to load the log and prints an error. If optional topics are missing, the affected features silently degrade (no airspeed, no STATUSTEXT, etc.).
+If a required topic is missing, Hawkeye refuses to load the log and prints an error.
+If optional topics are missing, the affected features silently degrade (no airspeed, no STATUSTEXT, etc.).
