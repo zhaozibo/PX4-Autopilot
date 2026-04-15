@@ -56,10 +56,7 @@ using namespace time_literals;
 ModuleBase::Descriptor Sih::desc{task_spawn, custom_command, print_usage};
 
 Sih::Sih() :
-	ModuleParams(nullptr)
-{
-	srand(1234); // initialize the random seed once before calling generate_wgn()
-}
+	ModuleParams(nullptr) {}
 
 Sih::~Sih()
 {

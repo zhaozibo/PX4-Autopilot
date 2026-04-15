@@ -41,10 +41,7 @@ ModuleBase::Descriptor SensorBaroSim::desc{task_spawn, custom_command, print_usa
 
 SensorBaroSim::SensorBaroSim() :
 	ModuleParams(nullptr),
-	ScheduledWorkItem(MODULE_NAME, px4::wq_configurations::hp_default)
-{
-	srand(1234); // initialize the random seed once before calling generate_wgn()
-}
+	ScheduledWorkItem(MODULE_NAME, px4::wq_configurations::hp_default) {}
 
 SensorBaroSim::~SensorBaroSim()
 {
