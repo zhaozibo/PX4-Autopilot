@@ -65,6 +65,7 @@ if (gz-transport_FOUND)
 			GZGimbal.hpp
 		DEPENDS
 			mixer_module
+			noise
 			px4_work_queue
 			${GZ_TRANSPORT_TARGET}
 		MODULE_CONFIG
