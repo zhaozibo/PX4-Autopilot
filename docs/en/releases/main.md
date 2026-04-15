@@ -42,6 +42,7 @@ Please continue reading for [upgrade instructions](#upgrade-guide).
 
 - [QGroundControl Bootloader Update](../advanced_config/bootloader_update.md#qgc-bootloader-update-sys-bl-update) via the [SYS_BL_UPDATE](../advanced_config/parameter_reference.md#SYS_BL_UPDATE) parameter has been re-enabled after being broken for a number of releases. ([PX4-Autopilot#25032: build: romf: fix generation of rc.board_bootloader_upgrade](https://github.com/PX4/PX4-Autopilot/pull/25032)).
 - [Feature: Allow prioritization of manual control inputs based on their instance number in ascending or descending order](../config/manual_control.md#px4-configuration). ([PX4-Autopilot#25602: Ascending and descending manual control input priorities](https://github.com/PX4/PX4-Autopilot/pull/25602)).
+- [GNSS check failsafe](../config/safety.md#gnss-check-failsafe): new configurable failsafe triggered by two conditions: active receiver count drops below [SYS_HAS_NUM_GNSS](../advanced_config/parameter_reference.md#SYS_HAS_NUM_GNSS) (warning only when `0`), or two receivers report inconsistent positions (warning always, failsafe action only when `SYS_HAS_NUM_GNSS=2`). Action configured via [COM_GPS_LOSS_ACT](../advanced_config/parameter_reference.md#COM_GPS_LOSS_ACT) (Warning, Return, Land, or Terminate). ([PX4-Autopilot#26863](https://github.com/PX4/PX4-Autopilot/pull/26863))
 
 ### Control
 
