@@ -251,6 +251,19 @@ The relevant parameters are shown below:
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------- |
 | [NAV_TRAFF_AVOID](../advanced_config/parameter_reference.md#NAV_TRAFF_AVOID) | Set the failsafe action: Disabled, Warn, Return mode, Land mode. |
 
+## Parachute Health Failsafe
+
+<Badge type="tip" text="PX4 v1.18" />
+
+The parachute health failsafe is triggered when a [MAVLink parachute](../peripherals/parachute.md) system is missing or unhealthy while the vehicle is armed and airborne.
+
+| Parameter                                                                                          | Description                                                                                                                                           |
+| -------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a id="COM_PARACHUTE"></a>[COM_PARACHUTE](../advanced_config/parameter_reference.md#COM_PARACHUTE) | Parachute system monitoring and failsafe action. `0`: Disabled (default), `1`: Warning only, `2`: Error only, `3`: Return, `4`: Land. |
+
+Values `2`–`4` prevent arming when the parachute system is not present and healthy.
+Values `3`–`4` also trigger the configured failsafe action if the parachute system is missing or unhealthy while airborne.
+
 ## Quad-chute Failsafe
 
 Failsafe for when a VTOL vehicle can no longer fly in fixed-wing mode, perhaps due to the failure of a pusher motor, airspeed sensor, or control surface.

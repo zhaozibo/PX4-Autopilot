@@ -42,6 +42,7 @@ Please continue reading for [upgrade instructions](#upgrade-guide).
 
 - [QGroundControl Bootloader Update](../advanced_config/bootloader_update.md#qgc-bootloader-update-sys-bl-update) via the [SYS_BL_UPDATE](../advanced_config/parameter_reference.md#SYS_BL_UPDATE) parameter has been re-enabled after being broken for a number of releases. ([PX4-Autopilot#25032: build: romf: fix generation of rc.board_bootloader_upgrade](https://github.com/PX4/PX4-Autopilot/pull/25032)).
 - [Feature: Allow prioritization of manual control inputs based on their instance number in ascending or descending order](../config/manual_control.md#px4-configuration). ([PX4-Autopilot#25602: Ascending and descending manual control input priorities](https://github.com/PX4/PX4-Autopilot/pull/25602)).
+- [Parachute health failsafe](../peripherals/parachute.md): extended [COM_PARACHUTE](../advanced_config/parameter_reference.md#COM_PARACHUTE) from a boolean into a configurable failsafe parameter. The in-flight action is now selectable (Return or Land). Users previously on `COM_PARACHUTE=1` (block arming) must update to `2` to retain that behaviour; set to `3` or higher to also enable the in-flight failsafe action. ([PX4-Autopilot#26918](https://github.com/PX4/PX4-Autopilot/pull/26918))
 
 ### Control
 
