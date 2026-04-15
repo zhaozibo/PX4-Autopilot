@@ -127,7 +127,7 @@ A window opens with the default quadrotor model on a grid backdrop, waiting for 
 
 _<!-- 02-img-01: first-launch window, default quad, grid theme, waiting-for-MAVLink state. 1280×720. -->_
 
-If the window doesn't appear or you hit a build error, see [Troubleshooting](../troubleshooting.md).
+If the window doesn't appear or you hit a build error, see [Troubleshooting](troubleshooting.md).
 
 ## Getting Started
 

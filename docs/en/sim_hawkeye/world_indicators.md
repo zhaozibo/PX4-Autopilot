@@ -128,7 +128,7 @@ Both overlays require a pinned secondary drone. See [Correlation Analysis](multi
 
 A direct 3D line connecting the two drones' current positions. Renders in the pinned drone's fleet color (so if you pin drone 3, the line is drone 3's color).
 
-![Correlation line overlay](../../assets/simulation/hawkeye/correlation-line.gif)
+![Correlation line overlay](../../assets/simulation/hawkeye/correlation-line.webp)
 
 _<!-- 07-gif-04: press Shift+T, direct line between two drones, updates as they move. 4s. -->_
 
@@ -146,7 +146,7 @@ The correlation line also renders on the heading-up radar panel in Tactical HUD 
 A semi-transparent 3D ruled surface spanning the two drones' trail histories.
 Each pair of corresponding samples (same timestamp, two different drones) becomes a quad, and the sequence of quads forms a "curtain" that shows the evolving separation between the two drones over time.
 
-![Correlation curtain overlay](../../assets/simulation/hawkeye/correlation-curtain.gif)
+![Correlation curtain overlay](../../assets/simulation/hawkeye/correlation-curtain.webp)
 
 _<!-- 07-gif-05: press Shift+T twice, curtain unfurls showing path divergence surface. 5s. -->_
 

@@ -125,7 +125,7 @@ A 2D radar panel shows all drones as colored blips relative to the selected dron
 A range ring indicates the visible distance scale.
 In multi-drone scenes with a pinned drone, the correlation line renders directly on the radar in the pinned drone's color.
 
-![Radar panel with multi-drone blips](../../assets/simulation/hawkeye/radar-panel.gif)
+![Radar panel with multi-drone blips](../../assets/simulation/hawkeye/radar-panel.webp)
 
 _<!-- 06-gif-03: 4 drones, radar blips update, 6s. -->_
 

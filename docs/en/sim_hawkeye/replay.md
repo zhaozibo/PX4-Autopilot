@@ -16,7 +16,7 @@ ULog replay: flight.ulg (287.3s, 289 index entries)
   Takeoff: 12.3s (CUSUM conf=92%)
 ```
 
-![ULog replay loading sequence](../../assets/simulation/hawkeye/replay-loading.gif)
+![ULog replay loading sequence](../../assets/simulation/hawkeye/replay-loading.webp)
 
 _<!-- 07-gif-01: command runs, console output scrolls, replay starts. 6s. -->_
 
@@ -69,7 +69,7 @@ Playback speed cycles through `0.25×`, `0.5×`, `1×`, `2×`, `4×`, `8×` with
 
 Markers let you annotate specific moments during a flight: the takeoff, the point where a control mode changed, the moment of a failure. Each marker stores the 3D position, playback time, and an optional text label.
 
-![Drop marker and label](../../assets/simulation/hawkeye/marker-drop.gif)
+![Drop marker and label](../../assets/simulation/hawkeye/marker-drop.webp)
 
 _<!-- 07-gif-06: press B, sphere appears. Press B then L, input opens, type "takeoff", Enter, label displays. 5s. -->_
 
@@ -121,7 +121,7 @@ In a multi-drone replay, each drone has its own marker list. The transport bar s
 
 `[` and `]` cycle only the **selected** drone's markers. `Ctrl+[` and `Ctrl+]` cycle **globally** across all drones, interleaved by time.
 
-![Marker navigation across drones](../../assets/simulation/hawkeye/marker-navigation.gif)
+![Marker navigation across drones](../../assets/simulation/hawkeye/marker-navigation.webp)
 
 _<!-- 07-gif-07: multi-drone replay, markers from all 3 drones visible, press ] then Ctrl+], highlight changes. 6s. -->_
 

@@ -7,7 +7,7 @@ For the 3D world-space indicators (trails, ground track, correlation overlays), 
 
 Press `C` to cycle between the three camera modes: **Chase → FPV → Free → Chase**.
 
-![Camera mode cycle](../../assets/simulation/hawkeye/camera-cycle.gif)
+![Camera mode cycle](../../assets/simulation/hawkeye/camera-cycle.webp)
 
 _<!-- 05-gif-01: camera cycle, 6s, Chase → FPV → Free with on-screen mode label. -->_
 
