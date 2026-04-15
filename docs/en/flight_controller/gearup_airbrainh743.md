@@ -93,7 +93,7 @@ Firmware can be installed in any of the normal ways:
 
 ### Flash Storage Troubleshooting
 
-The AirBrainH743 uses a 128MB NAND flash (W25N) with a littlefs filesystem for logging.
+The AirBrainH743 uses a 128MB NAND flash (W25N) with a littlefs filesystem for [logging](../dev_log/logging.md).
 If the flash filesystem becomes corrupted, you can reformat it using the [System Console](../debug/system_console.md):
 
 ```sh
