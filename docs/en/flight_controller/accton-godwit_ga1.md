@@ -91,24 +91,59 @@ This flight controller is [manufacturer supported](../flight_controller/autopilo
 
 ![G-A1 Wiring](../../assets/flight_controller/accton-godwit/ga1/wiring.png "G-A1 Wiring")
 
+## PWM Output
+
+PWM M1-M8 (IO Main PWM), A1-A8(FMU PWM).
+All these 16 support normal PWM output formats.
+FMU PWM A1-A6 can support DShot and B-Directional DShot.
+A1-A8(FMU PWM) are grouped as:
+
+- Group 1: A1, A2, A3, A4
+- Group 2: A5, A6
+- Group 3: A7, A8
+
+The motor and servo system should be connected to these ports according to the order outlined in the fuselage reference for your carrier.
+
+![G-A1 PWM Motor Servo](../../assets/flight_controller/accton-godwit/ga1/motor_servo.png "G-A1 PWM Motor Servo")
+<!-- pwm_outputs-proposed
+<!-- pwm_outputs-proposed
 ## PWM Outputs {#pwm_outputs}
 
-This flight controller supports up to 9 FMU PWM outputs (AUX) and 8 IO PWM outputs (MAIN).
+This flight controller supports up to 8 FMU PWM outputs (AUX) and 8 IO PWM outputs (MAIN).
 
 FMU Outputs:
 
 - Outputs 1-6 support [DShot](../peripherals/dshot.md).
-- Outputs 7-9 do not support DShot.
+- Outputs 7-8 do not support DShot.
 - Outputs 1-6 support [Bidirectional DShot](../peripherals/dshot.md#bidirectional-dshot-telemetry).
 
-The 9 outputs are in 4 groups:
+The 8 outputs are in 3 groups:
 
 - Outputs 1-4 in group1 (Timer5)
 - Outputs 5-6 in group2 (Timer4)
 - Outputs 7-8 in group3 (Timer12)
-- Output 9 in group4 (Timer1)
 
 All outputs within the same group must use the same output protocol and rate.
+-->
+
+## PWM Outputs {#pwm_outputs}
+
+This flight controller supports up to 8 FMU PWM outputs (AUX) and 8 IO PWM outputs (MAIN).
+
+FMU Outputs:
+
+- Outputs 1-6 support [DShot](../peripherals/dshot.md).
+- Outputs 7-8 do not support DShot.
+- Outputs 1-6 support [Bidirectional DShot](../peripherals/dshot.md#bidirectional-dshot-telemetry).
+
+The 8 outputs are in 3 groups:
+
+- Outputs 1-4 in group1 (Timer5)
+- Outputs 5-6 in group2 (Timer4)
+- Outputs 7-8 in group3 (Timer12)
+
+All outputs within the same group must use the same output protocol and rate.
+-->
 
 ## RC Input
 

@@ -13,11 +13,7 @@ Note: Got ports using https://github.com/PX4/PX4-user_guide/pull/672#issuecommen
 
 This flight controller supports up to 6 FMU PWM outputs (AUX) and 8 IO PWM outputs (MAIN).
 
-FMU Outputs:
-
-- Outputs 1-4 support [DShot](../peripherals/dshot.md).
-- Outputs 5-6 do not support DShot.
-- Outputs 1-4 support [Bidirectional DShot](../peripherals/dshot.md#bidirectional-dshot-telemetry).
+[DShot](../peripherals/dshot.md) is not supported.
 
 The 6 outputs are in 2 groups:
 

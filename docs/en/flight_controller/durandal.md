@@ -88,20 +88,14 @@ For more information see: [Durandal Technical Data Sheet](https://cdn.shopify.co
 
 ## PWM Outputs {#pwm_outputs}
 
-This flight controller supports up to 10 FMU PWM outputs (AUX) and 8 IO PWM outputs (MAIN).
+This flight controller supports up to 5 FMU PWM outputs (AUX) and 8 IO PWM outputs (MAIN).
 
-FMU Outputs:
+All FMU outputs support [DShot](../peripherals/dshot.md) and [Bidirectional DShot](../peripherals/dshot.md#bidirectional-dshot-telemetry).
 
-- Outputs 1-5 support [DShot](../peripherals/dshot.md).
-- Outputs 6-10 do not support DShot.
-- Outputs 1-5 support [Bidirectional DShot](../peripherals/dshot.md#bidirectional-dshot-telemetry).
-
-The 10 outputs are in 4 groups:
+The 5 outputs are in 2 groups:
 
 - Outputs 1-4 in group1 (Timer1)
 - Output 5 in group2 (Timer4)
-- Outputs 6-8 in group3 (Timer2)
-- Outputs 9-10 in group4 (Timer12)
 
 All outputs within the same group must use the same output protocol and rate.
 

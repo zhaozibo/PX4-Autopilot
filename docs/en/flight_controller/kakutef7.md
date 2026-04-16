@@ -10,11 +10,7 @@ DOC REMOVED: 202603
 
 This flight controller supports up to 6 FMU PWM outputs (MAIN).
 
-Outputs:
-
-- Outputs 1-6 support [DShot](../peripherals/dshot.md).
-- Outputs 3-4 support [Bidirectional DShot](../peripherals/dshot.md#bidirectional-dshot-telemetry).
-- Outputs 1-2, 5-6 support Bidirectional DShot output only (no eRPM capture).
+[DShot](../peripherals/dshot.md) is not supported.
 
 The 6 outputs are in 4 groups:
 

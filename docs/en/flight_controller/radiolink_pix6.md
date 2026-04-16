@@ -52,11 +52,7 @@ This flight controller is [manufacturer supported](../flight_controller/autopilo
 
 This flight controller supports up to 8 FMU PWM outputs (AUX) and 8 IO PWM outputs (MAIN).
 
-FMU Outputs:
-
-- Outputs 1-8 support [DShot](../peripherals/dshot.md).
-- Outputs 1-4 support [Bidirectional DShot](../peripherals/dshot.md#bidirectional-dshot-telemetry).
-- Outputs 5-8 support Bidirectional DShot output only (no eRPM capture).
+[DShot](../peripherals/dshot.md) is not supported.
 
 The 8 outputs are in 3 groups:
 

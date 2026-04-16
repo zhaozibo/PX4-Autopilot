@@ -9,7 +9,7 @@ Doc removed 202604
 
 This flight controller supports up to 6 FMU PWM outputs (AUX) and 8 IO PWM outputs (MAIN).
 
-All FMU outputs support [DShot](../peripherals/dshot.md) ([Bidirectional DShot](../peripherals/dshot.md#bidirectional-dshot-telemetry) not supported).
+[DShot](../peripherals/dshot.md) is not supported.
 
 The 6 outputs are in 2 groups:
 
