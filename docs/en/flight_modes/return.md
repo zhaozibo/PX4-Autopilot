@@ -171,7 +171,7 @@ The vehicle:
 - Flies via a direct path to the closest rally point.
 - On [arrival](#loiter-landing-at-destination) descends to the descent altitude and [lands or waits](#loiter-landing-at-destination) (depending on landing parameters).
 
-If no rally point is defined, the vehicle will descend and loiter at its current position (it will not return to home).
+If no rally point is defined, a warning will be shown, and the vehicle will descend and loiter at its current position (it will not return to home).
 
 ::: info
 This type is useful when the home position is not a safe return point.
