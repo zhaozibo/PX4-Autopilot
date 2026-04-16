@@ -81,7 +81,7 @@ MavlinkReceiver::~MavlinkReceiver()
 #endif // !CONSTRAINED_FLASH
 
 	_distance_sensor_pub.unadvertise();
-	_gps_inject_data_pub.unadvertise();
+	_rtcm_corrections_pub.unadvertise();
 	_rc_pub.unadvertise();
 	_manual_control_input_pub.unadvertise();
 	_ping_pub.unadvertise();
@@ -2736,18 +2736,18 @@ MavlinkReceiver::handle_message_gps_rtcm_data(mavlink_message_t *msg)
 	mavlink_gps_rtcm_data_t gps_rtcm_data_msg;
 	mavlink_msg_gps_rtcm_data_decode(msg, &gps_rtcm_data_msg);
 
-	gps_inject_data_s gps_inject_data_topic{};
+	rtcm_corrections_s rtcm_corrections_topic{};
 
-	gps_inject_data_topic.timestamp = hrt_absolute_time();
+	rtcm_corrections_topic.timestamp = hrt_absolute_time();
 
-	gps_inject_data_topic.len = math::min((int)sizeof(gps_rtcm_data_msg.data),
-					      (int)sizeof(uint8_t) * gps_rtcm_data_msg.len);
-	gps_inject_data_topic.flags = gps_rtcm_data_msg.flags;
-	memcpy(gps_inject_data_topic.data, gps_rtcm_data_msg.data,
-	       math::min((int)sizeof(gps_inject_data_topic.data), (int)sizeof(uint8_t) * gps_inject_data_topic.len));
+	rtcm_corrections_topic.len = math::min((int)sizeof(gps_rtcm_data_msg.data),
+					       (int)sizeof(uint8_t) * gps_rtcm_data_msg.len);
+	rtcm_corrections_topic.flags = gps_rtcm_data_msg.flags;
+	memcpy(rtcm_corrections_topic.data, gps_rtcm_data_msg.data,
+	       math::min((int)sizeof(rtcm_corrections_topic.data), (int)sizeof(uint8_t) * rtcm_corrections_topic.len));
 
-	gps_inject_data_topic.timestamp = hrt_absolute_time();
-	_gps_inject_data_pub.publish(gps_inject_data_topic);
+	rtcm_corrections_topic.timestamp = hrt_absolute_time();
+	_rtcm_corrections_pub.publish(rtcm_corrections_topic);
 }
 
 void
