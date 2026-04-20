@@ -405,7 +405,12 @@ FixedWingModeManager::set_control_mode_current(const hrt_abstime &now)
 		// Enter this mode only if the current waypoint has valid 3D position setpoints.
 
 		if (doing_backtransition) {
-			_control_mode_current = FW_POSCTRL_MODE_TRANSITION_TO_HOVER_LINE_FOLLOW;
+
+			const bool position_good_enough = _local_pos.eph < 10.0f && _local_pos.evh < 10.0f;
+
+			_control_mode_current = position_good_enough
+						? FW_POSCTRL_MODE_TRANSITION_TO_HOVER_LINE_FOLLOW
+						: FW_POSCTRL_MODE_TRANSITION_TO_HOVER_HEADING_HOLD;
 
 		} else if (_pos_sp_triplet.current.type == position_setpoint_s::SETPOINT_TYPE_TAKEOFF) {
 
