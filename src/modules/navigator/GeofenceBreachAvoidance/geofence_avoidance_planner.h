@@ -40,7 +40,6 @@
  */
 
 #include <cstdint>
-#include <cfloat>
 #include <matrix/math.hpp>
 #include "geofence_interface.h"
 
