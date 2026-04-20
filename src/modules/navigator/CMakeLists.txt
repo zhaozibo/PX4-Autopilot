@@ -76,8 +76,10 @@ px4_add_module(
 	DEPENDS
 		dataman_client
 		geo
+		geofence_utils
 		adsb
 		geofence_breach_avoidance
+		geofence_avoidance_planner
 		motion_planning
 		mission_feasibility_checker
 		rtl_time_estimator

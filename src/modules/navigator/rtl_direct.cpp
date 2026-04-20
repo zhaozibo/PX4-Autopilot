@@ -146,13 +146,30 @@ void RtlDirect::_updateRtlState()
 {
 	// RTL_LAND_DELAY > 0 -> wait seconds, < 0 wait indefinitely
 	const bool wait_at_rtl_descend_alt = fabsf(_param_rtl_land_delay.get()) > FLT_EPSILON;
-	const bool is_multicopter = (_vehicle_status_sub.get().vehicle_type == vehicle_status_s::VEHICLE_TYPE_ROTARY_WING);
+	const bool is_multicopter = (_vehicle_status_sub.get().vehicle_type ==
+				     vehicle_status_s::VEHICLE_TYPE_ROTARY_WING);
 
 	RTLState new_state{RTLState::IDLE};
 
 	switch (_rtl_state) {
 	case RTLState::CLIMBING:
-		new_state = RTLState::MOVE_TO_LOITER;
+		if (_geofence_aware_return_path.hasNextPoint()) {
+			new_state = RTLState::MOVE_TO_INTERMEDIATE_POINT;
+
+		} else {
+			new_state = RTLState::MOVE_TO_LOITER;
+		}
+
+		break;
+
+	case RTLState::MOVE_TO_INTERMEDIATE_POINT:
+		if (_geofence_aware_return_path.hasNextPoint()) {
+			new_state = RTLState::MOVE_TO_INTERMEDIATE_POINT;
+
+		} else {
+			new_state = RTLState::MOVE_TO_LOITER;
+		}
+
 		break;
 
 	case RTLState::MOVE_TO_LOITER:
@@ -171,7 +188,8 @@ void RtlDirect::_updateRtlState()
 
 	case RTLState::LOITER_HOLD:
 		if (_vehicle_status_sub.get().is_vtol
-		    && _vehicle_status_sub.get().vehicle_type == vehicle_status_s::VEHICLE_TYPE_FIXED_WING) {
+		    && _vehicle_status_sub.get().vehicle_type ==
+		    vehicle_status_s::VEHICLE_TYPE_FIXED_WING) {
 			new_state = RTLState::MOVE_TO_LAND;
 
 		} else {
@@ -205,7 +223,6 @@ void RtlDirect::_updateRtlState()
 	_rtl_state = new_state;
 }
 
-
 void RtlDirect::set_rtl_item()
 {
 	position_setpoint_triplet_s *pos_sp_triplet = _navigator->get_position_setpoint_triplet();
@@ -231,10 +248,25 @@ void RtlDirect::set_rtl_item()
 			break;
 		}
 
-	case RTLState::MOVE_TO_LOITER: {
+	case RTLState::MOVE_TO_INTERMEDIATE_POINT: {
+
+			const matrix::Vector2d point = _geofence_aware_return_path.getNextPoint();
 			PositionYawSetpoint pos_yaw_sp {
-				.lat = _land_approach.lat,
-				.lon = _land_approach.lon,
+				.lat = point(0),
+				.lon = point(1),
+				.alt = _rtl_alt,
+			};
+
+			setMoveToPositionMissionItem(_mission_item, pos_yaw_sp);
+			break;
+		}
+
+	case RTLState::MOVE_TO_LOITER: {
+
+			const loiter_point_s current_destination = _land_approach;
+			PositionYawSetpoint pos_yaw_sp {
+				.lat = current_destination.lat,
+				.lon = current_destination.lon,
 				.alt = _rtl_alt,
 			};
 
@@ -242,7 +274,7 @@ void RtlDirect::set_rtl_item()
 			// can be displayed on groundstation and the WP is accepted once within loiter radius
 			if (_vehicle_status_sub.get().vehicle_type == vehicle_status_s::VEHICLE_TYPE_FIXED_WING) {
 				pos_yaw_sp.yaw = NAN;
-				setLoiterHoldMissionItem(_mission_item, pos_yaw_sp, 0.f, _land_approach.loiter_radius_m);
+				setLoiterHoldMissionItem(_mission_item, pos_yaw_sp, 0.f, current_destination.loiter_radius_m);
 
 			} else {
 				// already set final yaw if close to destination and weather vane is disabled
@@ -404,6 +436,9 @@ RtlDirect::RTLState RtlDirect::getActivationState()
 	} else if ((_global_pos_sub.get().alt < _rtl_alt) || _enforce_rtl_alt) {
 		activation_state = RTLState::CLIMBING;
 
+	} else if (_geofence_aware_return_path.hasNextPoint()) {
+		activation_state = RTLState::MOVE_TO_INTERMEDIATE_POINT;
+
 	} else {
 		activation_state = RTLState::MOVE_TO_LOITER;
 	}
@@ -445,11 +480,25 @@ rtl_time_estimate_s RtlDirect::calc_rtl_time_estimate()
 			}
 
 		// FALLTHROUGH
+		case RTLState::MOVE_TO_INTERMEDIATE_POINT: {
+				matrix::Vector2f direction{};
+				matrix::Vector2d intermediate_point = _geofence_aware_return_path.getCurrentPoint();
+				get_vector_to_next_waypoint(_global_pos_sub.get().lat, _global_pos_sub.get().lon, intermediate_point(0),
+							    intermediate_point(1), &direction(0), &direction(1));
+				float move_to_land_dist{get_distance_to_next_waypoint(_global_pos_sub.get().lat, _global_pos_sub.get().lon, intermediate_point(0), intermediate_point(1))};
+
+				_rtl_time_estimator.addDistance(move_to_land_dist, direction, 0.f);
+			}
+
+		// FALLTHROUGH
 		case RTLState::MOVE_TO_LOITER: {
 				matrix::Vector2f direction{};
-				get_vector_to_next_waypoint(_global_pos_sub.get().lat, _global_pos_sub.get().lon, land_approach.lat,
+				matrix::Vector2d intermediate_point = _geofence_aware_return_path.getCurrentPoint();
+				const matrix::Vector2d start_position = intermediate_point.isAllFinite() ? matrix::Vector2d(intermediate_point(0), intermediate_point(1))
+									: matrix::Vector2d(_global_pos_sub.get().lat, _global_pos_sub.get().lon);
+				get_vector_to_next_waypoint(start_position(0), start_position(1), land_approach.lat,
 							    land_approach.lon, &direction(0), &direction(1));
-				float move_to_land_dist{get_distance_to_next_waypoint(_global_pos_sub.get().lat, _global_pos_sub.get().lon, land_approach.lat, land_approach.lon)};
+				float move_to_land_dist{get_distance_to_next_waypoint(start_position(0), start_position(1), land_approach.lat, land_approach.lon)};
 
 				if (_vehicle_status_sub.get().vehicle_type == vehicle_status_s::VEHICLE_TYPE_FIXED_WING) {
 					move_to_land_dist = max(0.f, move_to_land_dist - land_approach.loiter_radius_m);
@@ -603,4 +652,11 @@ void RtlDirect::publish_rtl_direct_navigator_mission_item()
 	navigator_mission_item.timestamp = hrt_absolute_time();
 
 	_navigator_mission_item_pub.publish(navigator_mission_item);
+}
+
+void RtlDirect::updateRtlPath()
+{
+	const matrix::Vector2d current_position{_global_pos_sub.get().lat, _global_pos_sub.get().lon};
+	_geofence_aware_return_path = _navigator->planPathToDestination(current_position, matrix::Vector2d(_destination.lat, _destination.lon),
+				      2.0f * _navigator->get_acceptance_radius());
 }

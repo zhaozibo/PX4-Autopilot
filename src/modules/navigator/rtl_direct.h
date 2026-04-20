@@ -55,6 +55,7 @@
 #include <uORB/topics/wind.h>
 
 #include <lib/rtl/rtl_time_estimator.h>
+#include <navigator/GeofenceBreachAvoidance/geofence_avoidance_planner.h>
 #include "mission_block.h"
 #include "navigation.h"
 #include "safe_point_land.hpp"
@@ -111,6 +112,8 @@ public:
 
 	bool isLanding() { return (_rtl_state != RTLState::IDLE) && (_rtl_state >= RTLState::LOITER_DOWN);};
 
+	void updateRtlPath();
+
 private:
 	/**
 	 * @brief Return to launch state machine.
@@ -118,6 +121,7 @@ private:
 	 */
 	enum class RTLState {
 		CLIMBING,
+		MOVE_TO_INTERMEDIATE_POINT,
 		MOVE_TO_LOITER,
 		LOITER_DOWN,
 		LOITER_HOLD,
@@ -168,7 +172,7 @@ private:
 
 	PositionYawSetpoint _destination{(double)NAN, (double)NAN, NAN, NAN}; ///< the RTL position to fly to
 	loiter_point_s _land_approach;
-
+	PlannedPath _geofence_aware_return_path;
 	float _rtl_alt{0.0f}; ///< AMSL altitude at which the vehicle should transit to the destination
 
 	DEFINE_PARAMETERS(

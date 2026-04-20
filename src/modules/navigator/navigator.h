@@ -312,6 +312,12 @@ public:
 
 	void trigger_hagl_failsafe(uint8_t nav_state);
 
+	PlannedPath planPathToDestination(const matrix::Vector2<double> &start, const matrix::Vector2<double> &destination,
+					  float margin)
+	{
+		return _geofence.planPathToDestination(start, destination, margin);
+	}
+
 private:
 
 	int _local_pos_sub{-1};
