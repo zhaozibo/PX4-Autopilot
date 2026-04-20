@@ -44,18 +44,6 @@ namespace geofence_utils
 {
 
 /**
- * Check if a point is inside a polygon using the PNPOLY ray casting algorithm.
- * Only supports non-complex (non-self-intersecting) polygons.
- *
- * @param vertices     array of polygon vertices (lat, lon) in degrees
- * @param num_vertices number of vertices
- * @param point        test point (lat, lon) in degrees
- * @return true if the point is inside the polygon
- */
-bool insidePolygon(const matrix::Vector2<double> *vertices, int num_vertices,
-		   const matrix::Vector2<double> &point);
-
-/**
  * Check if a point is inside a circle.
  *
  * @param center  circle center (lat, lon) in degrees

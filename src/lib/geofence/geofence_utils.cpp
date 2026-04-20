@@ -37,27 +37,6 @@
 namespace geofence_utils
 {
 
-bool insidePolygon(const matrix::Vector2<double> *vertices, int num_vertices,
-		   const matrix::Vector2<double> &point)
-{
-	/**
-	 * Adaptation of algorithm originally presented as
-	 * PNPOLY - Point Inclusion in Polygon Test
-	 * W. Randolph Franklin (WRF)
-	 * Only supports non-complex polygons (not self intersecting)
-	 */
-	bool c = false;
-
-	for (int i = 0, j = num_vertices - 1; i < num_vertices; j = i++) {
-		if (((vertices[i](1) >= point(1)) != (vertices[j](1) >= point(1))) &&
-		    (point(0) <= (vertices[j](0) - vertices[i](0)) * (point(1) - vertices[i](1)) /
-		     (vertices[j](1) - vertices[i](1)) + vertices[i](0))) {
-			c = !c;
-		}
-	}
-
-	return c;
-}
 bool insidePolygon(const matrix::Vector2f *vertices, int num_vertices,
 		   const matrix::Vector2f &point)
 {
