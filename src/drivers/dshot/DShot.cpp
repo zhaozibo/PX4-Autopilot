@@ -741,7 +741,7 @@ uint16_t DShot::convert_output_to_3d_scaling(uint16_t output)
 	// This is in terms of DShot values, code below is in terms of actuator_output
 	// Direction 1) 48 is the slowest, 1047 is the fastest.
 	// Direction 2) 1049 is the slowest, 2047 is the fastest.
-	if (output >= _3d_dead_l && output < _3d_dead_h) {
+	if (output >= _3d_dead_l && output <= _3d_dead_h) {
 		return DSHOT_DISARM_VALUE;
 	}
 
