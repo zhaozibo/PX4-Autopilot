@@ -1,6 +1,6 @@
 ############################################################################
 #
-#   Copyright (c) 2020 PX4 Development Team. All rights reserved.
+#   Copyright (c) 2026 PX4 Development Team. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -31,16 +31,11 @@
 #
 ############################################################################
 
-px4_add_library(geofence_breach_avoidance
-	geofence_breach_avoidance.cpp
-	geofence_breach_avoidance.h
+px4_add_library(geofence_utils
+	geofence_utils.cpp
 )
 
-px4_add_library(geofence_avoidance_planner
-	geofence_avoidance_planner.cpp
-	geofence_avoidance_planner.h
-)
+target_link_libraries(geofence_utils PRIVATE geo)
+target_include_directories(geofence_utils PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-px4_add_functional_gtest(SRC GeofenceBreachAvoidanceTest.cpp LINKLIBS geofence_breach_avoidance modules__navigator motion_planning)
-target_link_libraries(geofence_avoidance_planner PRIVATE geo geofence_utils)
-px4_add_unit_gtest(SRC GeofenceAvoidancePlannerTest.cpp LINKLIBS geofence_avoidance_planner geo geofence_utils)
+px4_add_unit_gtest(SRC GeofenceUtilsTest.cpp LINKLIBS geofence_utils)
