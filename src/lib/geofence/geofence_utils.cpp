@@ -90,19 +90,19 @@ bool insideCircle(const matrix::Vector2<double> &center, float radius,
 bool segmentsIntersect(const matrix::Vector2f &p1, const matrix::Vector2f &p2,
 		       const matrix::Vector2f &v1, const matrix::Vector2f &v2)
 {
-	double d1x = p2(0) - p1(0), d1y = p2(1) - p1(1);
-	double d2x = v2(0) - v1(0), d2y = v2(1) - v1(1);
-	double denom = d1x * d2y - d1y * d2x;
+	float d1x = p2(0) - p1(0), d1y = p2(1) - p1(1);
+	float d2x = v2(0) - v1(0), d2y = v2(1) - v1(1);
+	float denom = d1x * d2y - d1y * d2x;
 
-	if (fabs(denom) < 1e-15) {
+	if (fabsf(denom) < FLT_EPSILON) {
 		return false;
 	}
 
-	double d3x = v1(0) - p1(0), d3y = v1(1) - p1(1);
-	double t = (d3x * d2y - d3y * d2x) / denom;
-	double u = (d3x * d1y - d3y * d1x) / denom;
+	float d3x = v1(0) - p1(0), d3y = v1(1) - p1(1);
+	float t = (d3x * d2y - d3y * d2x) / denom;
+	float u = (d3x * d1y - d3y * d1x) / denom;
 
-	return t > 0.0 && t < 1.0 && u > 0.0 && u < 1.0;
+	return t > 0.0f && t < 1.0f && u > 0.0f && u < 1.0f;
 }
 
 bool expandOrShrinkPolygon(const matrix::Vector2f *vertices_in, int num_vertices,
