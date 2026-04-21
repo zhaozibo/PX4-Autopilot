@@ -251,13 +251,24 @@ bool GeofenceAvoidancePlanner::calculate_graph_nodes(const matrix::Vector2<doubl
 		} else if (info.fence_type == NAV_CMD_FENCE_CIRCLE_INCLUSION || info.fence_type == NAV_CMD_FENCE_CIRCLE_EXCLUSION) {
 			const matrix::Vector2f center = get_vertex_local_position(poly_index, 0, geofence, start);
 			const float delta_angle = 2.f * M_PI_F / kCircleApproxVertices;
-			const float enlarged_radius = info.circle_radius / (2.f * cosf(delta_angle)) + (info.fence_type == NAV_CMD_FENCE_CIRCLE_INCLUSION ?
-						      -margin : margin);
+
+			float adjusted_radius;
+
+			if (info.fence_type == NAV_CMD_FENCE_CIRCLE_EXCLUSION) {
+				adjusted_radius = info.circle_radius / cosf(M_PI_F / kCircleApproxVertices) + margin;
+
+			} else {
+				adjusted_radius = info.circle_radius - margin;
+
+				if (adjusted_radius <= 0.f) {
+					return false;
+				}
+			}
 
 			for (int i = 0; i < kCircleApproxVertices; i++) {
-				const float angle = i * (2.f * M_PI_F / kCircleApproxVertices);
+				const float angle = i * delta_angle;
 				_graph_nodes[node_index].type = Node::Type::VERTEX;
-				_graph_nodes[node_index].position = center + matrix::Vector2f{enlarged_radius * cosf(angle), enlarged_radius * sinf(angle)};
+				_graph_nodes[node_index].position = center + matrix::Vector2f{adjusted_radius * cosf(angle), adjusted_radius * sinf(angle)};
 				_graph_nodes[node_index].best_distance = FLT_MAX;
 				_graph_nodes[node_index].previous_index = -1;
 				_graph_nodes[node_index].visited = false;
