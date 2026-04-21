@@ -89,7 +89,7 @@ PX4 automatically manages log storage by cleaning up old logs when starting to l
 Two parameters control how much space logs may use:
 
 - [SDLOG_ROTATE](../advanced_config/parameter_reference.md#SDLOG_ROTATE) is the maximum disk usage percentage (default 90).
-  Cleanup ensures at least `(100 - SDLOG_ROTATE)%` of the disk stays free at all times, **even while writing a new log file**.
+  Cleanup prior to logging (see below) ensures at least `(100 - SDLOG_ROTATE)%` of the disk stays free at all times, **even while writing a new log file**.
   Setting it to `0` disables space-based cleanup entirely; setting it to `100` lets logs fill the disk completely.
 - [SDLOG_MAX_SIZE](../advanced_config/parameter_reference.md#SDLOG_MAX_SIZE) is the maximum size of a single log file in MB
   (default 1024). It also reserves headroom so that a full new file always fits after cleanup.
