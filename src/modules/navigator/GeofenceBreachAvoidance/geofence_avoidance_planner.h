@@ -47,6 +47,7 @@ static constexpr int kMaxNodes = 100;
 static constexpr int kCircleApproxVertices = 8;
 
 struct PlannedPath {
+	// does not include the start and the end, just intermediate points
 	static constexpr int kMaxPathPoints = 32;
 	matrix::Vector2<double> points[kMaxPathPoints];
 	int num_points{0};
@@ -64,19 +65,20 @@ struct PlannedPath {
 
 	}
 
-	matrix::Vector2<double> getNextPoint()
+	matrix::Vector2<double> getAndPopCurrentPoint()
 	{
 		if (current_index < num_points) {
 			return points[current_index++];
 
 		} else {
-			return points[num_points - 1];
+			return matrix::Vector2d{NAN, NAN};
 		}
 
 	}
 
 	matrix::Vector2d getCurrentPoint()
 	{
+		// returns the current points but does not increase the index
 		if (current_index < num_points) {
 			return points[current_index];
 		}

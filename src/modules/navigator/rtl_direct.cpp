@@ -250,7 +250,14 @@ void RtlDirect::set_rtl_item()
 
 	case RTLState::MOVE_TO_INTERMEDIATE_POINT: {
 
-			const matrix::Vector2d point = _geofence_aware_return_path.getNextPoint();
+			matrix::Vector2d point = _geofence_aware_return_path.getAndPopCurrentPoint();
+
+			if (point.isAllNan()) {
+				// should never happen
+				point(0) = _land_approach.lat;
+				point(1) = _land_approach.lon;
+			}
+
 			PositionYawSetpoint pos_yaw_sp {
 				.lat = point(0),
 				.lon = point(1),
