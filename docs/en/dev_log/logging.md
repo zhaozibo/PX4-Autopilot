@@ -95,7 +95,7 @@ Two parameters control how much space logs may use:
   (default 1024). It also reserves headroom so that a full new file always fits after cleanup.
 
 At log start, the cleanup threshold is `((100 - SDLOG_ROTATE)% of disk) + SDLOG_MAX_SIZE`.
-Oldest logs are deleted until the free space meets this threshold.
+The oldest logs are deleted until the free space meets this threshold.
 For example, on an 8 GB card with defaults, cleanup keeps at least `820 + 1024 = ~1.8 GB` free at log start,
 so ~6 GB is usable for logs and disk usage never exceeds 90% during writing.
 Small flash targets override `SDLOG_MAX_SIZE` to a smaller value to keep more logs within the available space.
