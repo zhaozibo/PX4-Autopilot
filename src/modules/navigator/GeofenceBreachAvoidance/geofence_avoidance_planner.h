@@ -44,6 +44,7 @@
 #include "geofence_interface.h"
 
 static constexpr int kMaxNodes = 100;
+static constexpr int kCircleApproxVertices = 8;
 
 struct PlannedPath {
 	static constexpr int kMaxPathPoints = 32;

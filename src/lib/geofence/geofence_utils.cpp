@@ -40,20 +40,10 @@ namespace geofence_utils
 bool insidePolygon(const matrix::Vector2f *vertices, int num_vertices,
 		   const matrix::Vector2f &point)
 {
-	/**
-	 * Adaptation of algorithm originally presented as
-	 * PNPOLY - Point Inclusion in Polygon Test
-	 * W. Randolph Franklin (WRF)
-	 * Only supports non-complex polygons (not self intersecting)
-	 */
 	bool c = false;
 
 	for (int i = 0, j = num_vertices - 1; i < num_vertices; j = i++) {
-		if (((vertices[i](1) >= point(1)) != (vertices[j](1) >= point(1))) &&
-		    (point(0) <= (vertices[j](0) - vertices[i](0)) * (point(1) - vertices[i](1)) /
-		     (vertices[j](1) - vertices[i](1)) + vertices[i](0))) {
-			c = !c;
-		}
+		insidePolygonUpdateState(c, vertices[i], vertices[j], point);
 	}
 
 	return c;
@@ -82,6 +72,26 @@ bool segmentsIntersect(const matrix::Vector2f &p1, const matrix::Vector2f &p2,
 	float u = (d3x * d1y - d3y * d1x) / denom;
 
 	return t > 0.0f && t < 1.0f && u > 0.0f && u < 1.0f;
+}
+
+bool lineSegmentIntersectsCircle(const matrix::Vector2f &start, const matrix::Vector2f &end,
+				 const matrix::Vector2f &center, float radius)
+{
+	const matrix::Vector2f d = end - start;
+	const float len_sq = d.dot(d);
+
+	if (len_sq < FLT_EPSILON) {
+		return false;
+	}
+
+	const float t = math::constrain((center - start).dot(d) / len_sq, 0.f, 1.f);
+	const matrix::Vector2f closest = start + d * t;
+
+	if ((closest - center).norm() >= radius) {
+		return false;
+	}
+
+	return (start - center).norm() >= radius || (end - center).norm() >= radius;
 }
 
 bool expandOrShrinkPolygon(const matrix::Vector2f *vertices_in, int num_vertices,
@@ -131,5 +141,7 @@ bool expandOrShrinkPolygon(const matrix::Vector2f *vertices_in, int num_vertices
 
 	return true;
 }
+
+
 
 } // namespace geofence_utils

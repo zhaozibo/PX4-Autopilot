@@ -44,6 +44,35 @@ namespace geofence_utils
 {
 
 /**
+ * Update the PNPOLY inside/outside state for a single polygon edge.
+ * Templated on the coordinate scalar type so the same test can be used
+ * with either float (local frame, meters) or double (lat/lon degrees).
+ *
+ * @param last_state  state passed in on each call as reference, init to false
+ * @param v1          edge start vertex
+ * @param v2          edge end vertex
+ * @param point       test point
+ */
+template <typename T>
+void insidePolygonUpdateState(bool &last_state,
+			      const matrix::Vector2<T> &v1,
+			      const matrix::Vector2<T> &v2,
+			      const matrix::Vector2<T> &point)
+{
+	/**
+	 * Adaptation of algorithm originally presented as
+	 * PNPOLY - Point Inclusion in Polygon Test
+	 * W. Randolph Franklin (WRF)
+	 * Only supports non-complex polygons (not self intersecting)
+	 */
+	if (((v1(1) >= point(1)) != (v2(1) >= point(1))) &&
+	    (point(0) <= (v2(0) - v1(0)) * (point(1) - v1(1)) /
+	     (v2(1) - v1(1)) + v1(0))) {
+		last_state = !last_state;
+	}
+}
+
+/**
  * Check if a point is inside a circle.
  *
  * @param center  circle center (lat, lon) in degrees
@@ -66,6 +95,19 @@ bool insideCircle(const matrix::Vector2<double> &center, float radius,
  */
 bool segmentsIntersect(const matrix::Vector2f &p1, const matrix::Vector2f &p2,
 		       const matrix::Vector2f &v1, const matrix::Vector2f &v2);
+
+/**
+ * Check if a line segment intersects a circle.
+ * Works in local Cartesian coordinates (meters).
+ *
+ * @param start   segment start in local frame
+ * @param end     segment end in local frame
+ * @param center  circle center in local frame
+ * @param radius  circle radius in meters
+ * @return true if the segment intersects the circle
+ */
+bool lineSegmentIntersectsCircle(const matrix::Vector2f &start, const matrix::Vector2f &end,
+				 const matrix::Vector2f &center, float radius);
 
 /**
  * Offset polygon vertices expand or inward by computing the bisector

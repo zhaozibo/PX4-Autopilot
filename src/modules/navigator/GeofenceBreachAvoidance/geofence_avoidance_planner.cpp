@@ -75,7 +75,13 @@ PlannedPath GeofenceAvoidancePlanner::planPath(const matrix::Vector2<double> &st
 
 	for (int poly_index = 0; poly_index < num_polygons; poly_index++) {
 		const PolygonInfo info = geofence->getPolygonInfoByIndex(poly_index);
-		num_vertices_total += info.vertex_count;
+
+		if (info.fence_type == NAV_CMD_FENCE_CIRCLE_INCLUSION || info.fence_type == NAV_CMD_FENCE_CIRCLE_EXCLUSION) {
+			num_vertices_total += kCircleApproxVertices;
+
+		} else {
+			num_vertices_total += info.vertex_count;
+		}
 	}
 
 	if (num_vertices_total - 2 > kMaxNodes) {
@@ -213,30 +219,50 @@ bool GeofenceAvoidancePlanner::calculate_graph_nodes(const matrix::Vector2<doubl
 	for (int poly_index = 0; poly_index < num_polygons; poly_index++) {
 		PolygonInfo info = geofence->getPolygonInfoByIndex(poly_index);
 
-		// Project vertices to local frame
-		matrix::Vector2f local_in[info.vertex_count];
-		matrix::Vector2f local_out[info.vertex_count];
 
-		for (int vertex_idx = 0; vertex_idx < info.vertex_count; vertex_idx++) {
-			local_in[vertex_idx] = get_vertex_local_position(poly_index, vertex_idx, geofence, start);
-		}
+		if (info.fence_type == NAV_CMD_FENCE_POLYGON_VERTEX_INCLUSION || info.fence_type == NAV_CMD_FENCE_POLYGON_VERTEX_EXCLUSION) {
 
-		// In order to avoid moving too close to the edges of the polygons, we either expand (inclusion polygon)
-		// or shrink (exclusion) the polygon by a margin and use the resulting vertices as graph nodes.
-		const bool should_expand = (info.fence_type == NAV_CMD_FENCE_POLYGON_VERTEX_EXCLUSION);
+			// Project vertices to local frame
+			matrix::Vector2f local_in[info.vertex_count];
+			matrix::Vector2f local_out[info.vertex_count];
 
-		if (!geofence_utils::expandOrShrinkPolygon(local_in, info.vertex_count, margin, should_expand,
-				local_out)) {
-			return false;
-		}
+			for (int vertex_idx = 0; vertex_idx < info.vertex_count; vertex_idx++) {
+				local_in[vertex_idx] = get_vertex_local_position(poly_index, vertex_idx, geofence, start);
+			}
 
-		for (int vertex_idx = 0; vertex_idx < info.vertex_count; vertex_idx++) {
-			_graph_nodes[node_index].type = Node::Type::VERTEX;
-			_graph_nodes[node_index].position = local_out[vertex_idx];
-			_graph_nodes[node_index].best_distance = FLT_MAX;
-			_graph_nodes[node_index].previous_index = -1;
-			_graph_nodes[node_index].visited = false;
-			node_index++;
+			// In order to avoid moving too close to the edges of the polygons, we either expand (inclusion polygon)
+			// or shrink (exclusion) the polygon by a margin and use the resulting vertices as graph nodes.
+			const bool should_expand = (info.fence_type == NAV_CMD_FENCE_POLYGON_VERTEX_EXCLUSION);
+
+			if (!geofence_utils::expandOrShrinkPolygon(local_in, info.vertex_count, margin, should_expand,
+					local_out)) {
+				return false;
+			}
+
+			for (int vertex_idx = 0; vertex_idx < info.vertex_count; vertex_idx++) {
+				_graph_nodes[node_index].type = Node::Type::VERTEX;
+				_graph_nodes[node_index].position = local_out[vertex_idx];
+				_graph_nodes[node_index].best_distance = FLT_MAX;
+				_graph_nodes[node_index].previous_index = -1;
+				_graph_nodes[node_index].visited = false;
+				node_index++;
+			}
+
+		} else if (info.fence_type == NAV_CMD_FENCE_CIRCLE_INCLUSION || info.fence_type == NAV_CMD_FENCE_CIRCLE_EXCLUSION) {
+			const matrix::Vector2f center = get_vertex_local_position(poly_index, 0, geofence, start);
+			const float delta_angle = 2.f * M_PI_F / kCircleApproxVertices;
+			const float enlarged_radius = info.circle_radius / (2.f * cosf(delta_angle)) + (info.fence_type == NAV_CMD_FENCE_CIRCLE_INCLUSION ?
+						      -margin : margin);
+
+			for (int i = 0; i < kCircleApproxVertices; i++) {
+				const float angle = i * (2.f * M_PI_F / kCircleApproxVertices);
+				_graph_nodes[node_index].type = Node::Type::VERTEX;
+				_graph_nodes[node_index].position = center + matrix::Vector2f{enlarged_radius * cosf(angle), enlarged_radius * sinf(angle)};
+				_graph_nodes[node_index].best_distance = FLT_MAX;
+				_graph_nodes[node_index].previous_index = -1;
+				_graph_nodes[node_index].visited = false;
+				node_index++;
+			}
 		}
 	}
 
