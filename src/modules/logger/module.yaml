@@ -132,6 +132,20 @@ parameters:
       min: 0
       max: 100
       reboot_required: false
+    SDLOG_DIRS_MAX:
+      description:
+        short: Maximum number of log directories to keep
+        long: 'If greater than 0, the oldest log directories are deleted at log
+          start to keep the total directory count at or below this value. This
+          cleanup is orthogonal to the free-space cleanup driven by SDLOG_ROTATE
+          and SDLOG_MAX_SIZE, and is useful for capping log usage by count
+          independent of available disk size (e.g. in SITL). A value of 0
+          disables this count-based cleanup.'
+      type: int32
+      default: 0
+      min: 0
+      max: 1000
+      reboot_required: false
     SDLOG_UUID:
       description:
         short: Log UUID

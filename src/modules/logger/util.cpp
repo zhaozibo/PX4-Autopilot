@@ -34,6 +34,7 @@
 #include "util.h"
 
 #include <dirent.h>
+#include <errno.h>
 #include <inttypes.h>
 #include <sys/stat.h>
 #include <string.h>
@@ -138,7 +139,8 @@ bool scan_log_directories(const char *log_root_dir, LogDirInfo &info)
 }
 
 int cleanup_old_logs(const char *log_root_dir, orb_advert_t &mavlink_log_pub,
-		     uint32_t rotate_pct, uint32_t max_file_size_mb)
+		     uint32_t rotate_pct, uint32_t max_file_size_mb,
+		     int32_t max_dirs_to_keep)
 {
 	uint64_t avail_bytes = 0;
 	uint64_t total_bytes = 0;
@@ -160,8 +162,10 @@ int cleanup_old_logs(const char *log_root_dir, orb_advert_t &mavlink_log_pub,
 		cleanup_threshold += (uint64_t)max_file_size_mb * 1024ULL * 1024ULL;
 	}
 
-	// Early out if we have enough space
-	if (avail_bytes >= cleanup_threshold) {
+	bool need_space_cleanup = avail_bytes < cleanup_threshold;
+
+	// Early out if we have enough space and no directory-count limit
+	if (!need_space_cleanup && max_dirs_to_keep <= 0) {
 		return PX4_OK;
 	}
 
@@ -172,18 +176,26 @@ int cleanup_old_logs(const char *log_root_dir, orb_advert_t &mavlink_log_pub,
 		return PX4_OK; // ignore if we cannot access the log directory
 	}
 
-	PX4_INFO("Log cleanup: %u MiB free, threshold %u MiB",
-		 (unsigned)(avail_bytes / 1024U / 1024U), (unsigned)(cleanup_threshold / 1024U / 1024U));
+	int total_dirs = info.num_sess + info.num_dates;
+	bool need_count_cleanup = (max_dirs_to_keep > 0) && (total_dirs > max_dirs_to_keep);
+
+	if (!need_space_cleanup && !need_count_cleanup) {
+		return PX4_OK;
+	}
+
+	PX4_INFO("Log cleanup: %u MiB free, threshold %u MiB, %d dirs (max %" PRId32 ")",
+		 (unsigned)(avail_bytes / 1024U / 1024U), (unsigned)(cleanup_threshold / 1024U / 1024U),
+		 total_dirs, max_dirs_to_keep > 0 ? max_dirs_to_keep : -1);
 
 	// Determine if we currently have valid time (using date dirs) or not (using sess dirs)
 	// Delete from the "other" scheme first to avoid deleting current log
 	uint64_t utc_time_usec;
 	bool have_time = get_log_time(utc_time_usec, 0, false);
 
-	// Cleanup oldest .ulg files one by one until we have enough free space
+	// Cleanup oldest .ulg files one by one until conditions are met
 	int empty_dir_failures = 0;
 
-	while (avail_bytes < cleanup_threshold) {
+	while (need_space_cleanup || need_count_cleanup) {
 		char oldest_file[LOG_DIR_LEN] = "";
 		char oldest_dir[LOG_DIR_LEN];
 
@@ -191,6 +203,7 @@ int cleanup_old_logs(const char *log_root_dir, orb_advert_t &mavlink_log_pub,
 			break;
 		}
 
+		total_dirs = info.num_sess + info.num_dates;
 		bool found_sess = info.num_sess > 0;
 		bool found_date = info.num_dates > 0;
 
@@ -282,18 +295,21 @@ int cleanup_old_logs(const char *log_root_dir, orb_advert_t &mavlink_log_pub,
 		PX4_INFO("removing old log %s/%s", oldest_dir, oldest_ulg);
 
 		if (unlink(oldest_file) != 0) {
-			PX4_ERR("Failed to delete %s", oldest_file);
+			PX4_ERR("Failed to delete %s (errno %d)", oldest_file, errno);
 			break;
 		}
 
-		// Re-check free space
+		// Re-check conditions
 		if (!get_free_space(log_root_dir, &avail_bytes, nullptr)) {
 			break;
 		}
+
+		need_space_cleanup = avail_bytes < cleanup_threshold;
+		need_count_cleanup = (max_dirs_to_keep > 0) && (total_dirs > max_dirs_to_keep);
 	}
 
 	// Final check: if still not enough space, refuse to log
-	if (avail_bytes < 10ULL * 1024ULL * 1024ULL) {  // Less than 10 MiB is critical
+	if (avail_bytes < 1ULL * 1024ULL * 1024ULL) {  // Less than 1 MiB is critical
 		mavlink_log_critical(&mavlink_log_pub, "[logger] Storage full: %u MiB free\t",
 				     (unsigned)(avail_bytes / 1024U / 1024U));
 		events::send<uint32_t>(events::ID("logger_storage_full"), events::Log::Error,
