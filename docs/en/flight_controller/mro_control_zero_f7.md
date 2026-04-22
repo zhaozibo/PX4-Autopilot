@@ -22,17 +22,20 @@ This flight controller is [manufacturer supported](../flight_controller/autopilo
 ## Key Features
 
 - Microprocessor:
+
   - 32-bit STM32F777 Cortex<sup>&reg;</sup> M4 core with FPU rev. 3
   - 216 MHz/512 KB RAM/2 MB Flash
   - F-RAM Cypress MF25V02-G 256-Kbit nonvolatile memory (Flash memory that performs as fast as RAM)
 
 - Sensors:
+
   - [Bosch BMI088](https://www.bosch-sensortec.com/products/motion-sensors/imus/bmi088/) 3-axis accelerometer/gyroscope (internally vibration dampened)
   - [Invensense ICM-20602](https://invensense.tdk.com/products/motion-tracking/6-axis/icm-20602/) 3-axis accelerometer/gyroscope
   - [Invensense ICM-20948](https://invensense.tdk.com/products/motion-tracking/9-axis/icm-20948/) 3-axis accelerometer/gyroscope/magnetometer
   - Infineon DPS310 barometer - [Discontinued](https://www.infineon.com/products/sensor/pressure-sensors/pressure-sensors-for-iot) (So smooth and NO more light sensitivity)
 
 - Interfaces:
+
   - 6x UART (serial ports total), 3x with HW flow control, 1x FRSky Telemetry (D or X types), 1x Console and 1x GPS+I2C
   - 8x PWM outputs (all DShot capable)
   - 1x CAN
@@ -49,6 +52,7 @@ This flight controller is [manufacturer supported](../flight_controller/autopilo
   - Tricolor LED
 
 - Weight and Dimensions (Uncased):
+
   - Weight: 5.3g (0.19oz)
   - Width: 20mm (0.79")
   - Length: 32mm (1.26")

@@ -99,6 +99,7 @@ _PX4_ and _Pixhawk_ have been validated with:
 
 - PPM sum receivers
 - S.BUS and S.BUS2 receivers from:
+
   - Futaba
   - FrSky S.BUS and PPM models
   - TBS Crossfire with SBUS as output protocol

@@ -296,12 +296,12 @@ For the `start_offb.launch` copy the following code:
 ```xml
 <?xml version="1.0"?>
 <launch>
-	<!-- Include the MAVROS node with SITL and Gazebo -->
-	<include file="$(find px4)/launch/mavros_posix_sitl.launch">
-	</include>
+ <!-- Include the MAVROS node with SITL and Gazebo -->
+ <include file="$(find px4)/launch/mavros_posix_sitl.launch">
+ </include>
 
-	<!-- Our node to control the drone -->
-	<node pkg="offboard_py" type="offb_node.py" name="offb_node_py" required="true" output="screen" />
+ <!-- Our node to control the drone -->
+ <node pkg="offboard_py" type="offb_node.py" name="offb_node_py" required="true" output="screen" />
 </launch>
 ```
 

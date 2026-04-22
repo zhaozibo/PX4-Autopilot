@@ -24,6 +24,7 @@ where,
 To make driver configurable:
 
 1. Create a YAML module configuration file:
+
    - Add a new file in the driver's source directory named **module.yaml**
    - Insert the following text and adjust as needed:
 
@@ -41,15 +42,15 @@ To make driver configurable:
      This is also used to validate all configuration files in CI.
      :::
 
-1. Add the module configuration to the **CMakeLists.txt** file for the driver module:
+2. Add the module configuration to the **CMakeLists.txt** file for the driver module:
 
    ```cmake
    px4_add_module(
-   	MODULE drivers__ulanding
-   	MAIN ulanding_radar
-   	SRCS
-   		ulanding.cpp
-   	MODULE_CONFIG
-   		module.yaml
-   	)
+    MODULE drivers__ulanding
+    MAIN ulanding_radar
+    SRCS
+     ulanding.cpp
+    MODULE_CONFIG
+     module.yaml
+    )
    ```

@@ -45,7 +45,7 @@ Other RoboClaw wiring is detailed in the [RoboClaw User Manual](https://download
 Use _QGroundControl_ for rover configuration:
 
 1. In the [Basic Configuration](../config/index.md) section, select the [Airframe](../config/airframe.md) tab.
-1. Choose **Aion Robotics R1 UGV** under the **Rover** category.
+2. Choose **Aion Robotics R1 UGV** under the **Rover** category.
 
 ![Select Airframe](../../assets/airframes/rover/aion_r1/r1_airframe.png)
 
@@ -54,6 +54,7 @@ Use _QGroundControl_ for rover configuration:
 First configure the serial connection:
 
 1. Navigate to the [Parameters](../advanced_config/parameters.md) section in QGroundControl.
+
    - Set the [RBCLW_SER_CFG](../advanced_config/parameter_reference.md#RBCLW_SER_CFG) parameter to the serial port to which the RoboClaw is connected (such as `GPS2`).
    - [RBCLW_COUNTS_REV](../advanced_config/parameter_reference.md#RBCLW_COUNTS_REV) specifies the number of encoder counts required for one wheel revolution.
      This value should be left at `1200` for the tested `RoboClaw 2x15A Motor Controller`.
@@ -68,7 +69,7 @@ First configure the serial connection:
 Then configure the actuator configuration:
 
 1. Navigate to [Actuators Configuration & Testing](../config/actuators.md) in QGroundControl.
-1. Select the RoboClaw driver from the list of _Actuator Outputs_.
+2. Select the RoboClaw driver from the list of _Actuator Outputs_.
 
    For the channel assignments, disarm, minimum, and maximum values, please refer to the image below.
 

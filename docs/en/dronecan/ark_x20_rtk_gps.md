@@ -121,6 +121,7 @@ For more information see [Rover and Fixed Base](../dronecan/index.md#rover-and-f
 ## LED Meanings
 
 - The GPS status lights are located to the right of the connectors
+
   - Blinking green is GPS fix
   - Blinking blue is received corrections and RTK Float
   - Solid blue is RTK Fixed

@@ -25,7 +25,7 @@ For more information and pinout, check the [GitHub documentation](https://github
 - 9x PWM Outputs (8 Motor outputs, 1 LED strip)
 - Battery input voltage: 3S-10S
 - Battery voltage/current monitoring
-- 5V@2A and 10V@2.5A BEC outputs
+- 5V@2A and <10V@2.5A> BEC outputs
 - USB Type-C (IP68)
 - EMC and ESD protection
 

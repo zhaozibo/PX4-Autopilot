@@ -46,4 +46,4 @@ It should be used for development only!
 
 ## Testing & Updating Ground Stations
 
-Testing the code and updating ground stations is done in the same way as when [Adding New Standard MAVLink Definitions ](../mavlink/adding_messages.md).
+Testing the code and updating ground stations is done in the same way as when [Adding New Standard MAVLink Definitions](../mavlink/adding_messages.md).

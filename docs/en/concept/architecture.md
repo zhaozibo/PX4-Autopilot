@@ -112,6 +112,7 @@ There are 2 different ways that a module can be executed:
 
 - **Tasks**: The module runs in its own task with its own stack and process priority.
 - **Work queue tasks**: The module runs on a shared work queue, sharing the same stack and work queue thread priority as other modules on the queue.
+
   - All the tasks must behave co-operatively as they cannot interrupt each other.
   - Multiple _work queue tasks_ can run on a queue, and there can be multiple queues.
   - A _work queue task_ is scheduled by specifying a fixed time in the future, or via uORB topic update callback.

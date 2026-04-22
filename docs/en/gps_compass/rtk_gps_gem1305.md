@@ -14,7 +14,7 @@ It does not yet support _moving base_ mode.
 
 ## Where to Buy
 
-- [GEM1305 RTK receiver with antenna](https://www.datagnss.com/collections/gnss-for-drone/products/gem1305) (www.datagnss.com)
+- [GEM1305 RTK receiver with antenna](https://www.datagnss.com/collections/gnss-for-drone/products/gem1305) (<www.datagnss.com>)
 
   ![DATAGNSS GEM1305 RTK Receiver](../../assets/hardware/gps/datagnss_gem1305/gem1305_hero.png)
 

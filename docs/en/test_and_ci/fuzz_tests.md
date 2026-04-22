@@ -14,9 +14,9 @@ For more information see [Running Fuzz Tests](#running-fuzz-tests) below.
 To write a fuzz test:
 
 1. Start by writing a "normal" [functional test](../test_and_ci/unit_tests.md#functional-test).
-1. Make sure the file name contains `fuzz` (lower case).
+2. Make sure the file name contains `fuzz` (lower case).
    For example `my_driver_fuzz_tests.cpp`.
-1. Add one or more fuzz tests to the file.
+3. Add one or more fuzz tests to the file.
    For example:
 
    ```cpp
@@ -31,7 +31,7 @@ To write a fuzz test:
    ```
 
 The file can also contain normal tests.
-For more information, see https://github.com/google/fuzztest.
+For more information, see <https://github.com/google/fuzztest>.
 
 A complete example in the PX4 repository can be found in the [septentrio driver](https://github.com/PX4/PX4-Autopilot/blob/main/src/drivers/gnss/septentrio/septentrio_fuzz_tests.cpp).
 

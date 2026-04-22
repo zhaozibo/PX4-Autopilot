@@ -60,6 +60,7 @@ The Pixhawk® 5X is perfect for developers at corporate research labs, startups,
 - IO Processor: STM32F100
   - 32 Bit Arm® Cortex®-M3, 24MHz, 8KB SRAM
 - On-board Sensors:
+
   - Accel/Gyro: ICM-20649
   - Accel/Gyro: ICM-42688P
   - Accel/Gyro: ICM-20602
@@ -67,6 +68,7 @@ The Pixhawk® 5X is perfect for developers at corporate research labs, startups,
   - Barometer: 2x BMP388
 
 - Interfaces
+
   - 16- PWM servo outputs
   - R/C input for Spektrum / DSM
   - Dedicated R/C input for PPM and S.Bus input
@@ -96,15 +98,18 @@ The Pixhawk® 5X is perfect for developers at corporate research labs, startups,
     - 2 Dedicated debug and GPIO lines
 
 - Voltage Ratings
+
   - Max input voltage: 6V
   - USB Power Input: 4.75~5.25V
   - Servo Rail Input: 0~36V
 
 - Dimensions
+
   - Flight Controller Module: 38.8 x 31.8 x 14.6mm
   - Standard Baseboard: 52.4 x 103.4 x 16.7mm
 
 - Weight
+
   - Flight Controller Module: 23g
   - Standard Baseboard: 51g
 
@@ -161,15 +166,15 @@ The **POWER1** & **POWER2** ports on the Pixhawk 5X uses the 6 circuit [2.00mm P
 Under these conditions all power sources will be used in this order to power the system:
 
 1. **POWER1** and **POWER2** inputs (4.9V to 5.5V)
-1. **USB** input (4.75V to 5.25V)
+2. **USB** input (4.75V to 5.25V)
 
 **Absolute Maximum Ratings**
 
 Under these conditions the system will not draw any power (will not be operational), but will remain intact.
 
 1. **POWER1** and **POWER2** inputs (operational range 4.1V to 5.7V, 0V to 10V undamaged)
-1. **USB** input (operational range 4.1V to 5.7V, 0V to 6V undamaged)
-1. Servo input: VDD_SERVO pin of **FMU PWM OUT** and **I/O PWM OUT** (0V to 42V undamaged)
+2. **USB** input (operational range 4.1V to 5.7V, 0V to 6V undamaged)
+3. Servo input: VDD_SERVO pin of **FMU PWM OUT** and **I/O PWM OUT** (0V to 42V undamaged)
 
 **Voltage monitoring**
 

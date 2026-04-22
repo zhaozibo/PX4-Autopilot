@@ -38,7 +38,7 @@ Mode completion result, published by an active mode. The possible values of nav_
 
 uint32 MESSAGE_VERSION = 0
 
-uint64 timestamp				 # time since system start (microseconds)
+uint64 timestamp     # time since system start (microseconds)
 
 
 uint8 RESULT_SUCCESS = 0

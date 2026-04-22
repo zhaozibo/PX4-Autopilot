@@ -432,4 +432,5 @@ They recommend sensors, power systems, and other components from the same manufa
 <div v-if="$frontmatter.frame === 'Multicopter'">
 
 - [Multicopter Racer Setup](../config_mc/racer_setup.md) — racer-specific assembly and configuration information (racers don't usually have a GNSS module)
+
 </div>

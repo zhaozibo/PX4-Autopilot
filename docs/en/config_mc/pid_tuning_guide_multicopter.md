@@ -64,7 +64,7 @@ The derivative term (**D**) is on the feedback path in order to avoid an effect 
 :::tip
 For more information see:
 
-- [Not all PID controllers are the same](https://www.controleng.com/not-all-pid-controllers-are-the-same/) (www.controleng.com)
+- [Not all PID controllers are the same](https://www.controleng.com/not-all-pid-controllers-are-the-same/) (<www.controleng.com>)
 - [PID controller > Standard versus parallel (ideal) PID form](<https://en.wikipedia.org/wiki/PID_controller#Standard_versus_parallel_(ideal)_form>) (Wikipedia)
 
 :::
@@ -98,6 +98,7 @@ The rate controller can be tuned in [Acro mode](../flight_modes_mc/acro.md) or [
 
   ::: warning
   If you choose this mode, you must [disable all stick expo and have reasonable maximum rates for all axes](../flight_modes_mc/acro.md#stick-input-mapping):
+
   - `MC_ACRO_EXPO` = 0, `MC_ACRO_EXPO_Y` = 0, `MC_ACRO_SUPEXPO` = 0,
     `MC_ACRO_SUPEXPOY` = 0
   - `MC_ACRO_P_MAX` = 200, `MC_ACRO_R_MAX` = 200

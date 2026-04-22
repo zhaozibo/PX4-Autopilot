@@ -17,7 +17,7 @@ It does not yet support _moving base_ mode.
 
 ## Where to Buy
 
-- [NANO HRTK receiver](https://www.datagnss.com/collections/gnss-for-drone/products/nano-helix-rtk-receiver) (www.datagnss.com)
+- [NANO HRTK receiver](https://www.datagnss.com/collections/gnss-for-drone/products/nano-helix-rtk-receiver) (<www.datagnss.com>)
 
 ## Key Features
 

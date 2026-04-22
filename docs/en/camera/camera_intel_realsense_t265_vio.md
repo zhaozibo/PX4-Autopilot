@@ -28,6 +28,7 @@ At a high level:
   ```
 
   This is a static transform that links the camera ROS frame `camera_pose_frame` to the MAVROS drone frame `base_link`.
+
   - the first three `args` specify _translation_ x,y,z in metres from the center of the flight controller to the camera.
     For example, if the camera is 10cm in front of the controller and 4cm up, the first three numbers would be : [0.1, 0, 0.04,...]
   - the next three `args` specify rotation in radians (yaw, pitch, roll).

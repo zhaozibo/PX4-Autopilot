@@ -136,7 +136,7 @@ This defines the minimum buffer size: the larger this maximum, the larger the lo
 PX4 uses bigger buffers on F7/H7 and read caching to make up for some of these issues.
 
 ::: info
-If you have concerns about a particular card you can run the above test and report the results to https://github.com/PX4/PX4-Autopilot/issues/4634.
+If you have concerns about a particular card you can run the above test and report the results to <https://github.com/PX4/PX4-Autopilot/issues/4634>.
 :::
 
 ## Log Streaming

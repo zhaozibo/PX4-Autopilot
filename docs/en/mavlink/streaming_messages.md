@@ -96,38 +96,38 @@ protected:
     explicit MavlinkStreamBatteryStatusDemo(Mavlink *mavlink) : MavlinkStream(mavlink)
     {}
 
-	bool send() override
-	{
-		bool updated = false;
+ bool send() override
+ {
+  bool updated = false;
 
-		// Loop through _battery_status_subs (subscription to array of BatteryStatus instances)
-		for (auto &battery_sub : _battery_status_subs) {
+  // Loop through _battery_status_subs (subscription to array of BatteryStatus instances)
+  for (auto &battery_sub : _battery_status_subs) {
             // battery_status_s is a struct that can hold the battery object topic
-			battery_status_s battery_status;
+   battery_status_s battery_status;
 
-			// Update battery_status and publish only if the status has changed
-			if (battery_sub.update(&battery_status)) {
+   // Update battery_status and publish only if the status has changed
+   if (battery_sub.update(&battery_status)) {
                 // mavlink_battery_status_demo_t is the MAVLink message object
-				mavlink_battery_status_demo_t bat_msg{};
+    mavlink_battery_status_demo_t bat_msg{};
 
-				bat_msg.id = battery_status.id - 1;
-				bat_msg.percent_remaining = (battery_status.connected) ? roundf(battery_status.remaining * 100.f) : -1;
+    bat_msg.id = battery_status.id - 1;
+    bat_msg.percent_remaining = (battery_status.connected) ? roundf(battery_status.remaining * 100.f) : -1;
 
-				// check if temperature valid
-				if (battery_status.connected && PX4_ISFINITE(battery_status.temperature)) {
-					bat_msg.temperature = battery_status.temperature * 100.f;
-				} else {
-					bat_msg.temperature = INT16_MAX;
-				}
+    // check if temperature valid
+    if (battery_status.connected && PX4_ISFINITE(battery_status.temperature)) {
+     bat_msg.temperature = battery_status.temperature * 100.f;
+    } else {
+     bat_msg.temperature = INT16_MAX;
+    }
 
                 //Send the message
-				mavlink_msg_battery_status_demo_send_struct(_mavlink->get_channel(), &bat_msg);
-				updated = true;
-			}
-		}
+    mavlink_msg_battery_status_demo_send_struct(_mavlink->get_channel(), &bat_msg);
+    updated = true;
+   }
+  }
 
-		return updated;
-	}
+  return updated;
+ }
 
 };
 ```
@@ -222,10 +222,10 @@ If you're just testing on a GCS, you could add the message to the `MAVLINK_MODE_
 For example, to stream `BATTERY_STATUS_DEMO` at 5 Hz:
 
 ```cpp
-	case MAVLINK_MODE_CONFIG: // USB
-		// Note: streams requiring low latency come first
-		...
-		configure_stream_local("BATTERY_STATUS_DEMO", 5.0f);
+ case MAVLINK_MODE_CONFIG: // USB
+  // Note: streams requiring low latency come first
+  ...
+  configure_stream_local("BATTERY_STATUS_DEMO", 5.0f);
         ...
 ```
 

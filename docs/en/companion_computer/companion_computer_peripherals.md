@@ -28,7 +28,6 @@ A few "turnkey" options are listed below:
 <!-- Reference links for above table -->
 
 [mro_usb_ftdi_serial_to_jst_gh]: https://store.mrobotics.io/USB-FTDI-Serial-to-JST-GH-p/mro-ftdi-jstgh01-mr.htm
-[sparkfun_ftdi basic_breakout]: https://www.sparkfun.com/products/9873
 
 You can also use an off-the-shelf FTDI cable [like this one](https://www.sparkfun.com/ftdi-cable-5v-vcc-3-3v-i-o.html) and connect it to flight controller using the appropriate header adaptor
 (JST-GH connectors are specified in the Pixhawk standard, but you should confirm the connectors for your flight controller).

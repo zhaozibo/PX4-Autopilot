@@ -423,7 +423,7 @@ To counter this, [EKF2_POS_LOCK](../advanced_config/parameter_reference.md#EKF2_
 The fusion modes of operation are controlled by [EKF2_RNG_CTRL](../advanced_config/parameter_reference.md#EKF2_RNG_CTRL):
 
 1. [Conditional range aiding](#conditional-range-aiding)
-1. [Range height fusion](#range-height-fusion)
+2. [Range height fusion](#range-height-fusion)
 
 For more details about the configuration of height sources, [click here](#height).
 
@@ -665,30 +665,30 @@ These are largely self documenting, and are reproduced below:
 
 ```
 # GPS
-float32[2] gps_hvel	# horizontal GPS velocity innovation (m/sec) and innovation variance ((m/sec)**2)
-float32    gps_vvel	# vertical GPS velocity innovation (m/sec) and innovation variance ((m/sec)**2)
-float32[2] gps_hpos	# horizontal GPS position innovation (m) and innovation variance (m**2)
-float32    gps_vpos	# vertical GPS position innovation (m) and innovation variance (m**2)
+float32[2] gps_hvel # horizontal GPS velocity innovation (m/sec) and innovation variance ((m/sec)**2)
+float32    gps_vvel # vertical GPS velocity innovation (m/sec) and innovation variance ((m/sec)**2)
+float32[2] gps_hpos # horizontal GPS position innovation (m) and innovation variance (m**2)
+float32    gps_vpos # vertical GPS position innovation (m) and innovation variance (m**2)
 
 # External Vision
-float32[2] ev_hvel	# horizontal external vision velocity innovation (m/sec) and innovation variance ((m/sec)**2)
-float32    ev_vvel	# vertical external vision velocity innovation (m/sec) and innovation variance ((m/sec)**2)
-float32[2] ev_hpos	# horizontal external vision position innovation (m) and innovation variance (m**2)
-float32    ev_vpos	# vertical external vision position innovation (m) and innovation variance (m**2)
+float32[2] ev_hvel # horizontal external vision velocity innovation (m/sec) and innovation variance ((m/sec)**2)
+float32    ev_vvel # vertical external vision velocity innovation (m/sec) and innovation variance ((m/sec)**2)
+float32[2] ev_hpos # horizontal external vision position innovation (m) and innovation variance (m**2)
+float32    ev_vpos # vertical external vision position innovation (m) and innovation variance (m**2)
 
 # Fake Position and Velocity
-float32[2] fake_hvel	# fake horizontal velocity innovation (m/s) and innovation variance ((m/s)**2)
-float32    fake_vvel	# fake vertical velocity innovation (m/s) and innovation variance ((m/s)**2)
-float32[2] fake_hpos	# fake horizontal position innovation (m) and innovation variance (m**2)
-float32    fake_vpos	# fake vertical position innovation (m) and innovation variance (m**2)
+float32[2] fake_hvel # fake horizontal velocity innovation (m/s) and innovation variance ((m/s)**2)
+float32    fake_vvel # fake vertical velocity innovation (m/s) and innovation variance ((m/s)**2)
+float32[2] fake_hpos # fake horizontal position innovation (m) and innovation variance (m**2)
+float32    fake_vpos # fake vertical position innovation (m) and innovation variance (m**2)
 
 # Height sensors
-float32 rng_vpos	# range sensor height innovation (m) and innovation variance (m**2)
-float32 baro_vpos	# barometer height innovation (m) and innovation variance (m**2)
+float32 rng_vpos # range sensor height innovation (m) and innovation variance (m**2)
+float32 baro_vpos # barometer height innovation (m) and innovation variance (m**2)
 
 # Auxiliary velocity
-float32[2] aux_hvel	# horizontal auxiliary velocity innovation from landing target measurement (m/sec) and innovation variance ((m/sec)**2)
-float32    aux_vvel	# vertical auxiliary velocity innovation from landing target measurement (m/sec) and innovation variance ((m/sec)**2)
+float32[2] aux_hvel # horizontal auxiliary velocity innovation from landing target measurement (m/sec) and innovation variance ((m/sec)**2)
+float32    aux_vvel # vertical auxiliary velocity innovation from landing target measurement (m/sec) and innovation variance ((m/sec)**2)
 ```
 
 ### Output Complementary Filter

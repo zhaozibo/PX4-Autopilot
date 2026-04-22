@@ -31,6 +31,7 @@ This flight controller is [manufacturer supported](../flight_controller/autopilo
 Main FMU Processor: STM32F765◦32 Bit Arm® Cortex®-M7, 216MHz, 2MB memory, 512KB RAM
 
 - On-board sensors:
+
   - Accel/Gyro: ICM-20689
   - Accel/Gyro: ICM-20602
   - Accel/Gyro: BMI055
@@ -38,6 +39,7 @@ Main FMU Processor: STM32F765◦32 Bit Arm® Cortex®-M7, 216MHz, 2MB memory, 51
   - Barometer: MS5611
 
 - Interfaces: 8 PWM outputs
+
   - 3 dedicated PWM/Capture inputs on FMU
   - Dedicated R/C input for CPPM
   - Dedicated R/C input for Spektrum / DSM and S.Bus

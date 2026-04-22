@@ -28,7 +28,7 @@ pageClass: is-wide-page
 ::: details Click here to see original file
 
 ```c
-uint64 timestamp		# time since system start (microseconds)
+uint64 timestamp  # time since system start (microseconds)
 char[100] cmd
 uint32 MAX_STRLEN = 100
 uint32 strlen

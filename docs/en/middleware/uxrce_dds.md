@@ -129,7 +129,7 @@ To build the agent within ROS:
    mkdir -p ~/px4_ros_uxrce_dds_ws/src
    ```
 
-1. Clone the source code for the eProsima [Micro-XRCE-DDS-Agent](https://github.com/eProsima/Micro-XRCE-DDS-Agent) to the `/src` directory (the `main` branch is cloned by default):
+2. Clone the source code for the eProsima [Micro-XRCE-DDS-Agent](https://github.com/eProsima/Micro-XRCE-DDS-Agent) to the `/src` directory (the `main` branch is cloned by default):
 
    ::::tabs
 
@@ -162,7 +162,7 @@ To build the agent within ROS:
 
    ::::
 
-1. Source the ROS 2 development environment, and compile the workspace using `colcon`:
+3. Source the ROS 2 development environment, and compile the workspace using `colcon`:
 
    :::: tabs
 
@@ -281,6 +281,7 @@ The configuration can be done using the [UXRCE-DDS parameters](../advanced_confi
 
 - [UXRCE_DDS_CFG](../advanced_config/parameter_reference.md#UXRCE_DDS_CFG): Set the port to connect on, such as `TELEM2`, `Ethernet`, or `Wifi`.
 - If using an Ethernet connection:
+
   - [UXRCE_DDS_PRT](../advanced_config/parameter_reference.md#UXRCE_DDS_PRT):
     Use this to specify the agent UDP listening port.
     The default value is `8888`.
@@ -290,6 +291,7 @@ The configuration can be done using the [UXRCE-DDS parameters](../advanced_confi
     The default value is `2130706433` which corresponds to the _localhost_ `127.0.0.1`.
 
     You can use [Tools/convert_ip.py](https://github.com/PX4/PX4-Autopilot/blob/main/Tools/convert_ip.py) to convert between the formats:
+
     - To obtain the `int32` version of an IP in decimal dot notation the command is:
 
       ```sh
@@ -303,6 +305,7 @@ The configuration can be done using the [UXRCE-DDS parameters](../advanced_confi
       ```
 
 - If using a serial connection:
+
   - [SER_TEL2_BAUD](../advanced_config/parameter_reference.md#SER_TEL2_BAUD), [SER_URT6_BAUD](../advanced_config/parameter_reference.md#SER_URT6_BAUD) (and so on):
     Use the `_BAUD` parameter associated with the serial port to set the baud rate.
     For example, you'd set a value for `SER_TEL2_BAUD` if you are connecting to the companion using `TELEM2`.
@@ -632,7 +635,7 @@ The list of topics that are published and subscribed for a particular firmware i
 
 See [Supported uORB Messages](#supported-uorb-messages) and [DDS Topics YAML](#dds-topics-yaml) sections for more information.
 
-#### Topics no longer need to be synced between client and agent.
+#### Topics no longer need to be synced between client and agent
 
 The list of bridged topics between agent and client no longer needs to be synced for ROS 2, so the `update_px4_ros2_bridge.sh` script is no longer needed.
 

@@ -39,6 +39,7 @@ They should be used by preference as they contain the most complete and up to da
 
 - Main FMU Processor: STM32H743
 - On-board sensors:
+
   - Accelerometer/Gyroscope: ICM-20689
   - Accelerometer/Gyroscope: ICM-20649
   - Accelerometer/Gyroscope: BMI088

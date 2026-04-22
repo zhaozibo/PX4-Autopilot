@@ -44,6 +44,7 @@ This information comes from the [Holybro Pixhawk-Jetson Baseboard Documentation]
 [Dimensions and weight](https://docs.holybro.com/autopilot/pixhawk-baseboards/pixhawk-jetson-baseboard/dimension-and-weight) (Holybro)
 
 - Dimensions
+
   - 126 x 80 x 45mm (with Jetson Orin NX + Heatsink/Fan & FC Module)
   - 126 x 80 x 22.9mm (without Jetson and FC Module)
 
@@ -55,30 +56,37 @@ This information comes from the [Holybro Pixhawk-Jetson Baseboard Documentation]
 ::: tab Jetson connectors
 
 - 2x Gigabit Ethernet Port
+
   - Connected to both Jetson & Autopilot via Ethernet switch (RTL8367S)
   - Ethernet Switch powered by the same circuit as the Pixhawk
   - 8-pin JST-GH
   - RJ45
 
 - 2x MIPI CSI Camera Inputs
+
   - 4 Lanes each
   - 22-Pin Raspberry Pi Cam FFC
 
 - 2x USB 3.0 Host Port
+
   - USB A
   - 5A Current Limit
 
 - 2x USB 2.0 Host Port
+
   - 5-Pin JST-GH
   - 0A Current Limit
 
 - USB 2.0 for Programming/Debugging
+
   - USB-C
 
 - 2 Key M 2242/2280 for NVMe SSD
+
   - PCIEx4
 
 - 2 Key E 2230 for WiFi/BT
+
   - PCIEx2
   - USB
   - UART
@@ -87,21 +95,27 @@ This information comes from the [Holybro Pixhawk-Jetson Baseboard Documentation]
 - Mini HDMI Out
 
 - 4x GPIO
+
   - 6-pin JST-GH
 
 - CAN Port
+
   - Connected to Autopilot's CAN2 (4 Pin JST-GH)
 
 - SPI Port
+
   - 7-Pin JST-GH
 
 - I2C Port
+
   - 4-Pin JST-GH
 
 - I2S Port
+
   - 7-Pin JST-GH
 
 - 2x UART Port
+
   - 1 for debug
   - 1 connected to Autopilot's telem2
 
@@ -114,10 +128,12 @@ This information comes from the [Holybro Pixhawk-Jetson Baseboard Documentation]
 ::: tab Autopilot connectors
 
 - Pixhawk Autopilot Bus Interface
+
   - 100 Pin Hirose DF40
   - 50 Pin Hirose DF40
 
 - Redundant Digital Power Module Inputs
+
   - I2C Power Monitor Support
   - 2x 6-Pin Molex CLIK-Mate
 
@@ -126,48 +142,61 @@ This information comes from the [Holybro Pixhawk-Jetson Baseboard Documentation]
 - Overvoltage Protection
 
 - Voltage Ratings
+
   - Max input voltage: 6V
   - USB Power Input: 4.75~5.25V
 
 - Full GPS Plus Safety Switch Port
+
   - 10-Pin JST-GH
 
 - Secondary (GPS2) Port
+
   - 6-Pin JST-GH
 
 - 2x CAN Ports
+
   - 4-Pin JST-GH
 
 - 3x Telemetry Ports with Flow Control
+
   - 2x 6-Pin JST-GH
   - 1 is connected to Jetson's `UART1` Port
 
 - 16 PWM Outputs
+
   - 2x 10-Pin JST-GH
 
 - UART4 & I2C Port
+
   - 6-Pin JST-GH
 
 - 2x Gigabit Ethernet Port
+
   - Connected to both Jetson & Autopilot via Ethernet switch (RTL8367S)
   - 8-Pin JST-GH
   - RJ45
 
 - AD & IO
+
   - 8-Pin JST-GH
 
 - USB 2.0
+
   - USB-C
   - 4-Pin JST-GH
 
 - DSM Input
+
   - 3-Pin JST-ZH 1.5mm Pitch
 
 - RC In
+
   - PPM/SBUS
   - 5-Pin JST-GH
 
 - SPI Port
+
   - External Sensor Bus (SPI5)
   - 11-Pin JST-GH
 

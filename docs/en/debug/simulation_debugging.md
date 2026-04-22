@@ -85,7 +85,7 @@ make px4_sitl_default gazebo-classic_iris_gdb
 is equivalent with
 
 ```sh
-make px4_sitl_default	# Configure with cmake
+make px4_sitl_default # Configure with cmake
 make -C build/px4_sitl_default classic_iris_gdb
 ```
 

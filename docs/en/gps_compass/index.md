@@ -27,7 +27,7 @@ These have been tested by the PX4 dev team, or which are popular within the PX4 
 | [ARK GPS](../dronecan/ark_gps.md)                            |     M9N     |          BMM150           |              ✓              |           ✓           | + Baro, IMU                 |
 | [ARK DAN GPS](../gps_compass/ark_dan_gps.md)                 |  DAN-F10N   |          IIS2MDC          |                             |           ✓           |                             |
 | [ARK SAM GPS](../gps_compass/ark_sam_gps.md)                 |  SAM-M10Q   |          IIS2MDC          |                             |           ✓           |                             |
-| [ARK SAM GPS MINI ](../gps_compass/ark_sam_gps_mini.md)      |  SAM-M10Q   |          IIS2MDC          |                             |           ✓           |                             |
+| [ARK SAM GPS MINI](../gps_compass/ark_sam_gps_mini.md)       |  SAM-M10Q   |          IIS2MDC          |                             |           ✓           |                             |
 | [ARK TESEO GPS](../dronecan/ark_teseo_gps.md)                | Teseo-LIV4F |          BMM150           |              ✓              |           ✓           | + Baro, IMU                 |
 | [Avionics Anonymous UAVCAN GNSS/Mag][avionics_anon_can_gnss] |   SAM-M8Q   |         MMC5983MA         |              ✓              |           ✘           |                             |
 | [CUAV NEO 3 GPS](../gps_compass/gps_cuav_neo_3.md)           |     M9N     |          IST8310          |                             |           ✓           |                             |
@@ -147,13 +147,14 @@ To ensure the port is set up correctly perform a [Serial Port Configuration](../
 The following steps show how to configure a secondary GPS on the `GPS 2` port in _QGroundControl_:
 
 1. [Find and set](../advanced_config/parameters.md) the parameter [GPS_2_CONFIG](../advanced_config/parameter_reference.md#GPS_2_CONFIG) to **GPS 2**.
+
    - Open _QGroundControl_ and navigate to the **Vehicle Setup > Parameters** section.
    - Select the **GPS** tab, then open the [GPS_2_CONFIG](../advanced_config/parameter_reference.md#GPS_2_CONFIG) parameter and select `GPS 2` from the dropdown list.
 
      ![QGC Serial Example](../../assets/peripherals/qgc_serial_config_example.png)
 
-1. Reboot the vehicle in order to make the other parameters visible.
-1. Select the **Serial** tab, and open the [SER_GPS2_BAUD](../advanced_config/parameter_reference.md#SER_GPS2_BAUD) parameter (`GPS 2` port baud rate): set it to _Auto_ (or 115200 for the Trimble).
+2. Reboot the vehicle in order to make the other parameters visible.
+3. Select the **Serial** tab, and open the [SER_GPS2_BAUD](../advanced_config/parameter_reference.md#SER_GPS2_BAUD) parameter (`GPS 2` port baud rate): set it to _Auto_ (or 115200 for the Trimble).
 
    ![QGC Serial Baudrate Example](../../assets/peripherals/qgc_serial_baudrate_example.png)
 

@@ -46,7 +46,6 @@ There may also be other DroneCAN rangefinders than those listed here.
 [Lanbao PSK-CM8JL65-CC5]: ../sensor/cm8jl65_ir_distance_sensor.md
 [LeddarOne]: ../sensor/leddar_one.md
 [Lidar-Lite]: ../sensor/lidar_lite.md
-[LightWare Lidar]: ../sensor/sfxx_lidar.md
 [LightWare SF11/C]: ../sensor/sfxx_lidar.md
 [LightWare LW20/C]: ../sensor/sfxx_lidar.md
 [LightWare SF45/B]: ../sensor/sfxx_lidar.md
@@ -206,7 +205,7 @@ To view the rangefinder output:
 
    ![Menu for QGC Analyze Tool](../../assets/qgc/analyze/menu_analyze_tool.png)
 
-1. Select the message `DISTANCE_SENSOR`, and then check the plot checkbox against `current_distance`.
+2. Select the message `DISTANCE_SENSOR`, and then check the plot checkbox against `current_distance`.
    The tool will then plot the result:
    ![QGC Analyze DISTANCE_SENSOR value](../../assets/qgc/analyze/qgc_analyze_tool_distance_sensor.png)
 

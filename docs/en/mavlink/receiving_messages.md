@@ -44,23 +44,23 @@ Implement the `handle_message_battery_status_demo` function in [mavlink_receiver
 void
 MavlinkReceiver::handle_message_battery_status_demo(mavlink_message_t *msg)
 {
-	if ((msg->sysid != mavlink_system.sysid) || (msg->compid == mavlink_system.compid)) {
-		// ignore battery status coming from other systems or from the autopilot itself
-		return;
-	}
+ if ((msg->sysid != mavlink_system.sysid) || (msg->compid == mavlink_system.compid)) {
+  // ignore battery status coming from other systems or from the autopilot itself
+  return;
+ }
 
-	// external battery measurements
-	mavlink_battery_status_t battery_mavlink;
-	mavlink_msg_battery_status_decode(msg, &battery_mavlink);
+ // external battery measurements
+ mavlink_battery_status_t battery_mavlink;
+ mavlink_msg_battery_status_decode(msg, &battery_mavlink);
 
-	battery_status_s battery_status{};
-	battery_status.timestamp = hrt_absolute_time();
+ battery_status_s battery_status{};
+ battery_status.timestamp = hrt_absolute_time();
 
-	battery_status.remaining = (float)battery_mavlink.battery_remaining / 100.0f;
-	battery_status.temperature = (float)battery_mavlink.temperature;
-	battery_status.connected = true;
+ battery_status.remaining = (float)battery_mavlink.battery_remaining / 100.0f;
+ battery_status.temperature = (float)battery_mavlink.temperature;
+ battery_status.connected = true;
 
-	_battery_pub.publish(battery_status);
+ _battery_pub.publish(battery_status);
 }
 ```
 

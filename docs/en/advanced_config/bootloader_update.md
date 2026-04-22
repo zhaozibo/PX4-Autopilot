@@ -34,15 +34,15 @@ You can enable this key in your own custom firmware if needed.
 The steps are:
 
 1. Insert an SD card (enables boot logging to debug any problems).
-1. [Update the Firmware](../config/firmware.md#custom) with an image containing the new/desired bootloader.
+2. [Update the Firmware](../config/firmware.md#custom) with an image containing the new/desired bootloader.
 
    ::: info
    The updated bootloader might be included the default firmware for your board or supplied in custom firmware.
    :::
 
-1. Wait for the vehicle to reboot.
-1. [Find and enable](../advanced_config/parameters.md) the parameter [SYS_BL_UPDATE](../advanced_config/parameter_reference.md#SYS_BL_UPDATE).
-1. Reboot (disconnect/reconnect the board).
+3. Wait for the vehicle to reboot.
+4. [Find and enable](../advanced_config/parameters.md) the parameter [SYS_BL_UPDATE](../advanced_config/parameter_reference.md#SYS_BL_UPDATE).
+5. Reboot (disconnect/reconnect the board).
    The bootloader update will only take a few seconds.
 
 Generally at this point you may then want to [update the firmware](../config/firmware.md) again using the correct/newly installed bootloader.
@@ -86,6 +86,7 @@ The following steps explain how you can "manually" update the bootloader using a
 2. Get a [Debug Probe](../debug/swd_debug.md#debug-probes-for-px4-hardware).
    Connect the probe your PC via USB and setup the `gdbserver`.
 3. Go into the directory containing the binary and run the command for your target bootloader in the terminal:
+
    - FMUv6X
 
      ```sh

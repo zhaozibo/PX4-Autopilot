@@ -20,22 +20,26 @@ Order this module from:
 ## Hardware Specifications
 
 - **TI INA226 Digital Power Monitor**
+
   - 0.0005 Ohm Shunt
   - I2C Interface
 
 - **5.2V 6A Step-Down Regulator**
+
   - 33V Maximum Input Voltage
   - 5.8V Minimum Input Voltage at 6A Out
   - Output Over-Voltage Protection
   - Output Over-Current Protection
 
 - **Connections**
+
   - XT60 Battery Input / Solder Pad Battery Input (No Connector version)
   - XT60 Battery Output / Solder Pad Battery Output (No Connector version)
   - 6 Pin Molex CLIK-Mate Output
     - [Matches ARK PAB Carrier Power Pinout](https://arkelectron.gitbook.io/ark-documentation/flight-controllers/ark-pixhawk-autopilot-bus-carrier/pinout)
 
 - **Other**
+
   - USA Built
   - FCC Compliant
   - Includes 6 Pin Molex CLIK-Mate Cable

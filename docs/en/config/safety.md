@@ -36,7 +36,6 @@ Note that different types of failsafe may not support all of these actions.
 [flight_term]: ../advanced_config/flight_termination.md
 [return]: ../flight_modes/return.md
 [pwm_main_failn]: ../advanced_config/parameter_reference.md#PWM_MAIN_FAIL1
-[pwm_aux_failn]: ../advanced_config/parameter_reference.md#PWM_AUX_FAIL1
 
 If multiple failsafes are triggered, the more severe action is taken.
 For example if both RC and GPS are lost, and manual control loss is set to [Return mode](#act_return) and GCS link loss to [Land](#act_land), Land is executed.

@@ -60,7 +60,7 @@ subscribed to by any other modules.
 uint64 timestamp # [us] Time since system start
 uint64 timestamp_sample # [us] Timestamp of the raw data
 
-float32 windspeed_north	# [m/s] Wind component in north / X direction
+float32 windspeed_north # [m/s] Wind component in north / X direction
 float32 windspeed_east # [m/s] Wind component in east / Y direction
 
 float32 variance_north # [(m/s)^2] [@invalid 0 if not estimated] Wind estimate error variance in north / X direction

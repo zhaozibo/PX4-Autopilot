@@ -2,6 +2,7 @@
   - [Basic Concepts](getting_started/px4_basic_concepts.md)
 - [Try PX4 (Simulation)](simulation/px4_simulation_quickstart.md)
 - [Multicopters](frames_multicopter/index.md)
+
   - [Features](features_mc/index.md)
     - [Flight Modes](flight_modes_mc/index.md)
       - [Position Mode (MC)](flight_modes_mc/position.md)
@@ -56,6 +57,7 @@
     - [DJI F450 (CUAV v5 nano)](frames_multicopter/dji_f450_cuav_5nano.md)
 
 - [Planes (Fixed-Wing)](frames_plane/index.md)
+
   - [Features](features_fw/index.md)
     - [Gain compression](features_fw/gain_compression.md)
   - [Assembly](assembly/assembly_fw.md)
@@ -86,6 +88,7 @@
     - [Wing Wing Z84 (Pixracer)](frames_plane/wing_wing_z84.md)
 
 - [VTOL](frames_vtol/index.md)
+
   - [Assembly](assembly/assembly_vtol.md)
   - [VTOL Config/Tuning](config_vtol/index.md)
     - [Auto-tune](config/autotune_vtol.md)
@@ -131,6 +134,7 @@
     - [QGroundControl Flight-Readiness Status](flying/pre_flight_checks.md)
   - [Asset Tracking](debug/asset_tracking.md)
 - [Hardware Selection & Setup](hardware/drone_parts.md)
+
   - [Flight Controllers (Autopilots)](flight_controller/index.md)
     - [Flight Controller Selection](getting_started/flight_controller_selection.md)
     - [Pixhawk Series](flight_controller/pixhawk_series.md)
@@ -317,8 +321,10 @@
       - [Flight Modes](config/flight_mode.md)
     - [Joysticks](config/joystick.md)
   - [Data Links](data_links/index.md)
+
     - [MAVLink Telemetry (OSD/GCS)](peripherals/mavlink_peripherals.md)
     - [Telemetry Radios](telemetry/index.md)
+
       - [SiK Radio](telemetry/sik_radio.md)
         - [RFD900 (SiK) Telemetry Radio](telemetry/rfd900_telemetry.md)
         - [ThunderFly TFSIK01 Telemetry Radio](telemetry/tfsik_telemetry.md)
@@ -409,6 +415,7 @@
     - [Full Parameter Reference](advanced_config/parameter_reference.md)
 
 - [Other Vehicles](airframes/index.md)
+
   - [Airships (experimental)](frames_airship/index.md)
   - [Autogyros (experimental)](frames_autogyro/index.md)
     - [ThunderFly Auto-G2 (Holybro pix32)](frames_autogyro/thunderfly_auto_g2.md)

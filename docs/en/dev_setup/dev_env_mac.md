@@ -71,6 +71,7 @@ To build for [other targets](../dev_setup/dev_env.md#supported-targets) you will
    :::
 
    This installs:
+
    - **Toolchain packages** from the `osx-cross/arm` and `PX4/px4` Homebrew taps — ARM cross-compiler (`arm-gcc-bin@13`), `cmake`, `ninja`, `ccache`, `fastdds`, `genromfs`, `kconfig-frontends`, and other build tools
    - **Python packages** from `requirements.txt`
    - **`px4-sim`** (via `--sim-tools`) — Gazebo Harmonic simulation (`gz-harmonic`) and related tools

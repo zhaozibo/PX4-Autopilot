@@ -190,7 +190,7 @@ Note that the X series receivers listed below are recommended (e.g. XSR, X8R). T
 | R9 slim     | 10km  | S.Bus (16)            | Smart Port                    | 43.3x26.8x13.9mm      | 15.8g  |
 
 ::: info
-The above table originates from https://blog.redsilico.com/frsky-receiver-chart and FrSky [product documentation](https://www.frsky-rc.com/product-category/receivers/).
+The above table originates from <https://blog.redsilico.com/frsky-receiver-chart> and FrSky [product documentation](https://www.frsky-rc.com/product-category/receivers/).
 :::
 
 <a id="ready_made_cable"></a>

@@ -109,6 +109,7 @@ Currently we have two types of source-based documentation:
   Developers should name C++ entities (classes, functions, variables etc.) such that their purpose can be inferred - reducing the need for explicit documentation.
 
   :::
+
   - Do not add documentation that can trivially be inferred from C++ entity names.
   - ALWAYS specify units of variables, constants, and input/return parameters where they are defined.
   - Commonly you may want to add information about corner cases and error handling.

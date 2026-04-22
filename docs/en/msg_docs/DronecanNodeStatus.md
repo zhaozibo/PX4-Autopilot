@@ -39,12 +39,12 @@ pageClass: is-wide-page
 ::: details Click here to see original file
 
 ```c
-uint64 timestamp					# time since system start (microseconds)
+uint64 timestamp     # time since system start (microseconds)
 
-uint16 node_id						# The node ID which this data comes from
+uint16 node_id      # The node ID which this data comes from
 
 # From the uavcan.protocol.NodeStatus message
-uint32 uptime_sec					# Node uptime
+uint32 uptime_sec     # Node uptime
 
 #
 # Abstract node health.

@@ -69,7 +69,7 @@ Because the risk of stalling is real, it is recommended to set the 'fixed-wing m
 This will cause the VTOL to transition back to multicopter mode and initiate the [Return mode](../flight_modes_vtol/return.md) below a certain altitude.
 You could set this to 15 or 20 meters to give the multicopter time to recover from a stall.
 
-The position estimator tested for this mode is EKF2, which is enabled by default (for more information see [Switching State Estimators](../advanced/switching_state_estimators.md#how-to-enable-different-estimators) and [EKF2_EN ](../advanced_config/parameter_reference.md#EKF2_EN)).
+The position estimator tested for this mode is EKF2, which is enabled by default (for more information see [Switching State Estimators](../advanced/switching_state_estimators.md#how-to-enable-different-estimators) and [EKF2_EN](../advanced_config/parameter_reference.md#EKF2_EN)).
 
 ## First Flight Without Airspeed Sensor
 

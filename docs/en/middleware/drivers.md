@@ -130,21 +130,21 @@ The code fragment below shows the required change to enable DEBUG_BUILD level de
 
 ```
 px4_add_module(
-	MODULE templates__module
-	MAIN module
+ MODULE templates__module
+ MAIN module
 ```
 
 ```
-	COMPILE_FLAGS
-		-DDEBUG_BUILD
+ COMPILE_FLAGS
+  -DDEBUG_BUILD
 ```
 
 ```
-	SRCS
-		module.cpp
-	DEPENDS
-		modules__uORB
-	)
+ SRCS
+  module.cpp
+ DEPENDS
+  modules__uORB
+ )
 ```
 
 :::tip

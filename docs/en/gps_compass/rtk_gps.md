@@ -67,7 +67,6 @@ It also highlights devices that connect via the CAN bus, and those which support
 [Dual F9P]: ../gps_compass/u-blox_f9p_heading.md
 [Septentrio Dual Antenna]: ../gps_compass/septentrio.md#gnss-based-heading
 [Unicore Dual Antenna]: ../gps_compass/rtk_gps_holybro_unicore_um982.md#enable-gps-heading-yaw
-[DATAGNSS GEM1305 RTK]: ../gps_compass/rtk_gps_gem1305.md
 [DroneCAN]: ../dronecan/index.md
 [GPS Yaw]: #configuring-gps-as-yaw-heading-source
 [mosaic-G5 P3]: https://www.septentrio.com/en/products/gnss-receivers/gnss-receiver-modules/mosaic-G5-P3
@@ -132,7 +131,7 @@ The RTK GPS connection is essentially plug and play:
 
 1. Start _QGroundControl_ and attach the base RTK GPS via USB to the ground station.
    The device is recognized automatically.
-1. Start the vehicle and make sure it is connected to _QGroundControl_.
+2. Start the vehicle and make sure it is connected to _QGroundControl_.
 
    :::tip
    _QGroundControl_ displays an RTK GPS status icon in the top icon bar while an RTK GPS device is connected (in addition to the normal GPS status icon).
@@ -140,7 +139,7 @@ The RTK GPS connection is essentially plug and play:
    You can click the icon to see the current state and RTK accuracy.
    :::
 
-1. _QGroundControl_ then starts the RTK setup process (known as "Survey-In").
+3. _QGroundControl_ then starts the RTK setup process (known as "Survey-In").
 
    Survey-In is a startup procedure to get an accurate position estimate of the base station.
    The process typically takes several minutes (it ends after reaching the minimum time and accuracy specified in the [RTK settings](#rtk-gps-settings)).
@@ -149,7 +148,8 @@ The RTK GPS connection is essentially plug and play:
 
    ![survey-in](../../assets/qgc/setup/rtk/qgc_rtk_survey-in.png)
 
-1. Once Survey-in completes:
+4. Once Survey-in completes:
+
    - The RTK GPS icon changes to white and _QGroundControl_ starts to stream position data to the vehicle:
 
      ![RTK streaming](../../assets/qgc/setup/rtk/qgc_rtk_streaming.png)

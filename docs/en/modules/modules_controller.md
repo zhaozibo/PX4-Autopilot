@@ -171,7 +171,7 @@ Nonlinear Quadrocopter Attitude Control (2013)
 by Dario Brescianini, Markus Hehn and Raffaello D'Andrea
 Institute for Dynamic Systems and Control (IDSC), ETH Zurich
 
-https://www.research-collection.ethz.ch/bitstream/handle/20.500.11850/154099/eth-7387-01.pdf
+<https://www.research-collection.ethz.ch/bitstream/handle/20.500.11850/154099/eth-7387-01.pdf>
 
 ### Usage {#mc_att_control_usage}
 

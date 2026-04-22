@@ -213,6 +213,7 @@ The steps are:
 
 3. Open PlotJuggler and navigate to the **Tools > Reactive Script Editor** section.
    In the **Script Editor** tab, add following scripts in the appropriate sections:
+
    - **Global code, executed once:**
 
      ```lua

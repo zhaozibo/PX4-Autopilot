@@ -415,13 +415,13 @@ This is a safety feature to prevent sudden motor movements after switch is enabl
 Sliders can be used to verify the following:
 
 1. Actuators (Motors, Control surfaces, etc.) are assigned to the expected output.
-1. Motors don't spin when at the `disarmed` PWM output value
-1. Motors barely spin at the `minimum` PWM output value.
-1. Motors give **positive thrust** in the expected direction
-1. Control Surfaces are in the correct idle position for `disarmed` output value
-1. Control Surfaces move in the direction as defined in the [Control Surface Convention](#control-surface-deflection-convention)
-1. Motor Tilt Servos are in the correct idle position for `disarmed` output value
-1. Motor Tilt Servos move in the direction as defined in the [Tilt Servo Convention](#tilt-servo-coordinate-system)
+2. Motors don't spin when at the `disarmed` PWM output value
+3. Motors barely spin at the `minimum` PWM output value.
+4. Motors give **positive thrust** in the expected direction
+5. Control Surfaces are in the correct idle position for `disarmed` output value
+6. Control Surfaces move in the direction as defined in the [Control Surface Convention](#control-surface-deflection-convention)
+7. Motor Tilt Servos are in the correct idle position for `disarmed` output value
+8. Motor Tilt Servos move in the direction as defined in the [Tilt Servo Convention](#tilt-servo-coordinate-system)
 
 ## Output Assignment and Configuration
 
@@ -454,15 +454,15 @@ QGC will then spin the next motor for you to assign, and so on.
 Instructions:
 
 1. Setup the motor geometry to match the motors on your frame.
-1. Select the PWM tab where you want to assign the motors.
-1. Click the **Identify & Assign Motors** button.
-1. One motor will start spinning (click **Spin Motor Again** if it stops spinning too quickly to note.)
+2. Select the PWM tab where you want to assign the motors.
+3. Click the **Identify & Assign Motors** button.
+4. One motor will start spinning (click **Spin Motor Again** if it stops spinning too quickly to note.)
 
    Select the corresponding motor in the geometry section.
 
    ![Screenshot showing how to identify/assign motors](../../assets/config/actuators/identify_motors_in_progress.png)
 
-1. After assigning all motors, the tool will set the correct motor mapping for the outputs and then exit.
+5. After assigning all motors, the tool will set the correct motor mapping for the outputs and then exit.
 
 ### Output Assignment (Manual)
 
@@ -475,19 +475,19 @@ Actuator outputs for both motors and servos can be _manually_ assigned using sli
 To assign an actuator:
 
 1. First assign functions to the outputs that you think are _likely_ to be correct in the _Actuator Outputs_ section.
-1. Toggle the **Enable sliders** switch in _Actuator Testing_ section.
-1. Move the slider for the actuator you want to test:
+2. Toggle the **Enable sliders** switch in _Actuator Testing_ section.
+3. Move the slider for the actuator you want to test:
    - Motors should be moved to the minimum thrust position.
    - Servos should be moved near the middle position.
-1. Check which actuator moves on the vehicle.
+4. Check which actuator moves on the vehicle.
    This should match the actuator positions for your geometry (the [airframe reference](../airframes/airframe_reference.md) shows motor positions for a number of standard airframes).
    - If the correct actuator moves, then proceed to the next step.
    - If a wrong actuator moves, swap the output assignment over.
    - If nothing moves then increase the slider mid-way though the range, then higher if needed.
      If nothing moves after that the output might not be connected, the motor might not be powered, or the output might be misconfigured.
      You will need to troubleshoot (perhaps try other actuator outputs to see if "anything" moves).
-1. Return the slider to the "disarmed" position (bottom of slider for motors, centre of slider for servos).
-1. Repeat for all actuators
+5. Return the slider to the "disarmed" position (bottom of slider for motors, centre of slider for servos).
+6. Repeat for all actuators
 
 ### Motor Configuration
 
@@ -516,6 +516,7 @@ For each motor:
    - If the motor spins, reduce the corresponding PWM `disarmed` value in the [Actuator Outputs](#actuator-outputs) section to below the level at which it still spins.
 2. Slowly move the slider up until it snaps to the _minimum_ position.
    In this position the motor is set to the outputs `minimum` value.
+
    - Verify that the motor is spinning very slowly in this position.
    - If the motor is not spinning, or spinning too fast you will need to adjust the corresponding PWM `minimum` value in the [Actuator Outputs](#actuator-outputs) such that the motors barely spin.
 
@@ -525,6 +526,7 @@ For each motor:
      :::
 
 3. Increase the slider value to a level where you can verify that the motor is spinning in the correct direction and that it would give a positive thrust in the expected direction.
+
    - The expected thrust direction can vary by vehicle type.
      For example in multicopters the thrust should always point upwards, while in a fixed-wing vehicle the thrust will push the vehicle forwards.
    - For VTOL, thrust should point upwards when the Tilt Servo is at 0 degrees as defined the [Tilt Servo Convention](#tilt-servo-coordinate-system).
@@ -591,6 +593,7 @@ To set these up:
    ![Control Surface Disarmed 1500 Setting](../../assets/config/actuators/control_surface_aileron_setup.png)
 
 2. Move the slider for the surface upwards (positive command) and verify that it moves in the direction defined in the [Control Surface Convention](#control-surface-deflection-convention).
+
    - Ailerons, elevons, V-Tails, A-Tails, and other horizontal surfaces should move up.
    - Rudders and other "purely vertical" surfaces should move right.
 
@@ -601,12 +604,14 @@ To set these up:
    If the control surface moves in the opposite direction, click on the `Rev Range` checkbox to reverse the range.
 
 3. Move the slider again to the middle and check if the Control Surfaces are aligned in the neutral position of the wing.
+
    - If it is not aligned, you can set the **Trim** value for the control surface.
 
    ::: info
    This is done in the `Trim` setting of the Geometry panel, usually by "trial and error".
    ![Control Surface Trimming](../../assets/config/actuators/control_surface_trim.png)
    :::
+
    - After setting the trim for a control surface, move its slider away from the centre, release, and then back into disarmed (middle) position.
      Confirm that surface is in the neutral position.
 

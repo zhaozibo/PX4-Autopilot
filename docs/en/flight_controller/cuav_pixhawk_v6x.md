@@ -96,6 +96,7 @@ The Pixhawk® V6X is ideal for corporate research labs, academic research and co
   - Baseboard: 56g
 - Operating & storage temperature: -20 ~ 85°c
 - Size
+
   - Flight controller
 
     ![Pixhawk V6X](../../assets/flight_controller/cuav_pixhawk_v6x/v6x_size.jpg)
@@ -153,8 +154,8 @@ Under these conditions all power sources will be used in this order to power the
 Under these conditions the system will not draw any power (will not be operational), but will remain intact.
 
 1. **POWER1** and **POWER2** inputs (operational range 4.7V to 5.7V, 0V to 10V undamaged)
-1. **USB input** (operational range 4.7V to 5.7V, 0V to 6V undamaged)
-1. **Servo input:** `VDD_SERVO` pin of **FMU PWM OUT** and **I/O PWM OUT** (0V to 42V undamaged)
+2. **USB input** (operational range 4.7V to 5.7V, 0V to 6V undamaged)
+3. **Servo input:** `VDD_SERVO` pin of **FMU PWM OUT** and **I/O PWM OUT** (0V to 42V undamaged)
 
 **Voltage monitoring**
 

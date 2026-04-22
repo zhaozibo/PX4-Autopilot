@@ -93,6 +93,7 @@ Follow these steps:
 
    After the flight, review the estimated scale in logs.
    Verify that:
+
    - `tas_scale_validated` in `AirspeedWind.msg` converged during flight.
    - `true_airspeed_m_s` (TAS) in [AirspeedValidated.msg](../msg_docs/AirspeedValidated.md) is consistent with groundspeed corrected for wind.
 

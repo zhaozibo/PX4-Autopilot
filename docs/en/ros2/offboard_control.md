@@ -34,27 +34,27 @@ This is needed because, by default, you cannot arm a vehicle without a connectio
 To build and run the example:
 
 1. Open a new terminal.
-1. Create and navigate into a new colcon workspace directory using:
+2. Create and navigate into a new colcon workspace directory using:
 
    ```sh
    mkdir -p ~/ws_offboard_control/src/
    cd ~/ws_offboard_control/src/
    ```
 
-1. Clone the [px4_msgs](https://github.com/PX4/px4_msgs) repo to the `/src` directory (this repo is needed in every ROS 2 PX4 workspace!):
+3. Clone the [px4_msgs](https://github.com/PX4/px4_msgs) repo to the `/src` directory (this repo is needed in every ROS 2 PX4 workspace!):
 
    ```sh
    git clone https://github.com/PX4/px4_msgs.git
    # checkout the matching release branch if not using PX4 main.
    ```
 
-1. Clone the example repository [px4_ros_com](https://github.com/PX4/px4_ros_com) to the `/src` directory:
+4. Clone the example repository [px4_ros_com](https://github.com/PX4/px4_ros_com) to the `/src` directory:
 
    ```sh
    git clone https://github.com/PX4/px4_ros_com.git
    ```
 
-1. Source the ROS 2 development environment into the current terminal and compile the workspace using `colcon`:
+5. Source the ROS 2 development environment into the current terminal and compile the workspace using `colcon`:
 
    :::: tabs
 
@@ -80,13 +80,13 @@ To build and run the example:
 
    ::::
 
-1. Source the `local_setup.bash`:
+6. Source the `local_setup.bash`:
 
    ```sh
    source install/local_setup.bash
    ```
 
-1. Launch the example.
+7. Launch the example.
 
    ```
    ros2 run px4_ros_com offboard_control
@@ -109,22 +109,22 @@ The required behaviour is implemented by the main loop spinning in the ROS 2 nod
 ```cpp
 auto timer_callback = [this]() -> void {
 
-	if (offboard_setpoint_counter_ == 10) {
-		// Change to Offboard mode after 10 setpoints
-		this->publish_vehicle_command(VehicleCommand::VEHICLE_CMD_DO_SET_MODE, 1, 6);
+ if (offboard_setpoint_counter_ == 10) {
+  // Change to Offboard mode after 10 setpoints
+  this->publish_vehicle_command(VehicleCommand::VEHICLE_CMD_DO_SET_MODE, 1, 6);
 
-		// Arm the vehicle
-		this->arm();
-	}
+  // Arm the vehicle
+  this->arm();
+ }
 
-	// OffboardControlMode needs to be paired with TrajectorySetpoint
-	publish_offboard_control_mode();
-	publish_trajectory_setpoint();
+ // OffboardControlMode needs to be paired with TrajectorySetpoint
+ publish_offboard_control_mode();
+ publish_trajectory_setpoint();
 
-	// stop the counter after reaching 11
-	if (offboard_setpoint_counter_ < 11) {
-		offboard_setpoint_counter_++;
-	}
+ // stop the counter after reaching 11
+ if (offboard_setpoint_counter_ < 11) {
+  offboard_setpoint_counter_++;
+ }
 };
 timer_ = this->create_wall_timer(100ms, timer_callback);
 ```
@@ -150,16 +150,16 @@ Here we're only using _position control_, so the `position` field is set to `tru
  */
 void OffboardControl::publish_offboard_control_mode()
 {
-	OffboardControlMode msg{};
-	msg.position = true;
-	msg.velocity = false;
-	msg.acceleration = false;
-	msg.attitude = false;
-	msg.body_rate = false;
-	msg.thrust_and_torque = false;
-	msg.direct_actuator = false;
-	msg.timestamp = this->get_clock()->now().nanoseconds() / 1000;
-	offboard_control_mode_publisher_->publish(msg);
+ OffboardControlMode msg{};
+ msg.position = true;
+ msg.velocity = false;
+ msg.acceleration = false;
+ msg.attitude = false;
+ msg.body_rate = false;
+ msg.thrust_and_torque = false;
+ msg.direct_actuator = false;
+ msg.timestamp = this->get_clock()->now().nanoseconds() / 1000;
+ offboard_control_mode_publisher_->publish(msg);
 }
 ```
 
@@ -174,11 +174,11 @@ In this case, the `x`, `y`, `z` and `yaw` fields are hardcoded to certain values
  */
 void OffboardControl::publish_trajectory_setpoint()
 {
-	TrajectorySetpoint msg{};
-	msg.position = {0.0, 0.0, -5.0};
-	msg.yaw = -3.14; // [-PI:PI]
-	msg.timestamp = this->get_clock()->now().nanoseconds() / 1000;
-	trajectory_setpoint_publisher_->publish(msg);
+ TrajectorySetpoint msg{};
+ msg.position = {0.0, 0.0, -5.0};
+ msg.yaw = -3.14; // [-PI:PI]
+ msg.timestamp = this->get_clock()->now().nanoseconds() / 1000;
+ trajectory_setpoint_publisher_->publish(msg);
 }
 ```
 
@@ -195,17 +195,17 @@ While we don't call `disarm()` in this example, it is also used in the implement
  */
 void OffboardControl::publish_vehicle_command(uint16_t command, float param1, float param2)
 {
-	VehicleCommand msg{};
-	msg.param1 = param1;
-	msg.param2 = param2;
-	msg.command = command;
-	msg.target_system = 1;
-	msg.target_component = 1;
-	msg.source_system = 1;
-	msg.source_component = 1;
-	msg.from_external = true;
-	msg.timestamp = this->get_clock()->now().nanoseconds() / 1000;
-	vehicle_command_publisher_->publish(msg);
+ VehicleCommand msg{};
+ msg.param1 = param1;
+ msg.param2 = param2;
+ msg.command = command;
+ msg.target_system = 1;
+ msg.target_component = 1;
+ msg.source_system = 1;
+ msg.source_component = 1;
+ msg.from_external = true;
+ msg.timestamp = this->get_clock()->now().nanoseconds() / 1000;
+ vehicle_command_publisher_->publish(msg);
 }
 ```
 

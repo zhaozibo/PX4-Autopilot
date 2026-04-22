@@ -149,6 +149,7 @@ In some scenarios, it may be useful to control an actuator while running SIH on 
    Alternatively, you can use the [`PWM_AUX_FUNCn`](../advanced_config/parameter_reference.md#PWM_AUX_FUNC1) parameters.
 
    You may also configure the output as desired:
+
    - Disarmed PWM: ([`PWM_MAIN_DISn`](../advanced_config/parameter_reference.md#PWM_MAIN_DIS1) / [`PWM_AUX_DIS1`](../advanced_config/parameter_reference.md#PWM_AUX_DIS1))
    - Minimum PWM ([`PWM_MAIN_MINn`](../advanced_config/parameter_reference.md#PWM_MAIN_MIN1) / [`PWM_AUX_MINn`](../advanced_config/parameter_reference.md#PWM_AUX_MIN1))
    - Maximum PWM ([`PWM_MAIN_MAXn`](../advanced_config/parameter_reference.md#PWM_MAIN_MAX1) / [`PWM_AUX_MAXn`](../advanced_config/parameter_reference.md#PWM_AUX_MAX1))

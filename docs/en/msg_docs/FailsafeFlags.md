@@ -73,7 +73,7 @@ The flag comments are used as label for the failsafe state machine simulation
 # Flags must be named such that false == no failure (e.g. _invalid, _unhealthy, _lost)
 # The flag comments are used as label for the failsafe state machine simulation
 
-uint64 timestamp				# time since system start (microseconds)
+uint64 timestamp    # time since system start (microseconds)
 
 # Per-mode requirements
 uint32 mode_req_angular_velocity
@@ -122,13 +122,13 @@ bool fd_motor_failure                 # Motor failure
 bool fd_alt_loss                      # Uncommanded altitude loss (rotary-wing, altitude-controlled flight)
 
 # Other
-bool geofence_breached        	      # Geofence breached (one or multiple)
+bool geofence_breached               # Geofence breached (one or multiple)
 bool mission_failure                  # Mission failure
 bool vtol_fixed_wing_system_failure   # vehicle in fixed-wing system failure failsafe mode (after quad-chute)
 bool wind_limit_exceeded              # Wind limit exceeded
 bool flight_time_limit_exceeded       # Maximum flight time exceeded
 bool position_accuracy_low            # Position estimate has dropped below threshold, but is currently still declared valid
-bool navigator_failure        	      # Navigator failed to execute a mode
+bool navigator_failure               # Navigator failed to execute a mode
 bool parachute_unhealthy              # Parachute system missing or unhealthy
 bool remote_id_unhealthy              # Remote ID (Open Drone ID) system missing or unhealthy
 ```

@@ -29,4 +29,4 @@ MindRacer 210 is available at [AirMind Store](https://airmind.mindpx.net/node/78
 
 ### Support
 
-Please visit http://www.mindpx.org for more information. Or you can send email to [support@mindpx.net](mailto:support@mindpx.net) for any inquiries or help.
+Please visit <http://www.mindpx.org> for more information. Or you can send email to [support@mindpx.net](mailto:support@mindpx.net) for any inquiries or help.

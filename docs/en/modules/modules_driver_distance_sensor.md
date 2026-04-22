@@ -69,7 +69,7 @@ Serial bus driver for the LeddarOne LiDAR.
 
 Most boards are configured to enable/start the driver on a specified UART using the SENS_LEDDAR1_CFG parameter.
 
-Setup/usage information: https://docs.px4.io/main/en/sensor/leddar_one.html
+Setup/usage information: <https://docs.px4.io/main/en/sensor/leddar_one.html>
 
 ### Examples
 
@@ -108,13 +108,13 @@ Serial bus driver for the Lightware GRF Laser rangefinder.
 
 ### Configuration
 
-https://docs.px4.io/main/en/sensor/grf_lidar
+<https://docs.px4.io/main/en/sensor/grf_lidar>
 
 ### Parameters
 
-https://docs.px4.io/main/en/advanced_config/parameter_reference#GRF_SENS_MODEL
-https://docs.px4.io/main/en/advanced_config/parameter_reference#GRF_RATE_CFG
-https://docs.px4.io/main/en/advanced_config/parameter_reference#SENS_EN_GRF_CFG
+<https://docs.px4.io/main/en/advanced_config/parameter_reference#GRF_SENS_MODEL>
+<https://docs.px4.io/main/en/advanced_config/parameter_reference#GRF_RATE_CFG>
+<https://docs.px4.io/main/en/advanced_config/parameter_reference#SENS_EN_GRF_CFG>
 
 ### Examples
 
@@ -149,7 +149,7 @@ Source: [drivers/distance_sensor/lightware_laser_i2c](https://github.com/PX4/PX4
 
 I2C bus driver for Lightware LIDAR rangefinders: SF10/a, SF10/b, SF10/c, SF11/c, SF/LW20, SF/LW30/d, GRF250, GRF500.
 
-Setup/usage information: https://docs.px4.io/main/en/sensor/sfxx_lidar.html
+Setup/usage information: <https://docs.px4.io/main/en/sensor/sfxx_lidar.html>
 
 ### Usage {#lightware_laser_i2c_usage}
 
@@ -181,7 +181,7 @@ Serial bus driver for the LightWare SF02/F, SF10/a, SF10/b, SF10/c, SF11/c Laser
 
 Most boards are configured to enable/start the driver on a specified UART using the SENS_SF0X_CFG parameter.
 
-Setup/usage information: https://docs.px4.io/main/en/sensor/sfxx_lidar.html
+Setup/usage information: <https://docs.px4.io/main/en/sensor/sfxx_lidar.html>
 
 ### Examples
 
@@ -253,7 +253,7 @@ I2C bus driver for LidarLite rangefinders.
 
 The sensor/driver must be enabled using the parameter SENS_EN_LL40LS.
 
-Setup/usage information: https://docs.px4.io/main/en/sensor/lidar_lite.html
+Setup/usage information: <https://docs.px4.io/main/en/sensor/lidar_lite.html>
 
 ### Usage {#ll40ls_usage}
 
@@ -289,7 +289,7 @@ PWM driver for LidarLite rangefinders.
 
 The sensor/driver must be enabled using the parameter SENS_EN_LL40LS.
 
-Setup/usage information: https://docs.px4.io/main/en/sensor/lidar_lite.html
+Setup/usage information: <https://docs.px4.io/main/en/sensor/lidar_lite.html>
 
 ### Usage {#ll40ls_pwm_usage}
 
@@ -448,7 +448,7 @@ I2C bus driver for TeraRanger rangefinders.
 
 The sensor/driver must be enabled using the parameter SENS_EN_TRANGER.
 
-Setup/usage information: https://docs.px4.io/main/en/sensor/rangefinders.html#teraranger-rangefinders
+Setup/usage information: <https://docs.px4.io/main/en/sensor/rangefinders.html#teraranger-rangefinders>
 
 ### Usage {#teraranger_usage}
 
@@ -508,7 +508,7 @@ Serial bus driver for the Benewake TFmini LiDAR.
 
 Most boards are configured to enable/start the driver on a specified UART using the SENS_TFMINI_CFG parameter.
 
-Setup/usage information: https://docs.px4.io/main/en/sensor/tfmini.html
+Setup/usage information: <https://docs.px4.io/main/en/sensor/tfmini.html>
 
 ### Examples
 
@@ -549,7 +549,7 @@ Source: [drivers/distance_sensor/ulanding_radar](https://github.com/PX4/PX4-Auto
 
 Serial bus driver for the Aerotenna uLanding radar.
 
-Setup/usage information: https://docs.px4.io/main/en/sensor/ulanding_radar.html
+Setup/usage information: <https://docs.px4.io/main/en/sensor/ulanding_radar.html>
 
 ### Examples
 

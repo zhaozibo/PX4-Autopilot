@@ -151,22 +151,22 @@ The names of the parameters must be the same as their parameter metadata definit
 class MyModule : ..., public ModuleParams
 {
 public:
-	...
+ ...
 
 private:
 
-	/**
-	 * Check for parameter changes and update them if needed.
-	 */
-	void parameters_update();
+ /**
+  * Check for parameter changes and update them if needed.
+  */
+ void parameters_update();
 
-	DEFINE_PARAMETERS(
-		(ParamInt<px4::params::SYS_AUTOSTART>) _sys_autostart,   /**< example parameter */
-		(ParamFloat<px4::params::ATT_BIAS_MAX>) _att_bias_max  /**< another parameter */
-	)
+ DEFINE_PARAMETERS(
+  (ParamInt<px4::params::SYS_AUTOSTART>) _sys_autostart,   /**< example parameter */
+  (ParamFloat<px4::params::ATT_BIAS_MAX>) _att_bias_max  /**< another parameter */
+ )
 
-	// Subscriptions
-	uORB::SubscriptionInterval _parameter_update_sub{ORB_ID(parameter_update), 1_s};
+ // Subscriptions
+ uORB::SubscriptionInterval _parameter_update_sub{ORB_ID(parameter_update), 1_s};
 
 };
 ```
@@ -178,14 +178,14 @@ Call `parameters_update();` periodically in code to check if there has been an u
 ```cpp
 void Module::parameters_update()
 {
-	if (_parameter_update_sub.updated()) {
-		parameter_update_s param_update;
-		_parameter_update_sub.copy(&param_update);
+ if (_parameter_update_sub.updated()) {
+  parameter_update_s param_update;
+  _parameter_update_sub.copy(&param_update);
 
-		// If any parameter updated, call updateParams() to check if
-		// this class attributes need updating (and do so).
-		updateParams();
-	}
+  // If any parameter updated, call updateParams() to check if
+  // this class attributes need updating (and do so).
+  updateParams();
+ }
 }
 ```
 
@@ -269,7 +269,7 @@ It supports all the same metadata, along with new features like multi-instance d
 
   ```cmake
   MODULE_CONFIG
-  	module.yaml
+   module.yaml
   ```
 
   to the `px4_add_module` section of the `CMakeLists.txt` file of that module.

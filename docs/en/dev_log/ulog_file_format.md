@@ -114,6 +114,7 @@ struct ulog_message_flag_bits_s {
 ```
 
 - `compat_flags`: compatible flag bits
+
   - These flags indicate the presence of features in the log file that are compatible with any ULog parser.
   - `compat_flags[0]`: _DEFAULT_PARAMETERS_ (Bit 0): if set, the log contains [default parameters message](#q-default-parameter-message)
 
@@ -123,6 +124,7 @@ struct ulog_message_flag_bits_s {
   It means parsers can just ignore the bits if one of the unknown bits is set.
 
 - `incompat_flags`: incompatible flag bits.
+
   - `incompat_flags[0]`: _DATA_APPENDED_ (Bit 0): if set, the log contains appended data and at least one of the `appended_offsets` is non-zero.
 
   The rest of the bits are currently not defined and must be set to 0.
@@ -135,6 +137,7 @@ struct ulog_message_flag_bits_s {
   For example, crash dumps.
 
   A process appending data should do:
+
   - set the relevant `incompat_flags` bit
   - set the first `appended_offsets` that is currently 0 to the length of the log file without the appended data, as that is where the new data will start
   - append any type of messages that are valid for the Data section.
@@ -400,6 +403,7 @@ struct message_logging_tagged_s {
 ```
 
 - `tag`: id representing source of logged message string. It could represent a process, thread or a class depending upon the system architecture.
+
   - For example, a reference implementation for an onboard computer running multiple processes to control different payloads, external disks, serial devices etc can encode these process identifiers using a `uint16_t enum` into the `tag` attribute of struct as follows:
 
   ```c

@@ -127,11 +127,11 @@ If those steps are consistent, you can try your first flight:
    You should have a green light.
    The green light tells you that position feedback is available and position control is now activated.
 
-1. Put the throttle stick in the middle (the dead zone) so that the vehicle maintains its altitude.
+2. Put the throttle stick in the middle (the dead zone) so that the vehicle maintains its altitude.
    Raising the stick will increase the reference altitude while lowering the value will decrease it.
    Similarly, the other stick will change the position over the ground.
-1. Increase the value of the throttle stick and the vehicle will take off. Move it back to the middle immediately afterwards.
-1. Confirm that the vehicle can hold its position.
+3. Increase the value of the throttle stick and the vehicle will take off. Move it back to the middle immediately afterwards.
+4. Confirm that the vehicle can hold its position.
 
 ## Troubleshooting
 
@@ -140,9 +140,11 @@ First, make sure MAVROS is able to connect successfully to the flight controller
 If it is connecting properly common problems/solutions are:
 
 - **Problem:** I get drift / flyaways when the drone flies, but not when I carry it around with the props off.
+
   - If using the [T265](../peripherals/camera_t265_vio.md) try soft-mounting it (this camera is very sensitive to high-frequency vibrations).
 
 - **Problem:** I get toilet-bowling when VIO is enabled.
+
   - Make sure the orientation of the camera matches the transform in the launch file.
     Use the _QGroundControl_ [MAVLink Inspector](https://docs.qgroundcontrol.com/master/en/qgc-user-guide/analyze_view/mavlink_inspector.html) to verify that the velocities in the `ODOMETRY` message coming from MAVROS are aligned to the FRD coordinate system.
 

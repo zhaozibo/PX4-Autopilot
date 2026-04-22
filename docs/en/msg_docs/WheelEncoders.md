@@ -21,7 +21,7 @@ pageClass: is-wide-page
 ::: details Click here to see original file
 
 ```c
-uint64 timestamp			# time since system start (microseconds)
+uint64 timestamp   # time since system start (microseconds)
 
 # Two wheels: 0 right, 1 left
 float32[2] wheel_speed # [rad/s]

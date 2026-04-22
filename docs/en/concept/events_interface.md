@@ -63,7 +63,7 @@ float arg2 = -1.f;
  * Link to documentation: <a>https://docs.px4.io</a>
  */
 events::send<uint8_t, float>(events::ID("event_name"),
-	{events::Log::Error, events::LogInternal::Info}, "Event Message", arg1, arg2);
+ {events::Log::Error, events::LogInternal::Info}, "Event Message", arg1, arg2);
 ```
 
 Explanations and requirements:
@@ -76,6 +76,7 @@ Explanations and requirements:
   - from that name, a 24 bit event ID is derived using a hash function.
     This means as long as the event name stays the same, so will the ID.
 - **Log Level**:
+
   - valid log levels are the same as used in the MAVLink [MAV_SEVERITY](https://mavlink.io/en/messages/common.html#MAV_SEVERITY) enum.
     In order of descending importance these are:
 
@@ -124,6 +125,7 @@ Text format for event message description:
   These have to be escaped: '\\\\', '\\<', '\\{'.
 
 - supported tags:
+
   - Profiles: `<profile name="[!]NAME">CONTENT</profile>`
 
     `CONTENT` will only be shown if the name matches the configured profile.
@@ -135,9 +137,11 @@ Text format for event message description:
   - no nested tags of the same type are allowed
 
 - arguments: template placeholders that follow python syntax, with 1-based indexing (instead of 0)
+
   - general form: `{ARG_IDX[:.NUM_DECIMAL_DIGITS][UNIT]}`
 
     UNIT:
+
     - m: horizontal distance in meters
     - m_v: vertical distance in meters
     - m^2: area in m^2

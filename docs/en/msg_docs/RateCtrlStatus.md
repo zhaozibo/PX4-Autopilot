@@ -22,7 +22,7 @@ pageClass: is-wide-page
 ::: details Click here to see original file
 
 ```c
-uint64 timestamp		# time since system start (microseconds)
+uint64 timestamp  # time since system start (microseconds)
 
 # rate controller integrator status
 float32 rollspeed_integ

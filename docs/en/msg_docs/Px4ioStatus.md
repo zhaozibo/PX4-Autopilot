@@ -50,12 +50,12 @@ pageClass: is-wide-page
 ::: details Click here to see original file
 
 ```c
-uint64 timestamp		# time since system start (microseconds)
+uint64 timestamp  # time since system start (microseconds)
 
 uint16 free_memory_bytes
 
-float32 voltage_v		# Servo rail voltage in volts
-float32 rssi_v			# RSSI pin voltage in volts
+float32 voltage_v  # Servo rail voltage in volts
+float32 rssi_v   # RSSI pin voltage in volts
 
 # PX4IO status flags (PX4IO_P_STATUS_FLAGS)
 bool status_arm_sync

@@ -25,7 +25,7 @@ In particular the following systems are recommended:
 
 ## Where to Buy
 
-SBG Systems solutions are available directly from [MySBG](https://my.sbg-systems.com) (FR) or through their Global Sales Representatives. For more information on their solutions or for international orders, please contact contact@sbg-systems.com.
+SBG Systems solutions are available directly from [MySBG](https://my.sbg-systems.com) (FR) or through their Global Sales Representatives. For more information on their solutions or for international orders, please contact <contact@sbg-systems.com>.
 
 ## Hardware Setup
 
@@ -59,6 +59,7 @@ To use the sbgECom driver:
 3. Set [SBG_BAUDRATE](../advanced_config/parameter_reference.md#SBG_BAUDRATE) to the desired default baudrate value.
 4. Allow the sbgECom driver to initialize by restarting PX4.
 5. Configure driver to provide IMU data, GNSS data and INS :
+
    1. Set [SBG_MODE](../advanced_config/parameter_reference.md#SBG_MODE) to the desired mode.
    2. Make sensor module select sensors by enabling [SENS_IMU_MODE](../advanced_config/parameter_reference.md#SENS_IMU_MODE).
    3. Prioritize SBG Systems sensors using [CAL_GYROn_PRIO](../advanced_config/parameter_reference.md#CAL_GYRO0_PRIO), [CAL_ACCn_PRIO](../advanced_config/parameter_reference.md#CAL_ACC0_PRIO), [CAL_BAROn_PRIO](../advanced_config/parameter_reference.md#CAL_BARO0_PRIO), [CAL_MAGn_PRIO](../advanced_config/parameter_reference.md#CAL_MAG0_PRIO), where _n_ is the instance number of the IMU component (0, 1, etc.).

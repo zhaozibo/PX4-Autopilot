@@ -10,7 +10,7 @@ It is recommended for use in large commercial vehicles, but might also be used f
 ## Where to Buy
 
 - [CUAV store](https://store.cuav.net/)
-- [CUAV aliexpress ](https://www.aliexpress.com/item/4000369700535.html)
+- [CUAV aliexpress](https://www.aliexpress.com/item/4000369700535.html)
 
 ## Hardware Specifications
 

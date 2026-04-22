@@ -42,8 +42,8 @@ Larger high power examples:
 - [NXP NavQPlus](https://nxp.gitbook.io/navqplus/user-contributed-content/ros2/microdds)
 - [Nvidia Jetson TX2](https://developer.nvidia.com/embedded/jetson-tx2)
 
-* [Intel NUC](https://www.asus.com/au/content/nuc-overview/)
-* [Gigabyte Brix](https://www.gigabyte.com/Mini-PcBarebone/BRIX)
+- [Intel NUC](https://www.asus.com/au/content/nuc-overview/)
+- [Gigabyte Brix](https://www.gigabyte.com/Mini-PcBarebone/BRIX)
 
 Small/lower power examples:
 

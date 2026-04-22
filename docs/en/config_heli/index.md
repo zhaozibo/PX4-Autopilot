@@ -30,7 +30,7 @@ To setup and configure a helicopter:
    The actuator configuration screen will then change to support this frame type.
    :::
 
-1. Configure helicopter actuator geometry in **Vehicle Setup > Actuators**.
+2. Configure helicopter actuator geometry in **Vehicle Setup > Actuators**.
 
    ::: info
    Actuator setup and testing is covered for most frames in [Actuators](../config/actuators.md).
@@ -42,12 +42,14 @@ To setup and configure a helicopter:
    ![Geometry: helicopter](../../assets/config/actuators/qgc_geometry_helicopter.png)
 
    The motors have no configurable geometry:
+
    - `Rotor (Motor 1)`: The main rotor
    - `Yaw tail motor (Motor 2)`: The tail rotor
 
    Swash plate servos: `3` | `4` <!-- 4 provides additional stability -->
 
    For each servo set:
+
    - `Angle`: Clockwise angle in degree on the swash plate circle at which the servo arm is attached starting from `0` pointing forwards.
      Example for a typical setup where three servos are controlling the swash plate equally distributed over the circle (360° / 3 =) 120° apart each which results in the angles:
 
@@ -63,29 +65,32 @@ To setup and configure a helicopter:
    - `Trim`: Offset individual servo positions. This is only needed in rare case when the swash plate is not level even though all servos are centered.
 
    Additional settings:
+
    - `Yaw compensation scale based on collective pitch`: How much yaw is feed forward compensated based on the current collective pitch.
    - `Main rotor turns counter-clockwise`: `Disabled` (clockwise rotation) | `Enabled`
    - `Throttle spoolup time`: Set value (in seconds) greater than the achievable minimum motor spool up time.
      A larger value may improve user experience.
 
-1. Remove the rotor blades and propellers
-1. Assign motors and servos to outputs and test (also in [Actuator configuration](../config/actuators.md)):
-   1. Assign the [motors and servos to the outputs](../config/actuators.md#actuator-outputs).
-   1. Power the vehicle with a battery and use the [actuator testing sliders](../config/actuators.md#actuator-testing) to validate correct servo and motor assignment and direction.
+3. Remove the rotor blades and propellers
+4. Assign motors and servos to outputs and test (also in [Actuator configuration](../config/actuators.md)):
 
-1. Using an RC in [Acro mode](../flight_modes_mc/acro.md), verify the correct movement of the swash-plate. With most airframes you need to see the following:
+   1. Assign the [motors and servos to the outputs](../config/actuators.md#actuator-outputs).
+   2. Power the vehicle with a battery and use the [actuator testing sliders](../config/actuators.md#actuator-testing) to validate correct servo and motor assignment and direction.
+
+5. Using an RC in [Acro mode](../flight_modes_mc/acro.md), verify the correct movement of the swash-plate. With most airframes you need to see the following:
+
    - Moving the roll stick to the right should tilt the swash-plate to the right.
    - Moving the pitch stick forward should tilt the swash-plate forward.
 
    In case your airframe requires any phase lag angle offset this can simply be added to all swash-plate servo angles. Refer to the manufacturer's documentation for your airframe.
 
-1. Arm the vehicle and check the main rotor spins up slowly.
+6. Arm the vehicle and check the main rotor spins up slowly.
    Adjust the throttle spoolup time as needed using the parameter [COM_SPOOLUP_TIME](../advanced_config/parameter_reference.md#COM_SPOOLUP_TIME).
    You can also adjust the throttle curve with the parameters [CA_HELI_THR_Cx](../advanced_config/parameter_reference.md#CA_HELI_THR_C0).
    The default is constant, maximum throttle (suitable for most setups).
-1. Disarm again and power off.
-1. Put the rotor blades on and power the vehicle.
-1. Configure the collective pitch curve using the parameters [CA_HELI_PITCH_Cx](../advanced_config/parameter_reference.md#CA_HELI_PITCH_C0).
+7. Disarm again and power off.
+8. Put the rotor blades on and power the vehicle.
+9. Configure the collective pitch curve using the parameters [CA_HELI_PITCH_Cx](../advanced_config/parameter_reference.md#CA_HELI_PITCH_C0).
    Set the minimum and maximum according to the minimum and maximum blade angles you want.
    Make sure the minimum is low enough so the vehicle can still descend.
    Instead start off with a too low value.
@@ -139,6 +144,7 @@ The rate controller should be tuned in [Acro mode](../flight_modes_mc/acro.md), 
 
 3. Then enable the PID gains.
    Start off with following values:
+
    - [MC_ROLLRATE_P](../advanced_config/parameter_reference.md#MC_ROLLRATE_P), [MC_PITCHRATE_P](../advanced_config/parameter_reference.md#MC_PITCHRATE_P) a quarter of the value you found to work well as the corresponding feed forward value in the previous step. `P = FF / 4`
 
    ```sh

@@ -94,5 +94,5 @@ You can also find MindRacer at Amazon<sup>&reg;</sup> or eBay<sup>&reg;</sup>.
 
 ## Support
 
-Please visit http://www.mindpx.org for more information.
+Please visit <http://www.mindpx.org> for more information.
 Or you can send email to [support@mindpx.net](mailto::support@mindpx.net) for any inquiries or help.

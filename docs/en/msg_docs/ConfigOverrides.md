@@ -40,7 +40,7 @@ Configurable overrides by (external) modes or mode executors.
 
 uint32 MESSAGE_VERSION = 1
 
-uint64 timestamp		# time since system start (microseconds)
+uint64 timestamp  # time since system start (microseconds)
 
 bool disable_auto_disarm         # Prevent the drone from automatically disarming after landing (if configured)
 

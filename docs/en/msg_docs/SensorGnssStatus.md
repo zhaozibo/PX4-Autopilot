@@ -29,7 +29,7 @@ Gnss quality indicators.
 ```c
 # Gnss quality indicators
 
-uint64 timestamp		# time since system start (microseconds)
+uint64 timestamp  # time since system start (microseconds)
 uint32 device_id                # unique device ID for the sensor that does not change between power cycles
 
 bool  quality_available         # Set to true if quality indicators are available

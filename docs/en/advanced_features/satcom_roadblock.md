@@ -100,6 +100,7 @@ Set up a delivery group for the message relay server and add the module to that 
 The relay server should be run on either Ubuntu 16.04 or 14.04 OS.
 
 1. The server working as a message relay should have a static IP address and two publicly accessible, open, TCP ports:
+
    - `5672` for the _RabbitMQ_ message broker (can be changed in the _rabbitmq_ settings)
    - `45679` for the HTTP POST interface (can be changed in the **relay.cfg** file)
 
@@ -179,15 +180,16 @@ To setup the ground station:
    sudo pip install pika tornado future
    ```
 
-1. Clone the SatComInfrastructure repository:
+2. Clone the SatComInfrastructure repository:
 
    ```sh
    git clone https://github.com/acfloria/SatComInfrastructure.git
    ```
 
-1. Edit the **udp2rabbit.cfg** configuration file to reflect your settings.
-1. [Install _QGroundControl_](https://docs.qgroundcontrol.com/master/en/qgc-user-guide/getting_started/download_and_install.html) (daily build).
-1. Add a UDP connection in QGC with the parameters:
+3. Edit the **udp2rabbit.cfg** configuration file to reflect your settings.
+4. [Install _QGroundControl_](https://docs.qgroundcontrol.com/master/en/qgc-user-guide/getting_started/download_and_install.html) (daily build).
+5. Add a UDP connection in QGC with the parameters:
+
    - Listening port: 10000
    - Target hosts: 127.0.0.1:10001
    - High Latency: checked
@@ -203,7 +205,7 @@ To setup the ground station:
    ./udp2rabbit.py
    ```
 
-1. Send a test message from [RockBlock Account](https://rockblock.rock7.com/Operations) to the created delivery group in the `Test Delivery Groups` tab.
+2. Send a test message from [RockBlock Account](https://rockblock.rock7.com/Operations) to the created delivery group in the `Test Delivery Groups` tab.
 
 If in the terminal where the `udp2rabbit.py` script is running within a couple of seconds the acknowledge for a message can be observed, then the RockBlock delivery group, the relay server and the udp2rabbit script are set up correctly:
 
@@ -234,6 +236,7 @@ If in the terminal where the `udp2rabbit.py` script is running within a couple o
 
 5. The satellite communication system is now ready to use.
    The priority link, which is the link over which commands are send, is determined the following ways:
+
    - If no link is commanded by the user a regular radio telemetry link is preferred over the high latency link.
    - The autopilot and QGC will fall back from the regular radio telemetry to the high latency link if the vehicle is armed and the radio telemetry link is lost (no MAVLink messages received for a certain time).
      As soon as the radio telemetry link is regained QGC and the autopilot will switch back to it.
@@ -247,6 +250,7 @@ If in the terminal where the `udp2rabbit.py` script is running within a couple o
 - Satellite communication messages from the airplane are received but no commands can be transmitted (the vehicle does not react)
   - Check the settings of the relay server and make sure that they are correct, especially the IMEI.
 - No satellite communication messages from the airplane arrive on the ground station:
+
   - Check using the system console if the _iridiumsbd_ driver started and if it did that a signal from any satellite is received by the module:
 
     ```sh
@@ -257,6 +261,7 @@ If in the terminal where the `udp2rabbit.py` script is running within a couple o
   - Check if the link is connected and that its settings are correct.
 
 - The IridiumSBD driver does not start:
+
   - Reboot the vehicle.
     If that helps increase the sleep time in the `extras.txt` before the driver is started.
     If that does not help make sure that the Pixhawk and the module have the same ground level. Confirm also that the baudrate of the module is set to 115200.

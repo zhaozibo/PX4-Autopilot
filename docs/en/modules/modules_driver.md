@@ -72,7 +72,7 @@ Source: [drivers/smart_battery/batmon](https://github.com/PX4/PX4-Autopilot/tree
 ### Description
 
 Driver for SMBUS Communication with BatMon enabled smart-battery
-Setup/usage information: https://rotoye.com/batmon-tutorial/
+Setup/usage information: <https://rotoye.com/batmon-tutorial/>
 
 ### Examples
 

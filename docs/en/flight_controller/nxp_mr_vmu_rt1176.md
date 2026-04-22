@@ -4,7 +4,7 @@
 
 ::: warning
 PX4 does not manufacture this (or any) autopilot.
-Contact the [manufacturer](https://www.nxp.com) for hardware support (https://community.nxp.com/) or compliance issues.
+Contact the [manufacturer](https://www.nxp.com) for hardware support (<https://community.nxp.com/>) or compliance issues.
 :::
 
 The _MR-VMU-RT1176_ reference design is based on the [Pixhawk<sup>&reg;</sup> FMUv6X-RT open standard](https://github.com/pixhawk/Pixhawk-Standards/blob/master/DS-020%20Pixhawk%20Autopilot%20v6X-RT%20Standard.pdf), the latest update to the successful family of Pixhawk<sup>&reg;</sup> flight controllers.
@@ -194,15 +194,15 @@ The **POWER1** & **POWER2** ports on the MR-VMU-RT1176 uses the 6 circuit [2.00m
 Under these conditions all power sources will be used in this order to power the system:
 
 1. **POWER1** and **POWER2** inputs (4.9V to 5.5V)
-1. **USB** input (4.75V to 5.25V)
+2. **USB** input (4.75V to 5.25V)
 
 ### Absolute Maximum Ratings
 
 Under these conditions the system will not draw any power (will not be operational), but will remain intact.
 
 1. **POWER1** and **POWER2** inputs (operational range 4.1V to 5.7V, 0V to 10V undamaged)
-1. **USB** input (operational range 4.1V to 5.7V, 0V to 6V undamaged)
-1. Servo input: VDD_SERVO pin of **FMU PWM OUT** and **I/O PWM OUT** (0V to 42V undamaged)
+2. **USB** input (operational range 4.1V to 5.7V, 0V to 6V undamaged)
+3. Servo input: VDD_SERVO pin of **FMU PWM OUT** and **I/O PWM OUT** (0V to 42V undamaged)
 
 ### Voltage monitoring
 

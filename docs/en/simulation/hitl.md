@@ -95,17 +95,20 @@ make px4_fmu-v6x boardconfig
 
 1. Connect the autopilot directly to _QGroundControl_ via USB.
 2. Select Airframe
+
    1. Open **Setup > Airframes**
    2. Select a [compatible airframe](#compatible_airframe) you want to test.
       Then click **Apply and Restart** on top-right of the _Airframe Setup_ page.
 
 3. Calibrate your [Manual Controller](../config/manual_control.md) (RC or Joystick), if needed.
 4. Setup UDP
+
    1. Under the _General_ tab of the settings menu, uncheck all _AutoConnect_ boxes except for **UDP**.
 
       ![QGC Auto-connect settings for HITL](../../assets/gcs/qgc_hitl_autoconnect.png)
 
 5. (Optional) Configure your manual controller priority and failsafe:
+
    - [Enable a mode in `COM_RC_IN_MODE` that enables and prioritises the controllers you want to use](../config/manual_control.md#px4-configuration).
      The default `RC or MAVLink keep first` should work if you plan to only have a Joystick (no RC).
    - You can set [NAV_RCL_ACT](../advanced_config/parameter_reference.md#NAV_RCL_ACT) to disable manual control loss failsafe while flying in a simulation.

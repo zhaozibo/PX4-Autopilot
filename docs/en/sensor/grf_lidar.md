@@ -29,15 +29,18 @@ The [lightware_grf_serial](../modules/modules_driver_distance_sensor.md#lightwar
 In order to use these modules you will first need to update the firmware configuration to add the driver, and then build the firmware.
 
 1. Update the firmware configuration. You can use either of the following options:
+
    - Menuconfig:
+
      1. Install and open [menuconfig](../hardware/porting_guide_config.md#px4-menuconfig-setup)
      2. In [menuconfig](../hardware/porting_guide_config.md#px4-menuconfig-setup), navigate to **Drivers > Distance sensors**
      3. Select/Enable `lightware_grf_serial`
      4. Save the configuration
 
    - Manually update `default.px4` to include the configuration key:
+
      1. Open the `default.px4board` config file that corresponds to the board you want to build for.
-        For example, to add the driver to `fmu-v6x` boards you would update [/boards/px4/fmu-v6x/default.px4board ](https://github.com/PX4/PX4-Autopilot/blob/main/boards/px4/fmu-v6x/default.px4board)
+        For example, to add the driver to `fmu-v6x` boards you would update [/boards/px4/fmu-v6x/default.px4board](https://github.com/PX4/PX4-Autopilot/blob/main/boards/px4/fmu-v6x/default.px4board)
      2. Add the following line and save the file:
 
         ```txt

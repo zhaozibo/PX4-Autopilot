@@ -19764,7 +19764,7 @@ Cyphal.
 
 Cyphal Node ID.
 
-Read the specs at https://opencyphal.org/ to learn more about Node ID.
+Read the specs at <https://opencyphal.org/> to learn more about Node ID.
 
 | Reboot  | minValue | maxValue | increment | default | unit |
 | ------- | -------- | -------- | --------- | ------- | ---- |
@@ -30516,7 +30516,7 @@ Pitch rate controller gain.
 Global gain of the controller.
 
 This gain scales the P, I and D terms of the controller:
-output = MC_PITCHRATE_K _ (MC_PITCHRATE_P _ error
+output = MC*PITCHRATE_K * (MC*PITCHRATE_P * error
 
 - MC_PITCHRATE_I \* error_integral
 - MC_PITCHRATE_D \* error_derivative)
@@ -30584,7 +30584,7 @@ Roll rate controller gain.
 Global gain of the controller.
 
 This gain scales the P, I and D terms of the controller:
-output = MC_ROLLRATE_K _ (MC_ROLLRATE_P _ error
+output = MC*ROLLRATE_K * (MC*ROLLRATE_P * error
 
 - MC_ROLLRATE_I \* error_integral
 - MC_ROLLRATE_D \* error_derivative)
@@ -30652,7 +30652,7 @@ Yaw rate controller gain.
 Global gain of the controller.
 
 This gain scales the P, I and D terms of the controller:
-output = MC_YAWRATE_K _ (MC_YAWRATE_P _ error
+output = MC*YAWRATE_K * (MC*YAWRATE_P * error
 
 - MC_YAWRATE_I \* error_integral
 - MC_YAWRATE_D \* error_derivative)
@@ -30893,7 +30893,7 @@ Thrust to motor control signal model parameter.
 Parameter used to model the nonlinear relationship between
 motor control signal (e.g. PWM) and static thrust.
 
-The model is: rel_thrust = factor _ rel_signal^2 + (1-factor) _ rel_signal,
+The model is: rel*thrust = factor * rel*signal^2 + (1-factor) * rel_signal,
 where rel_thrust is the normalized thrust between 0 and 1, and
 rel_signal is the relative motor control signal between 0 and 1.
 
@@ -33498,7 +33498,7 @@ Proportional gain for ground speed controller.
 
 Tuning parameter for the speed reduction based on the course error.
 
-Reduced_speed = RO_MAX_THR_SPEED _ (1 - normalized_course_error _ RO_SPEED_RED)
+Reduced*speed = RO_MAX_THR_SPEED * (1 - normalized*course_error * RO_SPEED_RED)
 The normalized course error is the angle between the current course and the bearing setpoint
 interpolated from [0, 180] -> [0, 1].
 Higher value -> More speed reduction.
@@ -33731,7 +33731,7 @@ This integer bitmask controls the set and rates of logged topics. The default al
 
 UTC offset (unit: min).
 
-the difference in hours and minutes from Coordinated Universal Time (UTC) for a your place and date. for example, In case of South Korea(UTC+09:00), UTC offset is 540 min (9\*60) refer to https://en.wikipedia.org/wiki/List_of_UTC_time_offsets
+the difference in hours and minutes from Coordinated Universal Time (UTC) for a your place and date. for example, In case of South Korea(UTC+09:00), UTC offset is 540 min (9\*60) refer to <https://en.wikipedia.org/wiki/List_of_UTC_time_offsets>
 
 | Reboot | minValue | maxValue | increment | default | unit |
 | ------ | -------- | -------- | --------- | ------- | ---- |
@@ -43154,7 +43154,7 @@ Each light uses two parameters: LGT_IDx for the light_id and LGT_FNx for the fun
 
 UAVCAN Node ID.
 
-Read the specs at https://dronecan.github.io/ to learn more about Node ID.
+Read the specs at <https://dronecan.github.io/> to learn more about Node ID.
 
 | Reboot  | minValue | maxValue | increment | default | unit |
 | ------- | -------- | -------- | --------- | ------- | ---- |
@@ -45290,8 +45290,8 @@ The encoder angle at which theta is zero. Adjust this number to change the locat
 Enable Zenoh.
 
 Set true (1) to start the Zenoh driver module (a.k.a the "Zenoh-Pico Node").
-See https://docs.px4.io/main/en/middleware/zenoh and
-https://docs.px4.io/main/en/modules/modules_driver.html#zenoh
+See <https://docs.px4.io/main/en/middleware/zenoh> and
+<https://docs.px4.io/main/en/modules/modules_driver.html#zenoh>
 
 | Reboot  | minValue | maxValue | increment | default      | unit |
 | ------- | -------- | -------- | --------- | ------------ | ---- |

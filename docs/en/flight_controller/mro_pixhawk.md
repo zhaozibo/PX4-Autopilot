@@ -44,6 +44,7 @@ This autopilot is [supported](../flight_controller/autopilot_pixhawk_standard.md
   - 3.3 and 6.6V ADC inputs
   - External microUSB port
 - Power System:
+
   - Ideal diode controller with automatic failover
   - Servo rail high-power (7 V) and high-current ready
   - All peripheral outputs over-current protected, all inputs ESD protected

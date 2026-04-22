@@ -87,7 +87,7 @@ The `OffboardControlMode` message is defined as shown.
 ```sh
 # Off-board control mode
 
-uint64 timestamp		# time since system start (microseconds)
+uint64 timestamp  # time since system start (microseconds)
 
 bool position
 bool velocity
@@ -129,7 +129,9 @@ For fixed-wing offboard control, please refer to the [PX4 ROS 2 Interface Librar
 ### Multicopters
 
 - [px4_msgs::msg::TrajectorySetpoint](https://github.com/PX4/PX4-Autopilot/blob/main/msg/versioned/TrajectorySetpoint.msg)
+
   - The following input combinations are supported:
+
     - Position setpoint (`position` different from `NaN`). Non-`NaN` values of velocity and acceleration are used as feedforward terms for the inner loop controllers.
     - Velocity setpoint (`velocity` different from `NaN` and `position` set to `NaN`). Non-`NaN` values of acceleration are used as feedforward terms for the inner loop controllers.
     - Acceleration setpoint (`acceleration` different from `NaN` and `position` and `velocity` set to `NaN`)
@@ -147,7 +149,9 @@ For fixed-wing offboard control, please refer to the [PX4 ROS 2 Interface Librar
   :::
 
 - [px4_msgs::msg::VehicleAttitudeSetpoint](https://github.com/PX4/PX4-Autopilot/blob/main/msg/versioned/VehicleAttitudeSetpoint.msg)
+
   - The following input combination is supported:
+
     - quaternion `q_d` + thrust setpoint `thrust_body`.
       Non-`NaN` values of `yaw_sp_move_rate` are used as feedforward terms expressed in Earth frame and in `[rad/s]`.
 
@@ -155,7 +159,9 @@ For fixed-wing offboard control, please refer to the [PX4 ROS 2 Interface Librar
     The thrust is in the drone body FRD frame and expressed in normalized \[-1, 1\] values.
 
 - [px4_msgs::msg::VehicleRatesSetpoint](https://github.com/PX4/PX4-Autopilot/blob/main/msg/versioned/VehicleRatesSetpoint.msg)
+
   - The following input combination is supported:
+
     - `roll`, `pitch`, `yaw` and `thrust_body`.
 
   - All the values are in the drone body FRD frame.
@@ -237,6 +243,7 @@ Ackermann rovers do not support the yaw setpoint.
 The following offboard control modes bypass all internal PX4 control loops and should be used with great care.
 
 - [px4_msgs::msg::VehicleThrustSetpoint](https://github.com/PX4/PX4-Autopilot/blob/main/msg/VehicleThrustSetpoint.msg) + [px4_msgs::msg::VehicleTorqueSetpoint](https://github.com/PX4/PX4-Autopilot/blob/main/msg/VehicleTorqueSetpoint.msg)
+
   - The following input combination is supported:
     - `xyz` for thrust and `xyz` for torque.
   - All the values are in the drone body FRD frame and normalized in \[-1, 1\].
@@ -254,7 +261,9 @@ The following MAVLink messages and their particular fields and field values are 
 ### Copter/VTOL
 
 - [SET_POSITION_TARGET_LOCAL_NED](https://mavlink.io/en/messages/common.html#SET_POSITION_TARGET_LOCAL_NED)
+
   - The following input combinations are supported: <!-- https://github.com/PX4/PX4-Autopilot/blob/main/src/lib/FlightTasks/tasks/Offboard/FlightTaskOffboard.cpp#L166-L170 -->
+
     - Position setpoint (only `x`, `y`, `z`)
     - Velocity setpoint (only `vx`, `vy`, `vz`)
     - Acceleration setpoint (only `afx`, `afy`, `afz`)
@@ -264,7 +273,9 @@ The following MAVLink messages and their particular fields and field values are 
   - PX4 supports the following `coordinate_frame` values (only): [MAV_FRAME_LOCAL_NED](https://mavlink.io/en/messages/common.html#MAV_FRAME_LOCAL_NED) and [MAV_FRAME_BODY_NED](https://mavlink.io/en/messages/common.html#MAV_FRAME_BODY_NED).
 
 - [SET_POSITION_TARGET_GLOBAL_INT](https://mavlink.io/en/messages/common.html#SET_POSITION_TARGET_GLOBAL_INT)
+
   - The following input combinations are supported: <!-- https://github.com/PX4/PX4-Autopilot/blob/main/src/lib/FlightTasks/tasks/Offboard/FlightTaskOffboard.cpp#L166-L170 -->
+
     - Position setpoint (only `lat_int`, `lon_int`, `alt`)
     - Velocity setpoint (only `vx`, `vy`, `vz`)
     - _Thrust_ setpoint (only `afx`, `afy`, `afz`)
@@ -285,14 +296,18 @@ The following MAVLink messages and their particular fields and field values are 
 ### Fixed-wing
 
 - [SET_POSITION_TARGET_LOCAL_NED](https://mavlink.io/en/messages/common.html#SET_POSITION_TARGET_LOCAL_NED)
+
   - The following input combinations are supported (via `type_mask`): <!-- https://github.com/PX4/PX4-Autopilot/blob/main/src/lib/FlightTasks/tasks/Offboard/FlightTaskOffboard.cpp#L166-L170 -->
+
     - Position setpoint (`x`, `y`, `z` only; velocity and acceleration setpoints are ignored).
+
       - Specify the _type_ of the setpoint in `type_mask` (if these bits are not set the vehicle will fly in a flower-like pattern):
         ::: info
         Some of the _setpoint type_ values below are not part of the MAVLink standard for the `type_mask` field.
         :::
 
         The values are:
+
         - 292: Gliding setpoint.
           This configures TECS to prioritize airspeed over altitude in order to make the vehicle glide when there is no thrust (i.e. pitch is controlled to regulate airspeed).
           It is equivalent to setting `type_mask` as `POSITION_TARGET_TYPEMASK_Z_IGNORE`, `POSITION_TARGET_TYPEMASK_VZ_IGNORE`, `POSITION_TARGET_TYPEMASK_AZ_IGNORE`.
@@ -304,8 +319,11 @@ The following MAVLink messages and their particular fields and field values are 
   - PX4 supports the coordinate frames (`coordinate_frame` field): [MAV_FRAME_LOCAL_NED](https://mavlink.io/en/messages/common.html#MAV_FRAME_LOCAL_NED) and [MAV_FRAME_BODY_NED](https://mavlink.io/en/messages/common.html#MAV_FRAME_BODY_NED).
 
 - [SET_POSITION_TARGET_GLOBAL_INT](https://mavlink.io/en/messages/common.html#SET_POSITION_TARGET_GLOBAL_INT)
+
   - The following input combinations are supported (via `type_mask`): <!-- https://github.com/PX4/PX4-Autopilot/blob/main/src/lib/FlightTasks/tasks/Offboard/FlightTaskOffboard.cpp#L166-L170 -->
+
     - Position setpoint (only `lat_int`, `lon_int`, `alt`)
+
       - Specify the _type_ of the setpoint in `type_mask` (if these bits are not set the vehicle will fly in a flower-like pattern):
 
         ::: info
@@ -313,6 +331,7 @@ The following MAVLink messages and their particular fields and field values are 
         :::
 
         The values are:
+
         - 4096: Takeoff setpoint.
         - 8192: Land setpoint.
         - 12288: Loiter setpoint (fly a circle centred on setpoint).
@@ -336,6 +355,7 @@ Rover MAVLink setpoints are gated by the MAVLink parameter [MAV_FWDEXTSP](../adv
 :::
 
 - [SET_POSITION_TARGET_LOCAL_NED](https://mavlink.io/en/messages/common.html#SET_POSITION_TARGET_LOCAL_NED)
+
   - Position setpoint: `x`, `y` in [MAV_FRAME_LOCAL_NED](https://mavlink.io/en/messages/common.html#MAV_FRAME_LOCAL_NED) (`z` is ignored by rover modules).
   - Velocity setpoint: `vx`, `vy` in [MAV_FRAME_LOCAL_NED](https://mavlink.io/en/messages/common.html#MAV_FRAME_LOCAL_NED) or [MAV_FRAME_BODY_NED](https://mavlink.io/en/messages/common.html#MAV_FRAME_BODY_NED).
   - `yaw`/`yaw_rate`:
@@ -344,6 +364,7 @@ Rover MAVLink setpoints are gated by the MAVLink parameter [MAV_FWDEXTSP](../adv
   - Acceleration setpoints (`afx`, `afy`, `afz`) are ignored by rover modules.
 
 - [SET_POSITION_TARGET_GLOBAL_INT](https://mavlink.io/en/messages/common.html#SET_POSITION_TARGET_GLOBAL_INT)
+
   - Position setpoint: `lat_int`, `lon_int`, `alt` (converted into local NED internally; rover modules only use the horizontal components).
   - Velocity setpoint: `vx`, `vy`, `vz` (rover modules use only the horizontal components).
   - PX4 supports the following `coordinate_frame` values (only): [MAV_FRAME_GLOBAL_INT](https://mavlink.io/en/messages/common.html#MAV_FRAME_GLOBAL_INT), [MAV_FRAME_GLOBAL_RELATIVE_ALT_INT](https://mavlink.io/en/messages/common.html#MAV_FRAME_GLOBAL_RELATIVE_ALT_INT), [MAV_FRAME_GLOBAL_TERRAIN_ALT_INT](https://mavlink.io/en/messages/common.html#MAV_FRAME_GLOBAL_TERRAIN_ALT_INT).
@@ -358,7 +379,7 @@ _Offboard mode_ is affected by the following parameters:
 | Parameter                                                                                                | Description                                                                                                                                                                                      |
 | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | <a id="COM_OF_LOSS_T"></a>[COM_OF_LOSS_T](../advanced_config/parameter_reference.md#COM_OF_LOSS_T)       | Time-out (in seconds) to wait when offboard connection is lost before triggering offboard lost failsafe (`COM_OBL_RC_ACT`)                                                                       |
-| <a id="COM_OBL_RC_ACT"></a>[COM_OBL_RC_ACT](../advanced_config/parameter_reference.md#COM_OBL_RC_ACT)    | Flight mode to switch to if offboard control is lost (Values are - `0`: _Position_, `1`: _Altitude_, `2`: _Manual_, `3`: *Return, `4`: *Land\*).                                                 |
+| <a id="COM_OBL_RC_ACT"></a>[COM_OBL_RC_ACT](../advanced_config/parameter_reference.md#COM_OBL_RC_ACT)    | Flight mode to switch to if offboard control is lost (Values are - `0`: _Position_, `1`: _Altitude_, `2`: _Manual_, `3`: *Return, `4`:*Land\*).                                                  |
 | <a id="COM_RC_OVERRIDE"></a>[COM_RC_OVERRIDE](../advanced_config/parameter_reference.md#COM_RC_OVERRIDE) | Controls whether stick movement on a multicopter (or VTOL in MC mode) causes a mode change to [Position mode](../flight_modes_mc/position.md). This is not enabled for offboard mode by default. |
 | <a id="COM_RC_STICK_OV"></a>[COM_RC_STICK_OV](../advanced_config/parameter_reference.md#COM_RC_STICK_OV) | The amount of stick movement that causes a transition to [Position mode](../flight_modes_mc/position.md) (if [COM_RC_OVERRIDE](#COM_RC_OVERRIDE) is enabled).                                    |
 | <a id="COM_RCL_EXCEPT"></a>[COM_RCL_EXCEPT](../advanced_config/parameter_reference.md#COM_RCL_EXCEPT)    | Specify modes in which RC loss is ignored and the failsafe action not triggered. Set bit `2` to ignore RC loss in Offboard mode.                                                                 |

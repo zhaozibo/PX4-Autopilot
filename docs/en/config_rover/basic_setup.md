@@ -87,12 +87,14 @@ Navigate to [Parameters](../advanced_config/parameters.md) in QGroundControl and
    This may or may not be appropriate for your vehicle and use case.
 
    One approach to determine an appropriate value is:
+
    1. From a standstill, give the rover full throttle until it reaches the maximum speed.
    2. Disarm the rover and plot the `measured_speed_body_x` from [RoverSpeedStatus](../msg_docs/RoverSpeedStatus.md).
    3. Divide the maximum speed by the time it took to reach it and set this as the value for [RO_ACCEL_LIM](#RO_ACCEL_LIM).
 
    Some RC rovers have enough torque to lift up if the maximum acceleration is not limited.
    If that is the case:
+
    1. Set [RO_ACCEL_LIM](#RO_ACCEL_LIM) to a low value, give the rover full throttle from a standstill and observe its behaviour.
    2. Increase [RO_ACCEL_LIM](#RO_ACCEL_LIM) until the rover starts to lift up during the acceleration.
    3. Set [RO_ACCEL_LIM](#RO_ACCEL_LIM) to the highest value that does not cause the rover to lift up.

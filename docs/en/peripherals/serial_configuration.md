@@ -54,9 +54,9 @@ For example, `MAV_0_CONFIG` enables MAVLink on a particular port, but you may al
 All the serial drivers/ports are configured in the same way:
 
 1. Set the configuration parameter for the service/peripheral to the port it will use.
-1. Reboot the vehicle in order to make the additional configuration parameters visible.
-1. Set the baud rate parameter for the selected port to the desired value (e.g. [SER_GPS1_BAUD](../advanced_config/parameter_reference.md#SER_GPS1_BAUD))
-1. Configure module-specific parameters (i.e. MAVLink streams and data rate configuration).
+2. Reboot the vehicle in order to make the additional configuration parameters visible.
+3. Set the baud rate parameter for the selected port to the desired value (e.g. [SER_GPS1_BAUD](../advanced_config/parameter_reference.md#SER_GPS1_BAUD))
+4. Configure module-specific parameters (i.e. MAVLink streams and data rate configuration).
 
 The [GPS/Compass > Secondary GPS](../gps_compass/index.md#dual_gps) section provides a practical example of how to configure a port in _QGroundControl_ (it shows how to use `GPS_2_CONFIG` to run a secondary GPS on the `TELEM 2` port).
 
@@ -106,6 +106,7 @@ The following ports are commonly mapped to specific functions on all boards:
 
   This is configured by default as a MAVLink port the onboard profile (for companion computers).
   The configuration for MAVLink is unique to this port (it doesn't use the `MAV_X_CONFIG` parameters).
+
   - [SYS_USB_AUTO](../advanced_config/parameter_reference.md#SYS_USB_AUTO) sets whether the port is set to no particular protocol, autodetects the protocol, or sets the comms link to MAVLink.
   - [USB_MAV_MODE](../advanced_config/parameter_reference.md#USB_MAV_MODE) sets the MAVLink profile that is used if MAVLink is set or detected.
 

@@ -12,8 +12,8 @@ The PX4 [docker files](https://github.com/PX4/PX4-containers/blob/master/docker/
 
 ```sh
 git clone --recursive https://github.com/google/bloaty.git /tmp/bloaty \
-	&& cd /tmp/bloaty && cmake -GNinja . && ninja bloaty && cp bloaty /usr/local/bin/ \
-	&& rm -rf /tmp/*
+ && cd /tmp/bloaty && cmake -GNinja . && ninja bloaty && cp bloaty /usr/local/bin/ \
+ && rm -rf /tmp/*
 ```
 
 The example below shows how you might see the impact of removing the _mpu9250_ driver from `px4_fmu-v2_default`.

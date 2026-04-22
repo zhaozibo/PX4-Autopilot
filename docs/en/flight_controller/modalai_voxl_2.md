@@ -91,7 +91,7 @@ VOXL SDK (Software Development Kit) consists of the open source [voxl-px4](https
 
 VOXL SDK runs on VOXL, VOXL 2 and RB5 Flight!
 
-The source code for projects within VOXL SDK can be found at https://gitlab.com/voxl-public, alongside build instructions.
+The source code for projects within VOXL SDK can be found at <https://gitlab.com/voxl-public>, alongside build instructions.
 
 ### Connectors
 
@@ -112,9 +112,9 @@ All single ended signals on cable-to-board connectors J10, J18, & J19 are 3.3V C
 | J7        | Camera Group 1                | DF40C-60DP-0.4V(51)     | DF40C-60DS-0.4V               | B2B Plug, 60-pin             | Qty-2 4L MIPI CSI ports, CCI and camera control signals, 8 power rails (from 1.05V up to 5V) for cameras and other sensors, dedicated SPI (QUP) port                                                       |
 | J8        | Camera Group 2                | DF40C-60DP-0.4V(51)     | DF40C-60DS-0.4V               | B2B Plug, 60-pin             | Qty-2 4L MIPI CSI ports, CCI and camera control signals, 8 power rails (from 1.05V up to 5V) for cameras and other sensors, dedicated SPI (QUP) port                                                       |
 | J9        | USB-C (ADB)                   | UJ31-CH-3-SMT-TR        | USB Type-C                    | Cable Receptacle, 24-pin R/A | ADB USB-C with re-driver and display port alternate mode (USB0)                                                                                                                                            |
-| J10       | SPI Expansion                 | SM08B-GHS-TB(LF)(SN)    | GHR-08V-S                     | Cable Header, 8-pin R/A      | SPI@3.3V with 2 CS_N pins, 32kHz CLK_OUT@3.3V                                                                                                                                                              |
-| J18       | ESC (SLPI Access)             | SM04B-GHS-TB(LF)(SN)    | GHR-04V-S                     | Cable Header, 4-pin R/A      | ESC UART@3.3V, 3.3V reference voltage                                                                                                                                                                      |
-| J19       | GNSS/MAG/RC/I2C (SLPI Access) | SM12B-GHS-TB(LF)(SN)    | GHR-12V-S                     | Cable Header, 6-pin R/A      | GNSS UART@3.3V, Magnetometer I2C@3.3V, 5V, RC UART, Spare I2C                                                                                                                                              |
+| J10       | SPI Expansion                 | SM08B-GHS-TB(LF)(SN)    | GHR-08V-S                     | Cable Header, 8-pin R/A      | <SPI@3.3V> with 2 CS_N pins, 32kHz <CLK_OUT@3.3V>                                                                                                                                                          |
+| J18       | ESC (SLPI Access)             | SM04B-GHS-TB(LF)(SN)    | GHR-04V-S                     | Cable Header, 4-pin R/A      | ESC <UART@3.3V>, 3.3V reference voltage                                                                                                                                                                    |
+| J19       | GNSS/MAG/RC/I2C (SLPI Access) | SM12B-GHS-TB(LF)(SN)    | GHR-12V-S                     | Cable Header, 6-pin R/A      | GNSS <UART@3.3V>, Magnetometer <I2C@3.3V>, 5V, RC UART, Spare I2C                                                                                                                                          |
 
 ### User Guide
 

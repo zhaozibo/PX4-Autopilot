@@ -51,7 +51,7 @@ pageClass: is-wide-page
 ::: details Click here to see original file
 
 ```c
-uint64 timestamp						# time since system start (microseconds)
+uint64 timestamp      # time since system start (microseconds)
 
 uint8[32] vendor_name
 uint8[32] model_name

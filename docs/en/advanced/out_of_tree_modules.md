@@ -34,15 +34,15 @@ To create an external module:
 
   ```cmake
   px4_add_module(
-  	MODULE modules__test_app
-  	MAIN test_app
-  	STACK_MAIN 2000
-  	SRCS
-  		px4_simple_app.c
-  	DEPENDS
-  		platforms__common
-  	EXTERNAL
-  	)
+   MODULE modules__test_app
+   MAIN test_app
+   STACK_MAIN 2000
+   SRCS
+    px4_simple_app.c
+   DEPENDS
+    platforms__common
+   EXTERNAL
+   )
   ```
 
 ## Out-of-Tree uORB Message Definitions

@@ -125,6 +125,7 @@ Tuning is the final step, carried out only after most other setup and configurat
   It has primarily been tested on racing quads and X500, and is expected to be less effective on tricopters with a tiltable rotor.
 
   Manual tuning using these guides are only needed if there is a problem with autotune:
+
   - [MC PID Tuning (Manual/Basic)](../config_mc/pid_tuning_guide_multicopter_basic.md) — Manual tuning basic how to.
   - [MC PID Tuning Guide (Manual/Detailed)](../config_mc/pid_tuning_guide_multicopter.md) — Manual tuning with detailed explanation.
 
@@ -145,7 +146,6 @@ AFAIK autotune was tested on various not so custom platforms e.g. X500, racer qu
 Autotune was never tested on a Helicopter.
 can you in theory autotune frame with any number of motors?
 In theory yes but it needs to be able to have reasonable authority around all axes so I'd expect autotune to not work well for a monocopter without swashplate and so on. Probably also the controllers wouldn't work out of the box. I saw issues before with designs that tilt the rotor e.g. tricopter, bicopter, ... again
-
 
 will PX4 still understand how to autotune?
 Autotune should work for any vehicle that has reasonable authority and dynamics around all the body axes. A tiltable motor e.g. tricopter has at the least dynamics which are less tested with autotune.

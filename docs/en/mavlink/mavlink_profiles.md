@@ -29,7 +29,7 @@ The profile defines the _default_ messages and rates.
 A connected MAVLink system can still request the streams/rates it wants using [MAV_CMD_SET_MESSAGE_INTERVAL](https://mavlink.io/en/messages/common.html#MAV_CMD_SET_MESSAGE_INTERVAL).
 :::
 
-To find the exact messages in each profile, search for ` configure_streams_to_default` (or the above profile names) in [mavlink_main.cpp](https://github.com/PX4/PX4-Autopilot/blob/main/src/modules/mavlink/mavlink_main.cpp).
+To find the exact messages in each profile, search for `configure_streams_to_default` (or the above profile names) in [mavlink_main.cpp](https://github.com/PX4/PX4-Autopilot/blob/main/src/modules/mavlink/mavlink_main.cpp).
 
 ## Assigning Profiles to Ports
 
@@ -57,10 +57,10 @@ If you're testing with a GCS over USB you might add the message to the `MAVLINK_
 For example, to stream `BATTERY_STATUS_DEMO` at 5 Hz:
 
 ```cpp
-	case MAVLINK_MODE_CONFIG: // USB
-		// Note: streams requiring low latency come first
-		...
-		configure_stream_local("BATTERY_STATUS_DEMO", 5.0f);
+ case MAVLINK_MODE_CONFIG: // USB
+  // Note: streams requiring low latency come first
+  ...
+  configure_stream_local("BATTERY_STATUS_DEMO", 5.0f);
         ...
 ```
 

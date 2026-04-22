@@ -224,7 +224,7 @@ bool in_transition_to_fw # True if VTOL is doing a transition from MC to FW
 
 # MAVLink identification
 uint8 system_type  # system type, contains mavlink MAV_TYPE
-uint8 system_id	   # system id, contains MAVLink's system ID field
+uint8 system_id    # system id, contains MAVLink's system ID field
 uint8 component_id # subsystem / component id, contains MAVLink's component ID field
 
 bool safety_button_available # Set to true if a safety button is connected
@@ -244,7 +244,7 @@ bool traffic_avoidance_system_present
 bool rc_calibration_in_progress
 bool calibration_enabled
 
-bool pre_flight_checks_pass		# true if all checks necessary to arm pass
+bool pre_flight_checks_pass  # true if all checks necessary to arm pass
 ```
 
 :::

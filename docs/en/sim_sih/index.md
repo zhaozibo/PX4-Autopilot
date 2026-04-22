@@ -296,7 +296,7 @@ If not, the SIH uses a simple model with maximum thrust force given by `SIH_F_T_
 2. W. Khan, "Dynamics modeling of agile fixed-wing unmanned aerial vehicles," Ph.D. thesis, Dept. of Mechanical Engineering, McGill University, Montreal, 2016.
 3. R. Chiappinelli, "Modeling and control of a flying wing tailsitter unmanned aerial vehicle," M.Sc. thesis, Dept. of Mechanical Engineering, McGill University, Montreal, 2018.
 4. S. Anumakonda, "Everything you need to know about Self-Driving Cars," 2021. [Link](https://srianumakonda.medium.com/everything-you-need-to-know-about-self-driving-in-30-minutes-b38d68bd3427)
-5. J.B. Brandt, R.W. Deters, G.K. Ananda, O.D. Dantsker, and M.S. Selig, UIUC Propeller Database, Vols 1-4, University of Illinois at Urbana-Champaign, Department of Aerospace Engineering, retrieved from https://m-selig.ae.illinois.edu/props/propDB.html.
+5. J.B. Brandt, R.W. Deters, G.K. Ananda, O.D. Dantsker, and M.S. Selig, UIUC Propeller Database, Vols 1-4, University of Illinois at Urbana-Champaign, Department of Aerospace Engineering, retrieved from <https://m-selig.ae.illinois.edu/props/propDB.html>.
 
 ## Video
 

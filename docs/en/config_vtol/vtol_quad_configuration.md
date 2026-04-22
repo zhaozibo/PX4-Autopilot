@@ -134,6 +134,7 @@ As soon as you notice the transition happen be ready to handle height loss which
 The following feature has been discussed but not implemented yet:
 
 - Once the transition happens the multirotor motors will stop and the pusher/puller throttle will remain at the `VT_F_TRANS_THR` level until you move the throttle stick, assuming you are in manual mode.
+
   :::
 
 #### Transition: Fixed-wing to Multirotor (Back-transition)

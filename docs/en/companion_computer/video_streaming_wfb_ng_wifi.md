@@ -35,6 +35,7 @@ The vehicle setup consists of:
 - Raspberry PI 3B/3B+/ZeroW
 - A camera.
   These have been tested:
+
   - [Raspberry Pi camera](https://www.raspberrypi.org/products/camera-module-v2/) connected via CSI.
   - [Logitech camera C920](https://support.logi.com/hc/en-us/articles/360024326953-Getting-started-HD-Pro-Webcam-C920) connected via USB
 
@@ -44,6 +45,7 @@ The vehicle setup consists of:
 
 - Ground Station Computer.
   These options have been tested:
+
   - Any Linux computer with a USB port (tested on Ubuntu 18.04 x86-64)
   - A computer with any OS running QGround control and Raspberry PI connected via Ethernet (RPi provides the wifi connection).
 
@@ -58,7 +60,7 @@ If you connect it to **USB3** port via **native USB3 cable** to a **Linux laptop
 
 For **Raspberry PI** (UAV or ground) it must be directly connected to 5V BEC (or high current power adapter in case of ground pi) in one of two ways:
 
-- Make a custom USB cable ([cut `+5V` wire from USB plug and connect it to BEC])(https://electronics.stackexchange.com/questions/218500/usb-charge-and-data-separate-cables)
+- Make a custom USB cable ([cut `+5V` wire from USB plug and connect it to BEC])(<https://electronics.stackexchange.com/questions/218500/usb-charge-and-data-separate-cables>)
 - Cut a `+5V` wire on PCB near USB port and wire it to BEC (don't do this if doubt - use custom cable instead).
 
 You must also add a 470uF **low ESR capacitor** (like ESC has) between **card +5v and ground** to filter voltage spikes.

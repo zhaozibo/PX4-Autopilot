@@ -33,7 +33,7 @@ Full documentation and source files can be found on [GitHub](https://github.com/
 
 ## Where to buy
 
-TFSLOT is possible to buy at [Tindie store](https://www.tindie.com/products/thunderfly/tfslot01a-inovative-drone-airspeed-sensor/) or by sending us an inquiry via email at info@thunderfly.cz
+TFSLOT is possible to buy at [Tindie store](https://www.tindie.com/products/thunderfly/tfslot01a-inovative-drone-airspeed-sensor/) or by sending us an inquiry via email at <info@thunderfly.cz>
 
 ## Connection
 

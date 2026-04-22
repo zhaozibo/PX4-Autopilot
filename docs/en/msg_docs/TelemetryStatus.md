@@ -72,11 +72,11 @@ uint8 LINK_TYPE_GENERIC = 0
 uint8 LINK_TYPE_UBIQUITY_BULLET = 1
 uint8 LINK_TYPE_WIRE = 2
 uint8 LINK_TYPE_USB = 3
-uint8 LINK_TYPE_IRIDIUM	= 4
+uint8 LINK_TYPE_IRIDIUM = 4
 
-uint64 timestamp			# time since system start (microseconds)
+uint64 timestamp   # time since system start (microseconds)
 
-uint8 type				#  type of the radio hardware (LINK_TYPE_*)
+uint8 type    #  type of the radio hardware (LINK_TYPE_*)
 
 uint8 mode
 

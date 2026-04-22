@@ -35,7 +35,7 @@ Events interface.
 # Events interface
 uint32 MESSAGE_VERSION = 1
 
-uint64 timestamp			# time since system start (microseconds)
+uint64 timestamp   # time since system start (microseconds)
 
 uint32 id                   # Event ID
 uint16 event_sequence       # Event sequence number
